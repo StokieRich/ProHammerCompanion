@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ProHammer Battle Companion v0.4</title>
+<title>ProHammer Battle Companion v0.6</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -52,37 +52,120 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 }@media(max-width:800px){.intent-actions{left:0;padding:12px 16px}.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;overflow:auto;gap:4px}.navitem{white-space:nowrap}.grid2,.grid3,.scoreboards,.final{grid-template-columns:1fr}main{padding:24px 16px}.course{grid-template-columns:1fr}.paint-row{grid-template-columns:70px 150px 1fr}}
 </style>
 <style>
-/* Print result: use the current tab, with a dedicated one-page A4 report. */
+/* Print result — v0.6: spacious, readable one-page A4 battle report. */
 #print-overlay{display:none}
 @media print{
- @page{size:A4 portrait;margin:7mm}
- html,body{margin:0!important;padding:0!important;background:#fff!important}
- body.printing-result>*:not(#print-overlay){display:none!important}
- body.printing-result #print-overlay{display:block!important}
- body.printing-result #print-overlay *{box-sizing:border-box}
- body.printing-result #print-overlay .report{width:100%;height:auto;max-width:196mm;margin:0 auto;color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:7.4pt;line-height:1.18}
- body.printing-result #print-overlay .report-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid #111;padding-bottom:4px;margin-bottom:5px}
- body.printing-result #print-overlay .brand{font-weight:900;font-size:19pt;letter-spacing:1px;line-height:1}
- body.printing-result #print-overlay .sub{font-size:5.8pt;font-weight:700;letter-spacing:1.5px;margin-top:2px}
- body.printing-result #print-overlay .winner{text-align:right}.winner span{display:block;font-size:6.5pt;font-weight:800;letter-spacing:1px}.winner strong{display:block;font-size:17pt;line-height:1}
- body.printing-result #print-overlay .label{font-size:5.7pt;font-weight:800;letter-spacing:1.25px}
- body.printing-result #print-overlay .mission{display:grid;grid-template-columns:minmax(0,1fr) 55mm;gap:5mm;border:1.2px solid #111;padding:5px;margin-bottom:5px}
- body.printing-result #print-overlay .mission h1{font-size:13pt;margin:1px 0 2px;text-transform:uppercase;line-height:1.05}
- body.printing-result #print-overlay .mission p{margin:0;font-size:6.8pt;line-height:1.2}
- body.printing-result #print-overlay .twist{border-left:1px solid #aaa;padding-left:4mm;font-size:7pt;line-height:1.15}.twist b{font-size:8pt;display:block;margin:1px 0}.twist p{margin:2px 0 0;font-size:6.5pt}
- body.printing-result #print-overlay .players{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
- body.printing-result #print-overlay .p-card{border:1.2px solid #111;padding:5px;break-inside:avoid;page-break-inside:avoid}
- body.printing-result #print-overlay .p-head{display:flex;justify-content:space-between;gap:3mm;border-bottom:1px solid #aaa;padding-bottom:3px}
- body.printing-result #print-overlay .p-head h2{font-size:11.5pt;margin:1px 0;line-height:1.05}.faction{font-size:6.8pt;font-weight:700}
- body.printing-result #print-overlay .score{text-align:right;line-height:.8;white-space:nowrap}.score em{display:block;font-style:normal;font-size:6pt;font-weight:900;letter-spacing:1px;min-height:7px}.score strong{font-size:22pt}.score small{font-size:6pt;font-weight:700}
- body.printing-result #print-overlay .score-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:4px 0}.score-row>div{border:1px solid #aaa;text-align:center;padding:2px}.score-row b{display:block;font-size:11pt;line-height:1}.score-row span{display:block;font-size:5.3pt;font-weight:800;letter-spacing:.4px;margin-top:1px}
- body.printing-result #print-overlay .block{border-top:1px solid #aaa;padding-top:2px;margin-top:4px}.block h3{font-size:5.8pt;letter-spacing:1px;margin:0 0 1px}.block ul{margin:0;padding-left:12px;font-size:6.5pt;line-height:1.15}.block li{margin:0}.rounds{font-size:6.5pt;white-space:nowrap}
- body.printing-result #print-overlay footer{text-align:center;border-top:1px solid #aaa;margin-top:5px;padding-top:2px;font-size:5.5pt;letter-spacing:1px;font-weight:700}
+  @page{size:A4 portrait;margin:12mm}
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+  body.printing-result>*:not(#print-overlay){display:none!important}
+  body.printing-result #print-overlay{display:block!important}
+  body.printing-result #print-overlay *{box-sizing:border-box}
+
+  body.printing-result #print-overlay .report{
+    width:100%;max-width:none;margin:0;padding:0;color:#111;background:#fff;
+    font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.32;
+    min-height:260mm;display:flex;flex-direction:column;
+  }
+  body.printing-result #print-overlay .report-head{
+    display:flex;justify-content:space-between;align-items:center;
+    border-bottom:3px solid #111;padding:0 0 8px;margin-bottom:10px;
+  }
+  body.printing-result #print-overlay .brand{
+    font-weight:900;font-size:30pt;letter-spacing:2px;line-height:.95;
+  }
+  body.printing-result #print-overlay .sub{
+    font-size:8pt;font-weight:800;letter-spacing:2px;margin-top:6px;
+  }
+  body.printing-result #print-overlay .winner{text-align:right}
+  body.printing-result #print-overlay .winner span{
+    display:block;font-size:9pt;font-weight:900;letter-spacing:1.5px;margin-bottom:3px;
+  }
+  body.printing-result #print-overlay .winner strong{
+    display:block;font-size:29pt;line-height:1;font-weight:900;
+  }
+  body.printing-result #print-overlay .label{
+    font-size:7.5pt;font-weight:900;letter-spacing:1.5px;
+  }
+  body.printing-result #print-overlay .mission{
+    display:grid;grid-template-columns:minmax(0,1fr) 65mm;gap:8mm;
+    border:2px solid #111;padding:12px 13px;margin-bottom:11px;min-height:43mm;
+  }
+  body.printing-result #print-overlay .mission h1{
+    font-size:22pt;margin:3px 0 7px;text-transform:uppercase;line-height:1.05;
+  }
+  body.printing-result #print-overlay .mission p{
+    margin:0;font-size:10pt;line-height:1.38;
+  }
+  body.printing-result #print-overlay .twist{
+    border-left:1px solid #999;padding-left:8mm;font-size:10pt;line-height:1.35;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  body.printing-result #print-overlay .twist b{
+    font-size:13pt;display:block;margin:4px 0 5px;
+  }
+  body.printing-result #print-overlay .twist p{margin:0;font-size:9.5pt;line-height:1.35}
+
+  body.printing-result #print-overlay .players{
+    display:grid;grid-template-columns:1fr 1fr;gap:8mm;align-items:stretch;flex:1;
+  }
+  body.printing-result #print-overlay .p-card{
+    border:2px solid #111;padding:12px 13px;min-height:112mm;
+    break-inside:avoid;page-break-inside:avoid;display:flex;flex-direction:column;
+  }
+  body.printing-result #print-overlay .p-head{
+    display:flex;justify-content:space-between;gap:6mm;
+    border-bottom:1px solid #999;padding-bottom:8px;
+  }
+  body.printing-result #print-overlay .p-head h2{
+    font-size:21pt;margin:4px 0;line-height:1.05;
+  }
+  body.printing-result #print-overlay .faction{font-size:11pt;font-weight:700}
+  body.printing-result #print-overlay .score{
+    text-align:right;line-height:.85;white-space:nowrap;padding-top:3px;
+  }
+  body.printing-result #print-overlay .score em{
+    display:block;font-style:normal;font-size:8pt;font-weight:900;
+    letter-spacing:1.5px;min-height:11px;margin-bottom:3px;
+  }
+  body.printing-result #print-overlay .score strong{font-size:38pt;font-weight:900}
+  body.printing-result #print-overlay .score small{font-size:8pt;font-weight:800}
+
+  body.printing-result #print-overlay .score-row{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:9px 0 10px;
+  }
+  body.printing-result #print-overlay .score-row>div{
+    border:1px solid #999;text-align:center;padding:7px 3px;min-height:20mm;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  body.printing-result #print-overlay .score-row b{
+    display:block;font-size:21pt;line-height:1;font-weight:900;
+  }
+  body.printing-result #print-overlay .score-row span{
+    display:block;font-size:7pt;font-weight:900;letter-spacing:.8px;margin-top:5px;
+  }
+
+  body.printing-result #print-overlay .block{
+    border-top:1px solid #999;padding-top:7px;margin-top:8px;
+  }
+  body.printing-result #print-overlay .block h3{
+    font-size:8pt;letter-spacing:1.3px;margin:0 0 5px;font-weight:900;
+  }
+  body.printing-result #print-overlay .block ul{
+    margin:0;padding-left:19px;font-size:10pt;line-height:1.4;
+  }
+  body.printing-result #print-overlay .block li{margin:2px 0}
+  body.printing-result #print-overlay .rounds{
+    font-size:10pt;white-space:normal;line-height:1.5;
+  }
+  body.printing-result #print-overlay footer{
+    text-align:center;border-top:2px solid #111;margin-top:10px;padding-top:6px;
+    font-size:7.5pt;letter-spacing:1.4px;font-weight:800;
+  }
 }
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v0.2</div></header>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v0.6</div></header>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
