@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ProHammer Battle Companion v0.2</title>
+<title>ProHammer Battle Companion v0.4</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -50,6 +50,35 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   h1,h2,h3,strong,label{color:#111!important}
   .print-only{display:block!important}
 }@media(max-width:800px){.intent-actions{left:0;padding:12px 16px}.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;overflow:auto;gap:4px}.navitem{white-space:nowrap}.grid2,.grid3,.scoreboards,.final{grid-template-columns:1fr}main{padding:24px 16px}.course{grid-template-columns:1fr}.paint-row{grid-template-columns:70px 150px 1fr}}
+</style>
+<style>
+/* Print result: use the current tab, with a dedicated one-page A4 report. */
+#print-overlay{display:none}
+@media print{
+ @page{size:A4 portrait;margin:7mm}
+ html,body{margin:0!important;padding:0!important;background:#fff!important}
+ body.printing-result>*:not(#print-overlay){display:none!important}
+ body.printing-result #print-overlay{display:block!important}
+ body.printing-result #print-overlay *{box-sizing:border-box}
+ body.printing-result #print-overlay .report{width:100%;height:auto;max-width:196mm;margin:0 auto;color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:7.4pt;line-height:1.18}
+ body.printing-result #print-overlay .report-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid #111;padding-bottom:4px;margin-bottom:5px}
+ body.printing-result #print-overlay .brand{font-weight:900;font-size:19pt;letter-spacing:1px;line-height:1}
+ body.printing-result #print-overlay .sub{font-size:5.8pt;font-weight:700;letter-spacing:1.5px;margin-top:2px}
+ body.printing-result #print-overlay .winner{text-align:right}.winner span{display:block;font-size:6.5pt;font-weight:800;letter-spacing:1px}.winner strong{display:block;font-size:17pt;line-height:1}
+ body.printing-result #print-overlay .label{font-size:5.7pt;font-weight:800;letter-spacing:1.25px}
+ body.printing-result #print-overlay .mission{display:grid;grid-template-columns:minmax(0,1fr) 55mm;gap:5mm;border:1.2px solid #111;padding:5px;margin-bottom:5px}
+ body.printing-result #print-overlay .mission h1{font-size:13pt;margin:1px 0 2px;text-transform:uppercase;line-height:1.05}
+ body.printing-result #print-overlay .mission p{margin:0;font-size:6.8pt;line-height:1.2}
+ body.printing-result #print-overlay .twist{border-left:1px solid #aaa;padding-left:4mm;font-size:7pt;line-height:1.15}.twist b{font-size:8pt;display:block;margin:1px 0}.twist p{margin:2px 0 0;font-size:6.5pt}
+ body.printing-result #print-overlay .players{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+ body.printing-result #print-overlay .p-card{border:1.2px solid #111;padding:5px;break-inside:avoid;page-break-inside:avoid}
+ body.printing-result #print-overlay .p-head{display:flex;justify-content:space-between;gap:3mm;border-bottom:1px solid #aaa;padding-bottom:3px}
+ body.printing-result #print-overlay .p-head h2{font-size:11.5pt;margin:1px 0;line-height:1.05}.faction{font-size:6.8pt;font-weight:700}
+ body.printing-result #print-overlay .score{text-align:right;line-height:.8;white-space:nowrap}.score em{display:block;font-style:normal;font-size:6pt;font-weight:900;letter-spacing:1px;min-height:7px}.score strong{font-size:22pt}.score small{font-size:6pt;font-weight:700}
+ body.printing-result #print-overlay .score-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:4px 0}.score-row>div{border:1px solid #aaa;text-align:center;padding:2px}.score-row b{display:block;font-size:11pt;line-height:1}.score-row span{display:block;font-size:5.3pt;font-weight:800;letter-spacing:.4px;margin-top:1px}
+ body.printing-result #print-overlay .block{border-top:1px solid #aaa;padding-top:2px;margin-top:4px}.block h3{font-size:5.8pt;letter-spacing:1px;margin:0 0 1px}.block ul{margin:0;padding-left:12px;font-size:6.5pt;line-height:1.15}.block li{margin:0}.rounds{font-size:6.5pt;white-space:nowrap}
+ body.printing-result #print-overlay footer{text-align:center;border-top:1px solid #aaa;margin-top:5px;padding-top:2px;font-size:5.5pt;letter-spacing:1px;font-weight:700}
+}
 </style>
 </head>
 <body>
@@ -495,22 +524,55 @@ function renderFinal(){
  renderNav();
 }
 function printResult(){
- const report=document.querySelector('.app')?.innerHTML || document.getElementById('app')?.innerHTML || '';
- const w=window.open('', '_blank', 'noopener,noreferrer');
- if(!w){
-   window.print();
-   return;
- }
- w.document.open();
- w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>ProHammer Battle Result</title><style>
- body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#111;margin:0;padding:28px;font-size:14px;line-height:1.45}
- h1{font-size:28px;margin:0 0 8px;text-transform:uppercase} h2{font-size:20px;margin:8px 0 14px} h3{font-size:15px;margin:20px 0 8px;text-transform:uppercase}
- .eyebrow{font-weight:700;letter-spacing:2px;font-size:11px;margin-bottom:6px}.mission{border:2px solid #111;padding:14px;margin:14px 0 20px}.num{font-weight:800;font-size:14px;letter-spacing:1px}.finalscore{font-size:42px;font-weight:900;line-height:1}.small{font-size:12px}.breakdown{display:flex;justify-content:space-between;border-bottom:1px solid #bbb;padding:5px 0}.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{border:1px solid #999;padding:14px;break-inside:avoid}.actions,.topbar,.nav{display:none!important}
- @media print{body{padding:12mm}.card{break-inside:avoid}}
- </style></head><body>${report}</body></html>`);
- w.document.close();
- w.onload=()=>{ w.focus(); setTimeout(()=>w.print(),150); };
+ const escHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+ const mission=missions[state.mission]||{};
+ const a=state.p[0].paint+primaryTotal(0)+secondaryTotal(0);
+ const b=state.p[1].paint+primaryTotal(1)+secondaryTotal(1);
+ const winner=a===b?'DRAW':a>b?`${escHtml(state.p[0].name)} WINS`:`${escHtml(state.p[1].name)} WINS`;
+ const playerCard=pi=>{
+   const p=state.p[pi];
+   const intents=p.intent.map(idx=>{
+     let t=flex[idx][0];
+     if(idx===0) t+=` — ${p.priority||'Location not recorded'}`;
+     return `<li>${escHtml(t)}</li>`;
+   }).join('')||'<li>None selected</li>';
+   const rounds=p.primary.map((v,i)=>`<span>R${i+1}: <b>${Number(v)||0}</b></span>`).join(' · ');
+   const achieved=achievedSecondaryNames(pi).map(x=>`<li>${escHtml(x)}</li>`).join('')||'<li>None</li>';
+   const win=a===b?'':(pi===0?(a>b?'WIN':''):(b>a?'WIN':''));
+   return `<section class="p-card">
+     <div class="p-head"><div><div class="label">PLAYER ${pi+1}</div><h2>${escHtml(p.name)}</h2><div class="faction">${escHtml(p.faction)}</div></div><div class="score"><em>${win}</em><strong>${pi===0?a:b}</strong><small>/100</small></div></div>
+     <div class="score-row"><div><b>${p.paint}</b><span>PAINTING</span></div><div><b>${primaryTotal(pi)}</b><span>PRIMARY</span></div><div><b>${secondaryTotal(pi)}</b><span>SECONDARY</span></div></div>
+     <div class="block"><h3>COMMANDER'S INTENT</h3><ul>${intents}</ul></div>
+     <div class="block"><h3>PRIMARY BY ROUND</h3><div class="rounds">${rounds}</div></div>
+     <div class="block"><h3>SECONDARIES ACHIEVED</h3><ul>${achieved}</ul></div>
+   </section>`;
+ };
+ const report=`<div id="print-report" class="report">
+   <header class="report-head"><div><div class="brand">PROHAMMER</div><div class="sub">BATTLE COMPANION · BATTLE REPORT</div></div><div class="winner"><span>${winner}</span><strong>${a} — ${b}</strong></div></header>
+   <section class="mission"><div class="mission-main"><div class="label">MISSION</div><h1>${escHtml(state.mission||'')}</h1><p>${escHtml(mission.flavour||'')}</p></div><div class="twist"><div class="label">SHAPE OF BATTLE</div><b>${escHtml(state.twist||'Open Battle')}</b><p>${escHtml(twistRules[state.twist]||'')}</p></div></section>
+   <div class="players">${playerCard(0)}${playerCard(1)}</div>
+   <footer>PROHAMMER BATTLE COMPANION · ${new Date().toLocaleDateString('en-GB')}</footer>
+ </div>`;
+
+ // Build the report in the current tab. This avoids opening an about:blank tab and
+ // lets the browser print the report directly from the page that contains the app.
+ let old=document.getElementById('print-overlay');
+ if(old) old.remove();
+ const overlay=document.createElement('div');
+ overlay.id='print-overlay';
+ overlay.innerHTML=report;
+ document.body.appendChild(overlay);
+ document.body.classList.add('printing-result');
+
+ const cleanup=()=>{
+   document.body.classList.remove('printing-result');
+   overlay.remove();
+   window.removeEventListener('afterprint',cleanup);
+ };
+ window.addEventListener('afterprint',cleanup);
+ setTimeout(()=>window.print(),50);
 }
+
 function saveResult(){
  printResult();
 }
