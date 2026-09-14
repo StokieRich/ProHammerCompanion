@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.1</title>
+<title>ProHammer Battle Companion v1.1.2</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -344,16 +344,125 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   main{padding:22px 14px 84px}
 }
 
+
+/* Mobile UI pass — v1.1.2
+   Content/rules unchanged. This section only changes presentation at narrow widths. */
+@media(max-width:800px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  body{font-size:14px}
+  header{height:54px;min-height:54px;padding:0 10px}
+  header .brand{font-size:14px;letter-spacing:1.5px}
+  header .subtitle{font-size:9px;overflow:hidden;text-overflow:ellipsis}
+  .mobile-menu-btn{padding:8px 10px;font-size:10px;flex:0 0 auto}
+
+  main{width:100%;max-width:100%;box-sizing:border-box;padding:12px 10px 70px;overflow-x:hidden}
+  .layout{width:100%;max-width:100%;display:block}
+
+  /* The mobile drawer remains available, but does not consume page width. */
+  nav#nav{top:54px;width:min(290px,88vw);max-width:88vw}
+  .mobile-nav-backdrop{inset:54px 0 0 0}
+
+  /* Collapse desktop multi-column layouts into a single readable column. */
+  .grid,.columns,.three-col,.two-col,.ref-grid,.quick-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%;
+    max-width:100%;
+  }
+  .grid > *, .columns > *, .three-col > *, .two-col > *, .ref-grid > *, .quick-grid > *{
+    min-width:0;
+    max-width:100%;
+  }
+
+  /* Battle progress: compact vertical tracker with the current step emphasised. */
+  .phase-flow,.phase-grid,.step-flow{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:6px!important;
+    width:100%;
+    max-width:100%;
+  }
+  .phase-flow > *, .phase-grid > *, .step-flow > *{
+    width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box;
+  }
+
+  /* Compact cards on phones; preserve readable text. */
+  .card,.panel,.ref-card,.rule-card,.info-card{
+    max-width:100%;
+    box-sizing:border-box;
+    padding:12px;
+  }
+  .card + .card,.panel + .panel{margin-top:8px}
+  h1{font-size:20px;line-height:1.15}
+  h2{font-size:16px;line-height:1.2}
+  h3{font-size:13px;line-height:1.2}
+  .section-title{margin-bottom:8px}
+
+  /* Tables: never force the whole page wider than the viewport. */
+  table{
+    width:100%!important;
+    max-width:100%!important;
+    table-layout:auto;
+  }
+  th,td{
+    padding:7px 6px;
+    font-size:12px;
+    line-height:1.25;
+    word-break:normal;
+    overflow-wrap:anywhere;
+  }
+  .table-wrap,.table-scroll,.scroll-table{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  /* Reference tabs/nav controls wrap instead of causing horizontal overflow. */
+  .tabs,.tabbar,.subnav,.ref-tabs{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:5px!important;
+    width:100%;
+    max-width:100%;
+  }
+  .tabs button,.tabbar button,.subnav button,.ref-tabs button{
+    flex:1 1 auto;
+    min-width:0;
+  }
+
+  /* More Detail stays compact on mobile. */
+  .more-detail,.detail-panel{
+    max-width:100%;
+    box-sizing:border-box;
+  }
+
+  /* Battle flow controls should remain easy to tap. */
+  button,.navitem{min-height:38px}
+}
+
+/* Extra-tight phone portrait layout */
+@media(max-width:480px){
+  main{padding-left:8px;padding-right:8px}
+  header{padding-left:8px;padding-right:8px}
+  .card,.panel,.ref-card,.rule-card,.info-card{padding:10px}
+  th,td{padding:6px 5px;font-size:11.5px}
+  h1{font-size:18px}
+  h2{font-size:15px}
+}
+
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.1</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.2</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.1";
+const APP_VERSION="v1.1.2";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
