@@ -1,4 +1,4 @@
-const VERSION = '1.1.9';
+const VERSION = '1.1.10';
 const CACHE = `prohammer-v${VERSION}`;
 const ASSETS = [
   './',
@@ -29,33 +29,13 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-
-  const request = event.request;
-
-  // Always try the network first for page navigations so a newly published
-  // version is picked up as soon as the device is back online.
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request, { cache: 'no-store' })
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy));
-          return response;
-        })
-        .catch(() => caches.match(request).then(cached => cached || caches.match('./index.html')))
-    );
-    return;
-  }
-
-  // Other local assets use the cache first, with a network fallback.
   event.respondWith(
-    caches.match(request).then(cached => {
-      if (cached) return cached;
-      return fetch(request).then(response => {
+    fetch(event.request)
+      .then(response => {
         const copy = response.clone();
-        caches.open(CACHE).then(cache => cache.put(request, copy));
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
         return response;
-      });
-    })
+      })
+      .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
   );
 });
