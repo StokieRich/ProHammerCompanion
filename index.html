@@ -121,6 +121,77 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .damage-result{font-weight:normal;color:var(--ink);font-size:13px}
 .damage-key{font-weight:bold;color:#d4b15f}
 @media(max-width:800px){.ref-topnav{top:0}.ref-topnav .ref-tab{padding:9px 12px}.ref-flow{margin-bottom:22px}}
+
+/* v1.1.8 refinements */
+.special-rules-search{
+  margin:0 0 18px;
+}
+.special-rules-search .btn{
+  min-height:42px;
+  padding:10px 16px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+@media(max-width:800px){
+  .special-rules-search .btn{width:100%}
+}
+.battle-rules-search{
+  margin:12px 0 16px;
+}
+.battle-rules-search .btn{
+  min-height:42px;
+  padding:10px 16px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+.vehicle-facing-box{
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:0;
+  overflow:hidden;
+}
+.vehicle-facing-box .vf-head{
+  background:#222527;
+  border-bottom:1px solid var(--line);
+  padding:11px 13px;
+  color:var(--ink);
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+.vehicle-facing-box .vf-body{
+  padding:12px 13px;
+}
+.vehicle-facing-box .vf-step{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  line-height:1.45;
+  font-size:13px;
+}
+.vehicle-facing-box .vf-step:last-child{border-bottom:0;padding-bottom:0}
+.vehicle-facing-box .vf-num{
+  flex:0 0 24px;
+  width:24px;height:24px;
+  display:grid;place-items:center;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-weight:900;
+  font-size:11px;
+  border-radius:50%;
+}
+.vehicle-facing-box .vf-note{
+  margin-top:10px;
+  padding:9px 10px;
+  border-left:3px solid var(--accent);
+  background:rgba(255,255,255,.025);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+}
+
 </style>
 <style>
 /* Print result — v0.6: spacious, readable one-page A4 battle report. */
@@ -662,7 +733,7 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .compact-rule p:last-child{margin-bottom:0}
 
 
-/* Special Rules and navigation refinement — v1.1.7 */
+/* Special Rules and navigation refinement — v1.1.8 */
 .special-rule-entry{border:1px solid var(--line);border-radius:3px;margin:0 0 7px;background:rgba(255,255,255,.015);overflow:hidden}
 .special-rule-entry .sr-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;background:rgba(255,255,255,.045);color:var(--accent);font-weight:800;font-size:13px}
 .special-rule-entry .sr-type{font-size:8px;letter-spacing:.8px;color:var(--muted);font-weight:700}
@@ -685,7 +756,7 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.7</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.8</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
@@ -883,11 +954,14 @@ function renderReference(){
  <li>AP “–” weapons only get glancing hits.</li><li>AP 1 weapons add +1 to the damage roll.</li><li>Open-topped suffer +1 to the damage roll.</li><li>Ordnance rolls 2D6, pick highest result.</li><li>Prior damage adds +1 to the damage roll.</li><li>Hull Down Vehicles: Gain cover save based on cover type. If successful, reduce penetrating to glancing hits, and glancing to no damage.</li><li>Skimmers moving FLAT OUT gain 5+ cover save.</li>
  </ul></div></div>`;
 
- const vehicleFacing=card("Vehicle Facing",`<div class="compact-rule">
- <p><strong>Check the attacking model's arc.</strong> Use the vehicle arc the model is wholly within.</p>
- <p><strong>Straddling two arcs?</strong> Use the arc closer to the vehicle's front.</p>
- <p class="small">If models are attacking from different arcs, resolve their attacks separately.</p>
- </div>`);
+ const vehicleFacing=`<div class="vehicle-facing-box">
+ <div class="vf-head">Vehicle Facing</div>
+ <div class="vf-body">
+  <div class="vf-step"><span class="vf-num">1</span><div><strong>Check the attacking model's arc.</strong><br>Use the vehicle arc the model is wholly within.</div></div>
+  <div class="vf-step"><span class="vf-num">2</span><div><strong>Straddling two arcs?</strong><br>Use the arc closer to the vehicle's front.</div></div>
+  <div class="vf-note"><strong>Different arcs:</strong> If attacking models occupy different arcs, resolve their attacks separately.</div>
+ </div>
+</div>`;
 
  const armour=cardDetail("Armor Saves",list([
    "If the AP of the weapon <strong>EXCEEDS</strong> armor (i.e. AP value is lower) then the armor is negated and no armor save may be taken.",
@@ -1383,21 +1457,12 @@ function filterSpecialRules(filter){
  });
 }
 function renderSpecialRules(){
- const categories=Object.keys(specialRulesData);
- const filterbar=`<div class="special-filterbar" role="toolbar" aria-label="Special rule categories">
-   <button class="btn active" data-filter="all" onclick="filterSpecialRules('all')">ALL</button>
-   ${categories.map((c,i)=>`<button class="btn" data-filter="cat${i}" onclick="filterSpecialRules('cat${i}')">${esc(c.split(" / ")[0])}</button>`).join("")}
- </div>`;
- const groups=categories.map((title,i)=>`<div class="special-section" data-category="cat${i}"><h2>${esc(title)}</h2><div class="special-grid"><div class="ref-card ref-wide">${itemsToSpecialRules(specialRulesData[title])}</div></div></div>`).join("");
+ const groups=Object.entries(specialRulesData).map(([title,items])=>`<div class="special-section"><h2>${esc(title)}</h2><div class="special-grid"><div class="ref-card ref-wide"><div class="special-rule-list">${items.map(specialRuleEntry).join("")}</div></div></div></div>`).join("");
  document.getElementById("app").innerHTML=`<div class="eyebrow">Special Rules · ${APP_VERSION}</div><h1 class="ref-page-title">Special Rules</h1><p class="ref-page-subtitle">Common special rules and abilities, kept separate from the phase-based Quick Reference.</p>
- <div class="mobile-primary-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#searchInput');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>
- ${filterbar}${groups}<div class="actions"><button class="btn back-battle reference-back" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+ <div class="special-rules-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#rule-search');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>
+ ${groups}<div class="actions"><button class="btn back-battle reference-back" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
  setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
 }
-function itemsToSpecialRules(items){
- return items.map(specialRuleEntry).join("");
-}
-
 function renderStrategyPoints(){
  document.getElementById("app").innerHTML=`<div class="eyebrow">Strategy Points · ${APP_VERSION}</div><h1 class="ref-page-title">Strategy Points</h1><p class="ref-page-subtitle">A standalone quick reference for a resource you may use repeatedly during the battle.</p>${strategyPointsHTML}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
 }
@@ -1775,7 +1840,8 @@ function renderBattle(){
  <div class="scoreboards">${[0,1].map(pi=>`<div class="scoreboard"><div class="playerhead"><div><strong>${esc(state.p[pi].name)}</strong><div class="small">${esc(state.p[pi].faction)} · Painting ${state.p[pi].paint}/20</div></div><div><div class="small">PRIMARY</div><div class="tot" id="total${pi}">${primaryTotal(pi)}</div></div></div>${conditionList(pi)}${secondary(pi)}</div>`).join("")}</div>
  <div class="notice">Primary is calculated from the selected conditions. Secondary objectives are ticked when achieved and contribute 5 VP each.</div>`;
  const endDisabled=state.round<5;
-document.getElementById("app").innerHTML=`<div class="eyebrow">The Course of Battle</div><h1>Score Sheet</h1>${body}<div class="actions"><button class="btn" onclick="back()">← BACK</button><button type="button" class="btn danger" ${endDisabled?"disabled":""} onclick="endBattle()">END BATTLE →</button></div>`;
+ const rulesSearch=state.round<5?`<div class="battle-rules-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#rule-search');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>`:"";
+document.getElementById("app").innerHTML=`<div class="eyebrow">The Course of Battle</div><h1>Score Sheet</h1>${body}${rulesSearch}<div class="actions"><button class="btn" onclick="back()">← BACK</button><button type="button" class="btn danger" ${endDisabled?"disabled":""} onclick="endBattle()">END BATTLE →</button></div>`;
 
  renderNav();
 }
