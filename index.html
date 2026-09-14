@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.5</title>
+<title>ProHammer Battle Companion v1.1.6</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -656,16 +656,21 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   .mobile-stack-table tr.mobile-collapsible-row td{padding:7px}
 }
 
+
+/* Concise Vehicle Facing card — v1.1.6 */
+.compact-rule p{margin:0 0 10px}
+.compact-rule p:last-child{margin-bottom:0}
+
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.5</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.6</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.5";
+const APP_VERSION="v1.1.6";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -854,10 +859,11 @@ function renderReference(){
  <li>AP “–” weapons only get glancing hits.</li><li>AP 1 weapons add +1 to the damage roll.</li><li>Open-topped suffer +1 to the damage roll.</li><li>Ordnance rolls 2D6, pick highest result.</li><li>Prior damage adds +1 to the damage roll.</li><li>Hull Down Vehicles: Gain cover save based on cover type. If successful, reduce penetrating to glancing hits, and glancing to no damage.</li><li>Skimmers moving FLAT OUT gain 5+ cover save.</li>
  </ul></div></div>`;
 
- const vehicleFacing=card("Vehicle Facing",`<div class="ref-table-wrap"><table class="ref-table ref-plain-table"><thead><tr><th>Category</th><th>Rule</th></tr></thead><tbody>
- <tr><td><strong>Facing</strong></td><td>Facing hit depends on the “Arc” that the firing model is wholly within.</td></tr>
- <tr><td><strong>Multiple Arcs</strong></td><td>If a model falls within multiple arcs, default to forward most arc.</td></tr>
- </tbody></table></div>`);
+ const vehicleFacing=card("Vehicle Facing",`<div class="compact-rule">
+ <p><strong>Check the attacking model's arc.</strong> Use the vehicle arc the model is wholly within.</p>
+ <p><strong>Straddling two arcs?</strong> Use the arc closer to the vehicle's front.</p>
+ <p class="small">If models are attacking from different arcs, resolve their attacks separately.</p>
+ </div>`);
 
  const armour=cardDetail("Armor Saves",list([
    "If the AP of the weapon <strong>EXCEEDS</strong> armor (i.e. AP value is lower) then the armor is negated and no armor save may be taken.",
@@ -1588,7 +1594,9 @@ function continueIntent(){
  renderNav();
 }
 function conditionList(pi){
- const m=missions[state.mission], arr=[...m.any,...(state.round>=2?m.from2:[])];
+ const m=missions[state.mission]||missions[Object.keys(missions)[0]];
+ if(!state.mission)state.mission=Object.keys(missions)[0];
+ const arr=[...m.any,...(state.round>=2?m.from2:[])];
  const current=state.p[pi].primary[state.round-1]||0;
  return `<div class="card"><h3>PRIMARY — ROUND ${state.round}</h3>${state.round===1?'<div class="small" style="margin-bottom:8px">ANY BATTLE ROUND</div>':'<div class="small" style="margin-bottom:8px">ANY BATTLE ROUND + SECOND BATTLE ROUND ONWARDS</div>'}
  ${arr.map((c,i)=>{const key=`${pi}-${state.round}-${i}`;const checked=(window._checks||{})[key];return `<div class="cond"><input type="checkbox" id="c${key}" ${checked?"checked":""} onchange="setCheck('${key}',${c[1]},${pi})"><label for="c${key}">${esc(c[0])}</label><div class="pts">+${c[1]}</div></div>`}).join("")}
@@ -1596,7 +1604,9 @@ function conditionList(pi){
 }
 function setCheck(key,pts,pi){
  window._checks=window._checks||{}; window._checks[key]=document.getElementById("c"+key).checked;
- const m=missions[state.mission], arr=[...m.any,...(state.round>=2?m.from2:[])];
+ const m=missions[state.mission]||missions[Object.keys(missions)[0]];
+ if(!state.mission)state.mission=Object.keys(missions)[0];
+ const arr=[...m.any,...(state.round>=2?m.from2:[])];
  let s=0;arr.forEach((c,i)=>{if(window._checks[`${pi}-${state.round}-${i}`])s+=c[1]});
  const prev=state.p[pi].primary.slice(0,state.round-1).reduce((a,b)=>a+b,0);
  s=Math.min(s,55-prev); state.p[pi].primary[state.round-1]=Math.max(0,s);
@@ -1687,6 +1697,7 @@ function secondaryTotal(pi){
  return Math.min(25,total);
 }
 function renderBattle(){
+ if(!state.mission)state.mission=Object.keys(missions)[0];
  const body=`<div class="roundnav"><button onclick="changeRound(-1)">←</button><strong>BATTLE ROUND ${state.round}</strong><button onclick="changeRound(1)">→</button></div>
  <div class="scoreboards">${[0,1].map(pi=>`<div class="scoreboard"><div class="playerhead"><div><strong>${esc(state.p[pi].name)}</strong><div class="small">${esc(state.p[pi].faction)} · Painting ${state.p[pi].paint}/20</div></div><div><div class="small">PRIMARY</div><div class="tot" id="total${pi}">${primaryTotal(pi)}</div></div></div>${conditionList(pi)}${secondary(pi)}</div>`).join("")}</div>
  <div class="notice">Primary is calculated from the selected conditions. Secondary objectives are ticked when achieved and contribute 5 VP each.</div>`;
