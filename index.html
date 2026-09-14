@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.4</title>
+<title>ProHammer Battle Companion v1.1.5</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -552,16 +552,120 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   .mobile-stack-table td:not(:first-child){grid-template-columns:96px minmax(0,1fr);gap:7px}
   .mobile-stack-table td{padding:7px}
 }
+
+/* Long reference tables collapse to tap-to-expand rows on mobile — v1.1.5 */
+@media(max-width:800px){
+  .mobile-stack-table{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    table-layout:auto!important;
+  }
+  .mobile-stack-table tbody{display:block!important;width:100%!important}
+  .mobile-stack-table tr.mobile-collapsible-row{
+    display:block!important;
+    width:100%!important;
+    box-sizing:border-box;
+    border:1px solid var(--line);
+    border-radius:3px;
+    margin:0 0 7px;
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row:focus{
+    outline:1px solid var(--accent);
+    outline-offset:1px;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td{
+    box-sizing:border-box;
+    width:100%!important;
+    border:0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:8px;
+    line-height:1.3;
+    overflow-wrap:break-word;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td:first-child{
+    display:block!important;
+    position:relative;
+    padding-right:34px;
+    background:rgba(255,255,255,.045);
+    color:var(--accent);
+    font-weight:800;
+    font-size:12px;
+    border-bottom:0;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td:first-child::after{
+    content:"＋";
+    position:absolute;
+    right:9px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+    font-size:16px;
+    line-height:1;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row.mobile-row-open td:first-child{
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-stack-table tr.mobile-collapsible-row.mobile-row-open td:first-child::after{
+    content:"−";
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td:not(:first-child){
+    display:none!important;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row.mobile-row-open td:not(:first-child){
+    display:grid!important;
+    grid-template-columns:105px minmax(0,1fr);
+    gap:8px;
+    align-items:start;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td:not(:first-child)::before{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.45px;
+    text-transform:uppercase;
+    line-height:1.2;
+    padding-top:1px;
+  }
+  .mobile-stack-unit tr td:nth-child(2)::before{content:"Normal move";}
+  .mobile-stack-unit tr td:nth-child(3)::before{content:"Advance / shooting";}
+  .mobile-stack-unit tr td:nth-child(4)::before{content:"Assault";}
+  .mobile-stack-unit tr td:nth-child(5)::before{content:"Morale / abilities";}
+
+  .mobile-stack-vehicle tr td:nth-child(2)::before{content:"No move";}
+  .mobile-stack-vehicle tr td:nth-child(3)::before{content:"Combat speed";}
+  .mobile-stack-vehicle tr td:nth-child(4)::before{content:"Cruising speed";}
+  .mobile-stack-vehicle tr td:nth-child(5)::before{content:"Flat-out speed";}
+
+  .mobile-stack-ranged tr td:nth-child(2)::before{content:"Shots";}
+  .mobile-stack-ranged tr td:nth-child(3)::before{content:"Move & shoot";}
+  .mobile-stack-ranged tr td:nth-child(4)::before{content:"Advance & shoot";}
+  .mobile-stack-ranged tr td:nth-child(5)::before{content:"Charge after firing";}
+  .mobile-stack-ranged tr td:nth-child(6)::before{content:"Notes";}
+
+  .mobile-stack-table tr.mobile-collapsible-row td:last-child{border-bottom:0}
+}
+@media(max-width:480px){
+  .mobile-stack-table tr.mobile-collapsible-row td:not(:first-child){
+    grid-template-columns:96px minmax(0,1fr)!important;
+    gap:7px;
+  }
+  .mobile-stack-table tr.mobile-collapsible-row td{padding:7px}
+}
+
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.4</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.5</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.4";
+const APP_VERSION="v1.1.5";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -675,6 +779,10 @@ function render(){
  if(state.step==="warlord") renderWarlordTraits();
  if(state.step==="search") renderSearch();
  renderNav();
+}
+function toggleMobileTableRow(row){
+ const open=row.classList.toggle("mobile-row-open");
+ row.setAttribute("aria-expanded",String(open));
 }
 function toggleMoreDetail(button){const panel=button.nextElementSibling;const open=panel.hasAttribute("hidden");if(open){panel.removeAttribute("hidden");button.textContent="Hide Detail";}else{panel.setAttribute("hidden","");button.textContent="More Detail";}}
 function renderReference(){
@@ -857,27 +965,27 @@ function renderReference(){
  ]));
 
  const moveTypes=card("Unit Types",`<div class="ref-table-wrap"><table class="ref-table mobile-stack-table mobile-stack-unit"><thead><tr><th>Model Type</th><th>Normal Move & Terrain Effects</th><th>Advance Moves & Shooting</th><th>Assault</th><th>Morale & Special Abilities</th></tr></thead><tbody>
- <tr><td><strong>INFANTRY</strong></td><td>Moves up to 6”</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 2D6”</td></tr>
- <tr><td><strong>JUMP INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 3D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
- <tr><td><strong>JETPACK INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 6” ignoring underlying terrain (*)</td><td>Advances +D6”<br><strong>Relentless</strong></td><td>Charges 6”<br><strong>THRUST:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 2D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
- <tr><td><strong>BIKES</strong></td><td>Moves up to 12” (**)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
- <tr><td><strong>JETBIKES</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong><br><strong>ELDAR JETBIKES:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
- <tr><td><strong>CAVALRY</strong></td><td>Moves up to 6” (**)</td><td>Advances +D6”</td><td>Charges 12”<br><strong>Fleet, Hammer of Wrath</strong></td><td>Falls back 3D6”</td></tr>
- <tr><td><strong>BEASTS</strong></td><td>Moves up to 6” – Ignores difficult terrain and automatically passes dangerous terrain tests.</td><td>Advances +D6”<br><strong>Relentless</strong><br>May shoot up to two ranged weapons.</td><td>Charges 12”<br><strong>Fleet</strong></td><td>Falls back 3D6”</td></tr>
- <tr><td><strong>MONSTROUS CREATURES</strong></td><td>Moves up to 6”<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 2D6”<br><strong>Cannot Take Cover!</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
- <tr><td><strong>FLYING MONSTERS</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Cannot Take Cover!</strong>, <strong>Deepstrike</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>INFANTRY</strong></td><td>Moves up to 6”</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 2D6”</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>JUMP INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 3D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>JETPACK INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 6” ignoring underlying terrain (*)</td><td>Advances +D6”<br><strong>Relentless</strong></td><td>Charges 6”<br><strong>THRUST:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 2D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>BIKES</strong></td><td>Moves up to 12” (**)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>JETBIKES</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong><br><strong>ELDAR JETBIKES:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>CAVALRY</strong></td><td>Moves up to 6” (**)</td><td>Advances +D6”</td><td>Charges 12”<br><strong>Fleet, Hammer of Wrath</strong></td><td>Falls back 3D6”</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>BEASTS</strong></td><td>Moves up to 6” – Ignores difficult terrain and automatically passes dangerous terrain tests.</td><td>Advances +D6”<br><strong>Relentless</strong><br>May shoot up to two ranged weapons.</td><td>Charges 12”<br><strong>Fleet</strong></td><td>Falls back 3D6”</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>MONSTROUS CREATURES</strong></td><td>Moves up to 6”<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 2D6”<br><strong>Cannot Take Cover!</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>FLYING MONSTERS</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Cannot Take Cover!</strong>, <strong>Deepstrike</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
  </tbody></table></div><div class="ref-note"><ul>
  <li><strong>* FLYING MODELS &amp; TERRAINS:</strong> Any models that END their move in difficult terrain must take a dangerous terrain test. Cannot land on other models or impassable terrain.</li>
  <li><strong>** BIKES / CAVALRY &amp; TERRAIN:</strong> Not slowed by difficult terrain, but any models that move through, or end their turn in difficult terrain must take a dangerous terrain test.</li>
  </ul></div>`,"ref-wide");
 
  const vehicleTypes=card("Vehicle Types",`<div class="ref-table-wrap"><table class="ref-table mobile-stack-table mobile-stack-vehicle"><thead><tr><th>Vehicle Type</th><th>No Move</th><th>Combat Speed</th><th>Cruising Speed</th><th>Flat-Out Speed</th></tr></thead><tbody>
- <tr><td><strong>Tank / Chariot</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
- <tr><td><strong>Skimmers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
- <tr><td><strong>Fast Vehicles</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–24”<br>Defensive weapons only using snap fire.</td></tr>
- <tr><td><strong>Fast Skimmers &amp; Hovering Flyers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–30”<br>Defensive weapons only using snap fire.</td></tr>
- <tr><td><strong>Walkers</strong><br>(Move as infantry if difficult terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Moves up to 6”<br>May fire ALL weapons normally and count as being RELENTLESS.<br>May only move up or down structures if able to use stairs or ramps.</td><td>Advances for an extra D6”<br>May shoot all assault weapons after advancing with snap fire.</td><td>Not applicable</td></tr>
- <tr><td><strong>Zooming Flyers</strong><br>(Flying Mode - ignores terrain)</td><td><strong>Must move at a minimum of combat speed.</strong></td><td><strong>18” exactly</strong><br>May pivot 90-degrees before moving.<br>May fire ALL weapons normally.</td><td>18–36”<br>May pivot 90-degrees before moving.<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>36–60”<br>No turns.<br>Defensive weapons only using snap fire.</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Tank / Chariot</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Skimmers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Fast Vehicles</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–24”<br>Defensive weapons only using snap fire.</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Fast Skimmers &amp; Hovering Flyers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–30”<br>Defensive weapons only using snap fire.</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Walkers</strong><br>(Move as infantry if difficult terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Moves up to 6”<br>May fire ALL weapons normally and count as being RELENTLESS.<br>May only move up or down structures if able to use stairs or ramps.</td><td>Advances for an extra D6”<br>May shoot all assault weapons after advancing with snap fire.</td><td>Not applicable</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Zooming Flyers</strong><br>(Flying Mode - ignores terrain)</td><td><strong>Must move at a minimum of combat speed.</strong></td><td><strong>18” exactly</strong><br>May pivot 90-degrees before moving.<br>May fire ALL weapons normally.</td><td>18–36”<br>May pivot 90-degrees before moving.<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>36–60”<br>No turns.<br>Defensive weapons only using snap fire.</td></tr>
  </tbody></table></div>`,"ref-wide");
 
  const reserveDeep=`<div class="ref-grid">${reserve}${deepStrike}${difficult}${dangerous}</div>`;
@@ -974,11 +1082,11 @@ function renderReference(){
  ]));
 
  const rangedTypes=`<div class="ref-card ref-wide"><h3>Ranged Weapon Types Summary</h3><div class="ref-table-wrap"><table class="ref-table mobile-stack-table mobile-stack-ranged"><thead><tr><th>Weapon Type</th><th>Number of Shots</th><th>Model move and shoot?</th><th>Unit advance and shoot?</th><th>Unit charge after firing?</th><th>Notes</th></tr></thead><tbody>
- <tr><td><strong>Assault (X)</strong></td><td>“X” shots at max range</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td></td></tr>
- <tr><td><strong>Heavy (X)</strong></td><td>“X” shots at max range</td><td>Yes, with snap fire</td><td>No</td><td>No</td><td></td></tr>
- <tr><td><strong>Pistol</strong></td><td>1 shot, unless Pistol (X)</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td>Counts as an assault and a close combat weapon</td></tr>
- <tr><td><strong>Rapid Fire</strong></td><td>1 shot at max range<br>2 shots at half range</td><td>Yes</td><td>No</td><td>No</td><td></td></tr>
- <tr><td><strong>Salvo (X/Y)</strong></td><td>If moved = X shots at half range<br>If not moved = Y shots at full range</td><td>Yes (see left)</td><td>No</td><td>No</td><td></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Assault (X)</strong></td><td>“X” shots at max range</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Heavy (X)</strong></td><td>“X” shots at max range</td><td>Yes, with snap fire</td><td>No</td><td>No</td><td></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Pistol</strong></td><td>1 shot, unless Pistol (X)</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td>Counts as an assault and a close combat weapon</td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Rapid Fire</strong></td><td>1 shot at max range<br>2 shots at half range</td><td>Yes</td><td>No</td><td>No</td><td></td></tr>
+ <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Salvo (X/Y)</strong></td><td>If moved = X shots at half range<br>If not moved = Y shots at full range</td><td>Yes (see left)</td><td>No</td><td>No</td><td></td></tr>
  </tbody></table></div></div>`;
 
  const meleeProps=`<div class="ref-card"><h3>Melee Weapon Properties</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type</th><th>Effect</th><th>Examples</th></tr></thead><tbody>
