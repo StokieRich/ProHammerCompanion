@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ProHammer Battle Companion v0.6</title>
+<title>ProHammer Battle Companion v1.0.12</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -50,6 +50,71 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   h1,h2,h3,strong,label{color:#111!important}
   .print-only{display:block!important}
 }@media(max-width:800px){.intent-actions{left:0;padding:12px 16px}.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;overflow:auto;gap:4px}.navitem{white-space:nowrap}.grid2,.grid3,.scoreboards,.final{grid-template-columns:1fr}main{padding:24px 16px}.course{grid-template-columns:1fr}.paint-row{grid-template-columns:70px 150px 1fr}}
+
+/* Reference section — v0.66 */
+.ref-nav{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.ref-nav .navitem{color:#b8ae98}
+.ref-nav .navitem.active{border-color:var(--accent);color:var(--ink);background:#25231f}
+.reference-intro{color:#c4bfb2;font-style:italic;line-height:1.55;max-width:820px;margin-bottom:20px}
+.ref-section{margin:18px 0 26px}
+.ref-section h2{color:var(--accent);font-size:18px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.ref-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.ref-card{background:var(--panel);border:1px solid var(--line);padding:0;margin:0;overflow:hidden}
+.ref-card h3{background:#222527;border-bottom:1px solid var(--line);padding:11px 13px;margin:0;color:var(--ink);font-size:15px;letter-spacing:.5px}
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.35}
+.ref-table th{background:#2a2c2e;color:var(--ink);font-size:11px;letter-spacing:.7px;text-transform:uppercase;text-align:left;padding:8px 9px;border-bottom:1px solid var(--line)}
+.ref-table td{padding:8px 9px;border-bottom:1px solid #343638;vertical-align:top;color:#ddd}
+.ref-table tr:last-child td{border-bottom:0}
+.ref-table td.result,.ref-table td strong{color:var(--accent);font-weight:bold}
+.damage-table td{padding:7px 9px}
+.damage-roll{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:28px;margin-right:8px;border:1px solid var(--line);background:#2a2c2e;color:var(--ink);font-weight:bold;font-size:14px;vertical-align:middle}
+.damage-result{font-weight:bold;color:var(--ink);font-size:13px}
+.damage-result strong{color:var(--ink)}
+.damage-table td:has(.damage-result){background:#242628}
+.ref-plain-table td{color:#ddd}
+.ref-section{margin-bottom:24px}
+.ref-section>h2{margin-bottom:10px}
+.ref-grid>.ref-wide{grid-column:1/-1}
+.ref-table.compact td{padding:6px 8px}
+.ref-table.center th:not(:first-child),.ref-table.center td:not(:first-child){text-align:center}
+.ref-note{padding:11px 13px;background:#302a20;border-top:1px solid var(--line);color:#d0c8b8;font-size:12px;line-height:1.45}
+.ref-note ul{margin:0;padding-left:18px}.ref-note li{margin:4px 0}
+.ref-callout{padding:12px 14px;border-left:3px solid var(--accent);background:#1b1a17;color:#c7c1b5;font-size:13px;line-height:1.45;margin:12px 0}
+.more-detail-btn{display:block;width:100%;border:0;border-top:1px solid var(--line);background:#1f2020;color:var(--accent);padding:9px 13px;text-align:left;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;cursor:pointer}.more-detail-btn:hover{background:#2a2c2e}.more-detail-panel{padding:11px 13px;background:#181a1b;border-top:1px solid var(--line);color:#c9c4b9;font-size:12px;line-height:1.5}.more-detail-panel p{margin:0 0 8px}.more-detail-panel p:last-child{margin-bottom:0}.more-detail-panel ul,.more-detail-panel ol{margin:0;padding-left:20px}.more-detail-panel li{margin:4px 0}.more-detail-panel strong{color:var(--ink)}
+.ref-list{margin:0;padding:12px 16px 12px 30px;color:#ddd;font-size:13px;line-height:1.45}
+.ref-list li{margin:5px 0}
+.ref-wide{grid-column:1/-1}
+.ref-subtitle{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:16px 0 7px}
+@media(max-width:800px){.ref-grid{grid-template-columns:1fr}.ref-wide{grid-column:auto}.ref-table{font-size:12px}.ref-table th{font-size:10px}}
+
+
+.ref-table-wrap{overflow-x:auto}
+.ref-card.tight .ref-list{padding-top:10px;padding-bottom:10px}
+.ref-card .ref-highlight{background:#302a20;border-top:1px solid var(--line);padding:10px 13px;color:#d0c8b8;font-size:12px;line-height:1.45}
+.ref-card .ref-phase{background:#25231f;color:var(--accent);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:8px 13px;border-bottom:1px solid var(--line)}
+.ref-card .ref-steps{margin:0;padding:12px 16px 12px 30px;color:#ddd;font-size:13px;line-height:1.45}
+.ref-card .ref-steps li{margin:5px 0}
+.ref-card .ref-small{font-size:11px;color:#b8b2a7}
+.ref-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ref-flow .ref-card{min-width:0}
+@media(max-width:1000px){.ref-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.ref-flow{grid-template-columns:1fr}}
+/* Reference navigation and phase-page spacing — v0.66 */
+.ref-timing{display:flex;align-items:center;gap:18px;background:#222527;border:1px solid var(--line);padding:13px 15px;margin-bottom:26px;text-transform:uppercase}
+.ref-timing strong{color:var(--accent);font-size:12px;letter-spacing:1px}
+.ref-timing span{color:#c7c1b5;font-size:12px}
+
+.ref-topnav{display:flex;gap:6px;overflow-x:auto;margin:0 0 22px;padding:6px;background:#151718;border:1px solid var(--line);position:sticky;top:66px;z-index:4}
+.ref-topnav .ref-tab{flex:1 0 auto;border:1px solid transparent;background:transparent;color:#aaa69b;padding:10px 14px;font-size:12px;font-weight:bold;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.ref-topnav .ref-tab:hover{background:#222527;color:var(--ink)}
+.ref-topnav .ref-tab.active{background:#2a2721;border-color:var(--accent);color:var(--ink)}
+.ref-page-title{margin-bottom:6px}
+.ref-page-subtitle{color:var(--muted);font-size:13px;margin:0 0 16px}
+.ref-flow{margin-top:14px;margin-bottom:26px}.ref-flow .ref-card{display:flex;flex-direction:column}.ref-flow .ref-card .ref-highlight{margin-top:auto}.ref-subsection{margin-top:28px}.ref-subsection>h2{color:var(--accent);font-size:18px;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px}
+.ref-flow::after{content:"";display:block;height:1px;grid-column:1/-1;background:transparent}
+.damage-result{font-weight:normal;color:var(--ink);font-size:13px}
+.damage-key{font-weight:bold;color:#d4b15f}
+@media(max-width:800px){.ref-topnav{top:0}.ref-topnav .ref-tab{padding:9px 12px}.ref-flow{margin-bottom:22px}}
 </style>
 <style>
 /* Print result — v0.6: spacious, readable one-page A4 battle report. */
@@ -163,14 +228,81 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
   }
 }
 </style>
+
+<style>
+/* v0.69 movement and shooting navigation layouts */
+.ref-movement-layout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch;margin-top:14px;margin-bottom:26px}
+.ref-movement-layout>.movement-primary{grid-column:span 1;display:flex;flex-direction:column;min-width:0}
+.ref-movement-layout>.movement-primary .ref-highlight{margin-top:auto}
+.ref-movement-right{grid-column:3 / 5;display:flex;flex-direction:column;gap:18px;min-width:0}
+.ref-movement-right .ref-card{display:flex;flex-direction:column;min-width:0}
+.ref-shooting-nav{display:flex;gap:8px;margin:0 0 18px;padding:6px;background:#1d2021;border:1px solid var(--line)}
+.ref-shooting-nav .ref-tab{flex:1}
+@media(max-width:900px){.ref-movement-layout{grid-template-columns:repeat(2,minmax(0,1fr))}.ref-movement-layout>.movement-primary{grid-column:span 1}.ref-movement-right{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.ref-movement-layout{grid-template-columns:1fr}.ref-movement-layout>.movement-primary{grid-column:auto}.ref-movement-right{grid-column:auto;display:flex}.ref-shooting-nav{flex-direction:column}}
+.ref-flow-four{grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;}
+.ref-flow-four > .ref-card{height:100%;}
+@media (max-width: 900px){.ref-flow-four{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width: 600px){.ref-flow-four{grid-template-columns:1fr;}}
+/* v1.0.12 — Reference system */
+.top-search{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.top-search input{width:100%;box-sizing:border-box;background:#1d2021;border:1px solid var(--line);color:var(--ink);padding:9px 10px;font-size:12px}
+.top-search input::placeholder{color:#777}
+.top-section-nav{margin-top:4px}
+.special-section{margin:0 0 24px}
+.special-section>h2{color:var(--accent);font-size:18px;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px}
+.special-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.special-grid>.ref-wide{grid-column:1/-1}
+.search-box{display:flex;gap:8px;margin:0 0 18px}
+.search-box input{flex:1;background:#1d2021;border:1px solid var(--line);color:var(--ink);padding:11px 12px;font-size:14px}
+.search-result{cursor:pointer}
+.search-result:hover{border-color:var(--accent)}
+.search-result .search-meta{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:0 0 5px}
+.search-result h3{margin-bottom:7px}
+.search-result p{margin:0;color:#bbb;font-size:12px;line-height:1.45} .search-result .search-full{margin:0;color:#ddd;font-size:13px;line-height:1.5}
+.search-result .search-snippet{color:#ddd;font-size:12px;line-height:1.5}
+.search-result .search-snippet table{width:100%;border-collapse:collapse;font-size:12px}
+.search-result .search-snippet td{padding:6px 8px;border:1px solid var(--line);vertical-align:top}
+.search-result .search-snippet td.result{font-weight:800;color:var(--accent)}
+.strategy-table td:first-child{font-weight:bold;color:var(--ink)}
+@media(max-width:800px){.special-grid{grid-template-columns:1fr}.special-grid>.ref-wide{grid-column:auto}}
+
+/* v0.74 movement spacing: stack related terrain/character references to use the available height cleanly. */
+.movement-transports{margin-top:18px}
+.movement-transports>.ref-card{grid-column:1/-1}
+.movement-types{margin-top:26px}
+</style>
+
+<style>
+/* v0.74 compact reference layouts: minimise vertical dead space between cards. */
+.ref-masonry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.ref-masonry-col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.ref-masonry-full{grid-column:1/-1}
+.ref-masonry .ref-card{min-width:0}
+.ref-page-pack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.ref-page-pack>.ref-card{min-width:0}
+.ref-page-pack>.ref-wide{grid-column:1/-1}
+@media(max-width:800px){.ref-masonry,.ref-page-pack{grid-template-columns:1fr}.ref-masonry-full,.ref-page-pack>.ref-wide{grid-column:auto}}
+</style>
+
+<style>
+/* v0.74 shooting reference order: follow the firing process while minimising dead space. */
+.shooting-reference-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.shooting-reference-grid>.shooting-ref-card{min-width:0}
+.shooting-reference-grid>.shooting-ref-wide{grid-column:1/-1;min-width:0}
+.shooting-reference-grid .ref-subsection{margin-top:0}
+.shooting-reference-grid .ref-subsection>h2{margin-top:0}
+@media(max-width:800px){.shooting-reference-grid{grid-template-columns:1fr}.shooting-reference-grid>.shooting-ref-wide{grid-column:auto}}
+</style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v0.6</div></header>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.0.12</div></header>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
+const APP_VERSION="v1.0.12";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -183,23 +315,42 @@ const labels={course:"Course",muster:"Muster",mission:"Mission",deployment:"Batt
 let state={step:"course",p:[
  {name:"",faction:"",paint:null,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]},
  {name:"",faction:"",paint:null,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]}
-],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null};
+],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null,refPage:"start",shootingView:"normal",searchQuery:"",returnStep:"course",returnScrollY:0};
 
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function renderNav(){
  const n=document.getElementById("nav");
- n.innerHTML=steps.map((s,i)=>`<div class="navitem ${state.step===s?"active":i<steps.indexOf(state.step)?"done":""}" onclick="go('${s}')">${i+1}. ${labels[s]}</div>`).join("");
+ n.innerHTML=steps.map((s,i)=>`<div class="navitem ${state.step===s?"active":i<steps.indexOf(state.step)?"done":""}" onclick="go('${s}')">${i+1}. ${labels[s]}</div>`).join("")+`<div class="ref-nav"><div class="navitem ${state.step==="reference"?"active":""}" onclick="go('reference')">Quick Reference</div><div class="navitem ${state.step==="vehicles"?"active":""}" onclick="go('vehicles')">Vehicle Reference</div><div class="navitem ${state.step==="special"?"active":""}" onclick="go('special')">Special Rules</div><div class="navitem ${state.step==="strategy"?"active":""}" onclick="go('strategy')">Strategy Points</div><div class="navitem ${state.step==="warlord"?"active":""}" onclick="go('warlord')">Warlord Traits</div><div class="navitem ${state.step==="search"?"active":""}" onclick="go('search')">Search</div></div>`;
 }
 function shell(eyebrow,title,body,back=true,nextText="NEXT →"){
  document.getElementById("app").innerHTML=`<div class="eyebrow">${eyebrow}</div><h1>${title}</h1>${body}<div class="actions">${back?'<button class="btn" onclick="back()">← BACK</button>':'<span></span>'}<button class="btn primary" onclick="next()">${nextText}</button></div>`;
  renderNav();
 }
 function go(s){
+ if(["reference","vehicles","special","strategy","warlord","search"].includes(s)){
+   if(!["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){
+     state.returnStep=state.step;
+     state.returnScrollY=window.scrollY||0;
+   }
+   state.step=s; render(); return;
+ }
  if(s==="final" && state.step!=="final"){return;}
  state.step=s; render();
 }
-function back(){const i=steps.indexOf(state.step);if(i>0){state.step=steps[i-1];render();}}
+function backToBattle(){
+ const target=state.returnStep||"course";
+ const y=state.returnScrollY||0;
+ state.step=target;
+ render();
+ setTimeout(()=>window.scrollTo({top:y,behavior:"auto"}),0);
+}
+function back(){
+ if(["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){backToBattle();return;}
+ const i=steps.indexOf(state.step);if(i>0){state.step=steps[i-1];render();}
+}
+
 function next(){
+ if(state.step==="reference"){return;}
  if(state.step==="intent"){continueIntent();return;}
  const i=steps.indexOf(state.step);
  if(i<steps.length-1){
@@ -238,8 +389,634 @@ function render(){
  if(state.step==="intent") renderIntent();
  if(state.step==="battle") renderBattle();
  if(state.step==="final") renderFinal();
+ if(state.step==="reference"||state.step==="vehicles") renderReference();
+ if(state.step==="special") renderSpecialRules();
+ if(state.step==="strategy") renderStrategyPoints();
+ if(state.step==="warlord") renderWarlordTraits();
+ if(state.step==="search") renderSearch();
  renderNav();
 }
+function toggleMoreDetail(button){const panel=button.nextElementSibling;const open=panel.hasAttribute("hidden");if(open){panel.removeAttribute("hidden");button.textContent="Hide Detail";}else{panel.setAttribute("hidden","");button.textContent="More Detail";}}
+function renderReference(){
+ const card=(title,content,extra="")=>`<div class="ref-card ${extra}"><h3>${title}</h3>${content}</div>`;
+ const list=items=>`<ul class="ref-list">${items.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+ const cardDetail=(title,content,details,extra="")=>`<div class="ref-card ${extra}"><h3>${title}</h3>${content}<button class="more-detail-btn" type="button" onclick="toggleMoreDetail(this)">More Detail</button><div class="more-detail-panel" hidden>${details}</div></div>`;
+ const MORE_DETAIL_RULES={
+   "Witchfire Psychic Powers":`<p><strong>Using powers:</strong> Mastery Level 1 psykers may invoke one power per player turn; Mastery Level 2+ may invoke two, but never more than two. The same power may not be successfully invoked more than once in a player turn. For every two powers successfully invoked in the turn, subsequent psychic tests suffer a cumulative -1 Leadership penalty. Psykers arriving from Reserve may invoke powers immediately after arriving and before normal Movement. Psychic powers may not be invoked as reactions.</p><p><strong>Targeting:</strong> Unless a power says otherwise, it requires line of sight. A psyker embarked in a transport may target itself or friendly units embarked with it, and may target outside units if an appropriate fire port has line of sight.</p><p><strong>Perils:</strong> Double 1 or double 6 on the psychic test causes Perils even if the power fails. The psyker suffers an automatic wound with no armour save; invulnerable saves and Feel No Pain may prevent it.</p><p><strong>Power types:</strong> Blessings are invoked during the Movement phase and normally last until the start of the psyker’s next turn. Conjurations are invoked at the start of Movement; the unit using one cannot perform other actions that turn, and each selected conjuration may only be successfully cast once per psyker per game. Summoned units arrive using Deep Strike rules. Maledictions are invoked during Movement and normally last until the start of the psyker’s next turn.</p><p><strong>Witchfire variants:</strong> Beams draw a line to a point within range and hit units according to how many models lie under the line. Focused witchfire can target a specific model, with the opposing player choosing the model if the psychic-test roll is within two points below the psyker’s Leadership. Maelstrom powers automatically hit all units in the affected area unless otherwise specified. Nova powers automatically target and hit all enemy units within their maximum range.</p>`,
+
+   "Step 2: First Fire & Overwatch":`<p><strong>First Fire:</strong> The target may Take Cover! or Jink/Evade if allowed, but cannot Return Fire! Overwatch attacks.</p><p><strong>Overwatch:</strong> Models may only fire within the 90° forward arc chosen when entering Overwatch. Overwatch may only target units within 24”.</p><p>Players alternate between First Fire and enemy Overwatch until all eligible units have resolved their attacks.</p>`,
+   "Step 3: Regular Fire":`<p><strong>Return Fire!</strong> may only be declared against a normal shooting attack, not First Fire or Overwatch. The reacting unit must be within 24”, must not have fired earlier that turn, Taken Cover!, Jinked/Evaded, or be engaged, and may not split fire. Vehicles may never Return Fire.</p><p>The reaction uses Limited Fire; casualties from the two attacks are removed simultaneously. A unit that Return Fires must also use Limited Fire in its next Shooting phase and suffers the specified assault penalties this turn.</p>`,
+   "Step 2: Assault Moves & Reactions":`<p><strong>Stand &amp; Shoot!</strong> is unavailable to a unit that has already fired, Gone to Ground/Jinked, is Broken or Pinned, or is already engaged. Vehicles may never Stand &amp; Shoot!, and the reaction cannot split fire.</p><p><strong>Pile-In:</strong> Defending models move up to 6” sequentially from closest to farthest, prioritising base contact with a charging model and otherwise staying within 1” of an engaged friendly model.</p>`,
+   "Step 4: Close Combat Results":`<p><strong>Pursuit:</strong> A winning unit that is no longer locked may pursue with D6 + highest Initiative, ignoring difficult terrain. Reaching the fleeing unit causes automatic pursuit hits; if contact is maintained, the fleeing unit ceases to be Broken.</p><p><strong>Restraint:</strong> Instead of pursuing, take a Leadership test to Consolidate. A voluntary withdrawal automatically passes this test.</p><p><strong>Consolidation:</strong> Restore coherency where necessary and may re-engage an enemy for a melee next turn. A unit that charged this turn may choose Overrun and move D6” instead of 3”. Non-Walker vehicles do not consolidate.</p>`,
+   "Vehicle Damage Tables":`<p><strong>Result effects:</strong> Crew Shaken means the vehicle fires with Snap Fire; Crew Stunned prevents movement and uses Snap Fire. Engine Damaged halves movement speed, with additional results halving it again. Weapon Destroyed removes a weapon, with later results selecting another weapon. Immobilized prevents movement/pivoting.</p><p><strong>Wrecked:</strong> The vehicle is destroyed and leaves a wreck; embarked passengers must take a Pinning Test. <strong>Explodes:</strong> replace the vehicle with a crater; models within D6” suffer S4 hits with no cover save, embarked passengers are automatically pinned and suffer an additional automatic hit that wounds on 4+.</p>`,
+   "Vehicle Facing":`<p>Models touching the forward arc line count as being in the front arc; models touching the rear arc line count as being in the side arc. If attacking models occupy different arcs, keep their attack rolls separated.</p>`,
+   "Vehicle Structure Points (SPs)":`<p>Wrecked and Explodes results automatically spend an available SP to reduce the result by 1. Other damage results may be reduced voluntarily by spending SPs. Flyers and fast skimmers that would be destroyed by Immobilized must spend available SPs to reduce the result below Immobilized if possible.</p>`,
+   "Transports":`<p><strong>Access:</strong> Disembarking models must be within 2” of an access point; open-topped vehicles treat the whole hull as an access point. A unit may not embark and disembark in the same turn.</p><p><strong>Emergency Disembarkation:</strong> If a transport suffers penetrating hits but is not destroyed, passengers may disembark after the current attacks are resolved. If the passengers are subsequently exposed to attacks, they use the applicable Shaken/Stunned/Snap Fire restrictions.</p>`,
+   "Suppression & Crossfire":`<p>A unit can have no more than six suppression tokens. Suppression also applies a -1 modifier to Leadership tests, including Morale, Pinning, Split Fire and Psychic tests.</p><p><strong>Crossfire:</strong> determine the vehicle/unit’s rearward arc from the direction the unit is facing; when an attack from that arc would cause a suppression token, it causes two instead.</p>`,
+   "Screening":`<p>Gaps wider than 2” do not count as part of a screen. Multiple units may form a combined screen if no relevant line of fire passes through a gap wider than 2”. Single-model units never count as screens.</p><p><strong>Shooting into melee:</strong> Roll to hit normally, then roll a D6 for each hit: 4+ hits the intended enemy; 1–3 hits the friendly engaged unit. If several friendly units are involved, use the largest unit, breaking ties by proximity. Add +1 when shooting at a monstrous creature or walker.</p>`,
+   "Pinned":`<p><strong>Pinning Test:</strong> use the highest applicable Leadership, with -1 if at half strength, -1 if out of coherency, and -1 for each suppression token.</p><p>A Pinned unit may not Advance, enter Overwatch, or perform Take Cover!, Return Fire!, or Stand &amp; Shoot! reactions.</p>`
+ };
+ const applyMoreDetailPanels=root=>{root.querySelectorAll(".ref-card").forEach(cardEl=>{if(cardEl.querySelector(":scope > .more-detail-btn"))return;const h=cardEl.querySelector(":scope > h3");if(!h)return;const title=h.textContent.trim();const details=MORE_DETAIL_RULES[title];if(!details)return;cardEl.insertAdjacentHTML("beforeend",`<button class="more-detail-btn" type="button" onclick="toggleMoreDetail(this)">More Detail</button><div class="more-detail-panel" hidden>${details}</div>`);});};
+ const table=(head,rows,cls="")=>`<div class="ref-table-wrap"><table class="ref-table ${cls}"><thead><tr>${head.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((x,i)=>i===0?`<td>${x}</td>`:`<td class="result">${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+
+ const rangedHit=card("Ranged Attack Hit Rolls",table(
+   ["Ballistic Skill","1","2","3","4","5","6","7","8","9","10"],
+   [["Hits On…","6","5+","4+","3+","2+","1/6+","1/5+","1/4+","1/3+","1/2+"]],
+   "center compact"
+ ));
+
+ const meleeHit=card("Melee Attack Hit Rolls",table(
+   ["Attacker's Weapon Skill vs. Opponent Weapon Skill"],
+   []
+ ),"");
+ // Replace the simple helper output above with the two-column table because the
+ // first column is descriptive rather than a single result value.
+ const meleeHitCard=`<div class="ref-card"><h3>Melee Attack Hit Rolls</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Attacker's Weapon Skill vs. Opponent Weapon Skill</th><th>Hits On…</th></tr></thead><tbody>
+ <tr><td>Attacker’s WS is <strong>GREATER</strong> than opponent’s</td><td class="result">3+</td></tr>
+ <tr><td>Attacker’s WS <strong>EQUALS</strong> opponent’s or is <strong>LOWER by 1</strong></td><td class="result">4+</td></tr>
+ <tr><td>Attacker’s WS is <strong>LOWER</strong> than opponent’s WS by 2 or more</td><td class="result">5+</td></tr>
+ </tbody></table></div></div>`;
+
+ const vehicleHitCard=`<div class="ref-card"><h3>Melee Attacks vs Vehicle Hit Rolls</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Vehicle Speed</th><th>Hits On…</th></tr></thead><tbody>
+ <tr><td>Vehicle stationary</td><td class="result">Automatic hit</td></tr>
+ <tr><td>Vehicle moved up to 6”</td><td class="result">3+</td></tr>
+ <tr><td>Vehicle moved 6–12”</td><td class="result">4+</td></tr>
+ <tr><td>Vehicle moved over 12–18”</td><td class="result">5+</td></tr>
+ <tr><td>Vehicle moved over 18”</td><td class="result">6+</td></tr>
+ </tbody></table></div><div class="ref-note"><ul><li>Stationary skimmers hit on a 3+</li><li>Flyers only hit by other flying models on a 5+</li></ul></div></div>`;
+
+ const woundCard=`<div class="ref-card"><h3>Wound Chart (Figurine Models)</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Attack Strength vs. Target’s Toughness</th><th>Wounds On…</th></tr></thead><tbody>
+ <tr><td>Strength is <strong>4 (or more) lower</strong> than target’s toughness</td><td class="result">Cannot wound</td></tr>
+ <tr><td>Strength is <strong>2 or 3 lower</strong> than target’s toughness</td><td class="result">6+</td></tr>
+ <tr><td>Strength is <strong>1 lower</strong> than target’s toughness</td><td class="result">5+</td></tr>
+ <tr><td>Strength <strong>EQUALS</strong> the target’s toughness</td><td class="result">4+</td></tr>
+ <tr><td>Strength is <strong>1 higher</strong> than target’s toughness</td><td class="result">3+</td></tr>
+ <tr><td>Strength is <strong>2 (or more) higher</strong> than target’s toughness</td><td class="result">2+</td></tr>
+ </tbody></table></div></div>`;
+
+ const damage=`<div class="ref-card ref-wide"><h3>Vehicle Damage Tables</h3><div class="ref-table-wrap"><table class="ref-table damage-table"><thead><tr><th style="width:50%">Glancing Hit <span class="small">(Penetration equals Armor)</span></th><th style="width:50%">Penetrating Hit <span class="small">(Penetration more than Armor)</span></th></tr></thead><tbody>
+ <tr><td><span class="damage-roll">1</span><span class="damage-result"><span class="damage-key">Crew shaken:</span> fires with snap fire</span></td><td><span class="damage-roll">1</span><span class="damage-result"><span class="damage-key">Crew stunned:</span> can’t move, fires with snap fire</span></td></tr>
+ <tr><td><span class="damage-roll">2</span><span class="damage-result"><span class="damage-key">Crew shaken:</span> fires with snap fire</span></td><td><span class="damage-roll">2</span><span class="damage-result"><span class="damage-key">Crew stunned:</span> can’t move, fires with snap fire</span></td></tr>
+ <tr><td><span class="damage-roll">3</span><span class="damage-result"><span class="damage-key">Crew stunned:</span> can’t move, fires with snap fire</span></td><td><span class="damage-roll">3</span><span class="damage-result"><span class="damage-key">Engine damaged + crew shaken</span></span></td></tr>
+ <tr><td><span class="damage-roll">4</span><span class="damage-result"><span class="damage-key">Engine damaged:</span> Halve movement speeds</span></td><td><span class="damage-roll">4</span><span class="damage-result"><span class="damage-key">Weapon destroyed + crew stunned</span></span></td></tr>
+ <tr><td><span class="damage-roll">5</span><span class="damage-result"><span class="damage-key">Weapon destroyed:</span> attacker chooses a weapon</span></td><td><span class="damage-roll">5</span><span class="damage-result"><span class="damage-key">Immobilized + crew stunned</span></span></td></tr>
+ <tr><td><span class="damage-roll">6</span><span class="damage-result"><span class="damage-key">Immobilized:</span> can no longer move or pivot</span></td><td><span class="damage-roll">6</span><span class="damage-result"><span class="damage-key">Wrecked:</span> vehicle destroyed (leaves wreck)</span></td></tr>
+ <tr><td><span class="damage-roll">7+</span><span class="damage-result"><span class="damage-key">Wrecked:</span> vehicle destroyed (leaves wreck)</span></td><td><span class="damage-roll">7+</span><span class="damage-result"><span class="damage-key">EXPLODES!</span></span></td></tr>
+ </tbody></table></div><div class="ref-note"><ul>
+ <li>AP “–” weapons only get glancing hits.</li><li>AP 1 weapons add +1 to the damage roll.</li><li>Open-topped suffer +1 to the damage roll.</li><li>Ordnance rolls 2D6, pick highest result.</li><li>Prior damage adds +1 to the damage roll.</li><li>Hull Down Vehicles: Gain cover save based on cover type. If successful, reduce penetrating to glancing hits, and glancing to no damage.</li><li>Skimmers moving FLAT OUT gain 5+ cover save.</li>
+ </ul></div></div>`;
+
+ const vehicleFacing=card("Vehicle Facing",`<div class="ref-table-wrap"><table class="ref-table ref-plain-table"><thead><tr><th>Category</th><th>Rule</th></tr></thead><tbody>
+ <tr><td><strong>Facing</strong></td><td>Facing hit depends on the “Arc” that the firing model is wholly within.</td></tr>
+ <tr><td><strong>Multiple Arcs</strong></td><td>If a model falls within multiple arcs, default to forward most arc.</td></tr>
+ </tbody></table></div>`);
+
+ const armour=cardDetail("Armor Saves",list([
+   "If the AP of the weapon <strong>EXCEEDS</strong> armor (i.e. AP value is lower) then the armor is negated and no armor save may be taken.",
+   "If the AP of the weapon <strong>EQUALS</strong> the Armor Save value, the armor is <strong>IMPACTED</strong>: apply a -1 modifier to the armor save roll.",
+   "If the AP of the weapon is higher than the Armor Save value, take the armor save as normal."
+ ]),`<p><strong>Saving throws:</strong> A model may normally take only one saving throw: Armor, Cover, or Invulnerable. The defender may choose the strongest available save.</p><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Attack AP vs Saving Throw</th><th>Result</th></tr></thead><tbody><tr><td>AP is lower than the Saving Throw value</td><td class="result">Armor Penetrated — No Save</td></tr><tr><td>AP equals the Saving Throw value</td><td class="result">Armor Impacted — -1 to armor save roll</td></tr><tr><td>AP is higher than the Saving Throw value</td><td class="result">Take armor save as normal</td></tr></tbody></table></div><p>Cover saves are not modified by a weapon's AP characteristic or by abilities that negate armor saves; some weapon types, such as Templates, can ignore cover as specified by their rules.</p>`);
+
+ const cover=card("Cover Saves",`<div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type of Cover</th><th>Saves On…</th></tr></thead><tbody>
+   <tr><td><strong>SOFT COVER:</strong> Vegetation, woods, shrubs, wooden walls, chain link fences or other open fencing, etc.</td><td class="result">5+</td></tr>
+   <tr><td><strong>HARD COVER:</strong> Ruins, solid stone, concrete structures, metal walls, metal/concrete barricades, sand bags, craters</td><td class="result">4+</td></tr>
+   <tr><td><strong>FORTIFICATIONS:</strong> Battlements, bunkers</td><td class="result">3+</td></tr>
+ </tbody></table></div>`);
+
+ const terrain=card("Terrain Types",`<div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type</th><th>Rule</th></tr></thead><tbody>
+   <tr><td><strong>DENSE AREA TERRAIN</strong></td><td>Blocks Line of Sight beyond 6” up to height of the main feature on the terrain. Targets within 6” of the edge count as obscured terrain against cover.</td></tr>
+   <tr><td><strong>OBSTACLES</strong></td><td>Models seen over/through obstacle count as obscured if their body or hull is partially blocked.</td></tr>
+ </tbody></table></div>`);
+
+ const regroup=card("Regrouping",`${list([
+   "Must be <strong>UNENGAGED</strong> and have no enemies within 1”.",
+   "Must have at least one model alive in the unit.",
+   "Unit must be in coherency.",
+   "If <strong>PASSED</strong>, unit may only move D3” but may shoot and assault as normal. Models count as having moved when shooting.",
+   "If <strong>FAILED</strong>, unit continues to fall back and remains broken."
+ ])}<div class="ref-highlight"><strong>Morale Modifiers</strong><br>−1 if the unit is below 50% of its starting strength<br>−1 if the unit suffered casualties from a friendly source (e.g. friendly fire)<br>−1 if the unit is out of coherency<br>−1 for every 3 wounds (rounded up) the unit’s side lost during melee<br>−1 for each suppression token on the unit</div>`);
+
+ const vsp=`<div class="ref-card"><h3>Vehicle Structure Points (SPs)</h3><div class="ref-table-wrap"><table class="ref-table center compact"><thead><tr><th>Total Armour Value<br><span class="small">Front + Rear + 1 Side</span></th><th>Structure Points</th></tr></thead><tbody>
+ <tr><td>30 or less</td><td class="result">0 SP</td></tr>
+ <tr><td>31–34</td><td class="result">1 SP</td></tr>
+ <tr><td>35+</td><td class="result">2 SP</td></tr>
+ </tbody></table></div><div class="ref-note"><ul>
+   <li>SPs <strong>MUST</strong> be spent to reduce destroyed vehicle results to non-destroyed results if able (including for disabled skimmers).</li>
+   <li><strong>Jury-Rig:</strong> When suffering ANY other damage result, the vehicle’s owner MAY spend structure points to reduce the damage result further.</li>
+ </ul></div></div>`;
+
+ const allocation=cardDetail("Unsaved Wound Allocation",list([
+   "After rolling saves, unsaved wounds may be given to <strong>ANY</strong> model in the unit (even if not otherwise hittable).",
+   "If all hittable models (either from ranged or melee attacks) have been removed as a casualty, unsaved wounds may be ignored.",
+   "If a model with more than one wound is allocated unsaved wounds, subsequent wounds must be applied to the already wounded models first.",
+   "<strong>INDEPENDENT CHARACTER EXCEPTION:</strong> If an Independent Character has joined a unit, a wound does NOT have to be allocated to an already wounded Independent Character if another model in the unit can take the wound."
+ ]),`<p>Unsaved wounds may be allocated to any model in the unit, including models that did not take a saving throw or were not eligible to receive the original attack. Wounds are allocated one-by-one across models able to be hit.</p><p><strong>Multi-wound models:</strong> already wounded models are normally allocated subsequent wounds first, until reduced to zero wounds. The Independent Character exception allows the player to avoid allocating a wound to an already wounded joined Independent Character when another model can take it.</p><p><strong>Massive wounds / Instant Death:</strong> an unsaved wound from a weapon that causes Instant Death or has Strength double (or more) the Toughness used for the wound roll inflicts a Massive Wound, causing D3 wounds to the target. Excess damage does not spill over to another model.</p>`);
+
+ const transports=cardDetail("Transports",list([
+   "May carry one unit only, and may not exceed the vehicle’s transport capacity.",
+   "If disembarking before the vehicle moves, the unit may act normally.",
+   "A unit may only disembark after the vehicle has moved if the vehicle moved 12” or less.",
+   "Units that disembark after the vehicle has moved may move normally, but cannot Advance.",
+   "Disembarking units may charge, but do not gain the +1 Attack bonus for charging."
+ ]),`<p><strong>Transport capacity:</strong> A transport may carry only one unit at a time. An Independent Character joined to that unit counts as part of the transported unit. Bulky models count as 2, Very Bulky as 3, and Extremely Bulky as 5 for capacity.</p><p><strong>Access:</strong> Models disembark within 2” of an access point. Open-topped vehicles treat the entire hull as an access point. A unit may not embark and disembark in the same turn.</p><p><strong>Emergency Disembarkation:</strong> If a transport suffers penetrating hits but is not destroyed, its passengers may immediately disembark after the current attacks are resolved. They may be affected by Shaken/Stunned results and Snap Fire on their next turn. Units that declared fire against the transport but have not yet fired may instead target the disembarked passengers.</p>`);
+
+ const snap=card("Snap Fire",list([
+   "Units (or models) shooting with SNAP FIRE only hit on a 6+ regardless of BS or modifiers.",
+   "Templates hit each target unit on a 4+."
+ ]));
+
+ const limitedFire=card("Limited Fire",list([
+   "Weapons shoot half their normal shots (rounded up) with a -1 to hit penalty.",
+   "May target any units within 24”.",
+   "Units hit by limited fire on their own turn are not affected by suppression or pinnings from those attacks.",
+   "If using limited fire due to the unit taking the “Return Fire!” or “Stand & Shoot!” reactions, the unit must also use limited fire on its next shooting phase. The unit also suffers the following ASSAULT penalties: no cover bonus, fights at initiative 1, and no bonus attacks."
+ ]));
+
+ const suppression=cardDetail("Suppression & Crossfire",list([
+   "If unit receives more shots than it has models AND suffers at least one unsaved wound, the unit gains 1 suppression token.",
+   "Each suppression token incurs -1 LD penalty.",
+   "3+ suppression tokens forces a -1 PINNING test. If failed, the unit is pinned and loses all but one suppression token.",
+   "Units lose one suppression token at the <strong>END</strong> of their own turn. Lose all but one token if the unit becomes Pinned.",
+   "<strong>CROSSFIRE:</strong> Units attacked on their rearward arc gain an additional suppression token.",
+   "Vehicles and monstrous creatures never gain suppression tokens."
+ ]),`<p><strong>Gaining suppression:</strong> Each time an enemy unit makes ranged attacks where the total shots fired exceeds the number of models in the target unit and at least one unsaved wound is caused, the target gains one suppression token. A unit may have no more than six.</p><p><strong>Effects:</strong> Each token gives -1 to all Leadership tests, including Morale, Pinning, Split Fire and Psychic tests. At three or more tokens, the unit must take a Pinning Test at the end of the current turn.</p><p><strong>Removing tokens:</strong> If a unit becomes Pinned, it loses all but one token. If it becomes engaged in melee, it also loses all but one. At the <strong>end of its own turn</strong>, it loses one token.</p><p><strong>Crossfire:</strong> When a unit would gain one suppression token from an attack made from its rearward arc while caught in crossfire, it gains <strong>two</strong> tokens instead.</p>`);
+
+ const screening=cardDetail("Screening",list([
+   "If all lines of sight from the eligible shooting models to the hittable models in the target unit pass through or between gaps in an intervening enemy unit, a screen is intact.",
+   "If a screen is intact, all successful hits on the target unit instead hit the screening unit.",
+   "Monstrous creatures and vehicles can never be screened unless all of the screening models are monstrous creatures themselves."
+ ]),`<p><strong>Determining a screen:</strong> All possible lines of fire from eligible shooting models to hittable models in the target unit must pass through bases or between gaps in intervening opposing units and/or through or between bases of units engaged in melee belonging to either player.</p><ul><li>Gaps larger than 2” do not count as part of the screen.</li><li>Multiple units may form a combined screen if no line passes through a gap larger than 2”.</li><li>Monstrous creatures, flying monsters and vehicles are not screened unless the screening models are also monstrous creatures or flying monsters. Vehicles count as intervening terrain instead.</li><li>Elevation that lets lines of fire pass over the screen prevents screening.</li><li>Single-model units never count as screens.</li></ul><p><strong>Effect:</strong> Successful hits against a screened target instead hit the screening unit. A unit may still declare fire at a screened target; if another firing unit invalidates the screen before it shoots, it may resolve its fire against the original target. With a combined screen, hits are resolved against the screening unit with a model closest to a model in the shooting unit.</p><p><strong>Shooting into melee:</strong> Friendly models in the engagement do not block line of sight or provide screening. Roll to hit normally; for each successful hit, roll a D6: 4+ hits the intended enemy unit, while 1–3 hits the shooting player's own engaged unit. If multiple friendly units are engaged, use the one with the most models, breaking ties by closest model. Add +1 when shooting at a monstrous creature or walker.</p>`);
+
+ const pinned=cardDetail("Pinned",list([
+   "A pinned unit is subject to the following:",
+   "May only crawl D3” in its next movement phase.",
+   "Gains +1 to cover saves (or 6+ in the open).",
+   "Shoots with snap fire on its next turn.",
+   "May not charge.",
+   "If charged, loses advantages for being in cover (opponent’s strike at normal initiative value).",
+   "Pinned status is lost at the end of the assault phase if engaged, otherwise at the end of its own next turn."
+ ]),`<p><strong>Pinning Test:</strong> Use the unit's highest applicable Leadership, with -1 if at half strength, -1 if out of coherency, and -1 for each suppression token. If the test fails, the unit becomes Pinned.</p><p><strong>Effects:</strong> A Pinned unit may move only D3” in its next Movement phase and may not Advance. It may shoot, but only with Snap Fire. It gains +1 to cover saves, or a 6+ cover save if in the open. It may not charge, enter Overwatch, or perform Take Cover!, Return Fire!, or Stand &amp; Shoot! reactions. If charged, it does not count as being in cover. Broken/Pinned units still make the normal Fall Back move rather than the D3” pinned move.</p><p>A Pinned unit becomes unpinned at the end of its own next turn, or automatically at the end of the current Assault phase if it is engaged.</p>`,`tight`);
+
+ const reserve=card("Reserve Roll — Roll once for each unit able to enter from reserve",`<div class="ref-table-wrap"><table class="ref-table center"><thead><tr><th>Battle Round</th><th>Round 1</th><th>Round 2</th><th>Round 3</th><th>Round 4 or later</th></tr></thead><tbody><tr><td><strong>Reserve Roll Needed</strong></td><td>—</td><td>4+</td><td>3+</td><td>Automatically arrives</td></tr></tbody></table></div>`);
+
+ const deepStrike=card("Deep Strike",`<ol class="ref-steps">
+   <li>Place a “center model” at desired location with within 2” of an enemy model.</li>
+   <li>Roll a scatter and 2D6. Move center model to adjusted location. If landing on top or within 2” of an enemy or in impassable terrain, a mishap occurs.<br><em><strong>Mishap:</strong> Opponent repositions center model anywhere within 12” of the original location.</em></li>
+   <li>Place remaining models within 2” of the center model or as close as possible if all models don’t fit within 2”.</li>
+ </ol>`);
+
+ const difficult=card("Difficult Terrain",list([
+   "Units starting or entering difficult terrain must roll a 2D6 and pick the highest.",
+   "May “approach” difficult terrain with normal movement, but total move distance upon entering or continuing throughout the difficult terrain cannot exceed the highest value rolled.",
+   "Vehicles treat difficult terrain as Dangerous Terrain."
+ ]));
+
+ const dangerous=card("Dangerous Terrain",list([
+   "Figurine models entering must each roll a D6. On a 1 suffers a wound. Armor and invulnerable saves may be taken.",
+   "Vehicles roll a D6 when ending their turn in dangerous terrain. Vehicles are immobilized on a 1."
+ ]));
+
+ const moveTypes=card("Unit Types",`<div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Model Type</th><th>Normal Move & Terrain Effects</th><th>Advance Moves & Shooting</th><th>Assault</th><th>Morale & Special Abilities</th></tr></thead><tbody>
+ <tr><td><strong>INFANTRY</strong></td><td>Moves up to 6”</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 2D6”</td></tr>
+ <tr><td><strong>JUMP INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances +D6”</td><td>Charges 6”</td><td>Falls back 3D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
+ <tr><td><strong>JETPACK INFANTRY</strong><br>(Flying Model)</td><td>Moves up to 6” ignoring underlying terrain (*)</td><td>Advances +D6”<br><strong>Relentless</strong></td><td>Charges 6”<br><strong>THRUST:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 2D6”<br><strong>Deepstrike, Bulky</strong></td></tr>
+ <tr><td><strong>BIKES</strong></td><td>Moves up to 12” (**)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
+ <tr><td><strong>JETBIKES</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)</td><td>Advances with Turbo-Boosters up to an additional 12”.<br><strong>Relentless.</strong> May shoot two weapons, one per each rider.</td><td>Charges 6” <strong>Hammer of Wrath</strong><br><strong>ELDAR JETBIKES:</strong> May move 6” in the assault phase if unengaged and not charging.</td><td>Falls back 3D6”<br><strong>Jink</strong></td></tr>
+ <tr><td><strong>CAVALRY</strong></td><td>Moves up to 6” (**)</td><td>Advances +D6”</td><td>Charges 12”<br><strong>Fleet, Hammer of Wrath</strong></td><td>Falls back 3D6”</td></tr>
+ <tr><td><strong>BEASTS</strong></td><td>Moves up to 6” – Ignores difficult terrain and automatically passes dangerous terrain tests.</td><td>Advances +D6”<br><strong>Relentless</strong><br>May shoot up to two ranged weapons.</td><td>Charges 12”<br><strong>Fleet</strong></td><td>Falls back 3D6”</td></tr>
+ <tr><td><strong>MONSTROUS CREATURES</strong></td><td>Moves up to 6”<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 2D6”<br><strong>Cannot Take Cover!</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
+ <tr><td><strong>FLYING MONSTERS</strong><br>(Flying Model)</td><td>Moves up to 12” ignoring underlying terrain (*)<br><strong>Moves Through Cover</strong></td><td>Advances +D6”<br><strong>Relentless.</strong> May shoot up to two ranged weapons.</td><td>Charges 6”<br><strong>Smash, Hammer of Wrath</strong></td><td>Falls back 3D6”<br><strong>Cannot Take Cover!</strong>, <strong>Deepstrike</strong><br><strong>Fear</strong> (only if also Fearless)</td></tr>
+ </tbody></table></div><div class="ref-note"><ul>
+ <li><strong>* FLYING MODELS &amp; TERRAINS:</strong> Any models that END their move in difficult terrain must take a dangerous terrain test. Cannot land on other models or impassable terrain.</li>
+ <li><strong>** BIKES / CAVALRY &amp; TERRAIN:</strong> Not slowed by difficult terrain, but any models that move through, or end their turn in difficult terrain must take a dangerous terrain test.</li>
+ </ul></div>`,"ref-wide");
+
+ const vehicleTypes=card("Vehicle Types",`<div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Vehicle Type</th><th>No Move</th><th>Combat Speed</th><th>Cruising Speed</th><th>Flat-Out Speed</th></tr></thead><tbody>
+ <tr><td><strong>Tank / Chariot</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
+ <tr><td><strong>Skimmers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>6–12”<br>Defensive weapons only using snap fire.</td><td>12–18”<br>No shooting.</td></tr>
+ <tr><td><strong>Fast Vehicles</strong></td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–24”<br>Defensive weapons only using snap fire.</td></tr>
+ <tr><td><strong>Fast Skimmers &amp; Hovering Flyers</strong><br>(Flying Model - ignores terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Up to 6”<br>May fire ALL weapons normally</td><td>6–12”<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>12–30”<br>Defensive weapons only using snap fire.</td></tr>
+ <tr><td><strong>Walkers</strong><br>(Move as infantry if difficult terrain)</td><td>0” (may pivot)<br>May fire ALL weapons normally</td><td>Moves up to 6”<br>May fire ALL weapons normally and count as being RELENTLESS.<br>May only move up or down structures if able to use stairs or ramps.</td><td>Advances for an extra D6”<br>May shoot all assault weapons after advancing with snap fire.</td><td>Not applicable</td></tr>
+ <tr><td><strong>Zooming Flyers</strong><br>(Flying Mode - ignores terrain)</td><td><strong>Must move at a minimum of combat speed.</strong></td><td><strong>18” exactly</strong><br>May pivot 90-degrees before moving.<br>May fire ALL weapons normally.</td><td>18–36”<br>May pivot 90-degrees before moving.<br>Fires TWO main weapons and all defensive weapons normally. Others with snap fire.</td><td>36–60”<br>No turns.<br>Defensive weapons only using snap fire.</td></tr>
+ </tbody></table></div>`,"ref-wide");
+
+ const reserveDeep=`<div class="ref-grid">${reserve}${deepStrike}${difficult}${dangerous}</div>`;
+
+ const shootingFlow=`<div class="ref-flow">
+ ${card("Step 1: Declare Shooting Targets",`<div class="ref-phase">Active player</div>${list([
+   "Select a unit that is eligible to shoot.",
+   "Declare shooting target(s) for the unit.",
+   "<strong>SPLITTING FIRE:</strong> May declare two targets and test for split fire (Leadership Test). If successful declare what models will shoot at what targets.",
+   "<strong>ENTER OVERWATCH:</strong> If the unit remained stationary during the movement phase, may enter overwatch during the direction of fire. Vehicles may not enter overwatch."
+ ])}`)}
+ ${card("Step 2: First Fire & Overwatch",`${list([
+   "<strong>FIRST FIRE:</strong> Targeted unit may immediately Take Cover (or Jink/Evade) but may NOT Return Fire!",
+   "Opposing player selects a unit they have on Overwatch and resolves shooting using Overwatch Fire.",
+   "<strong>Overwatch Fire:</strong> Limited to targets within 24” range. Targeted unit may immediately Take Cover (or Jink/Evade) but may NOT Return Fire."
+ ])}<div class="ref-highlight"><strong>Shooting eligibility:</strong> Must have line of sight to the target unit and must have a ranged weapon.</div>`)}
+ ${card("Step 3: Regular Fire",`${list([
+   "Active player selects a unit that has not yet shot and identifies target(s).",
+   "Targeted unit may immediately Take Cover (or Jink/Evade) or may declare that it will Return Fire!",
+   "Selected unit resolves shooting using normal fire.",
+   "<strong>RETURN FIRE:</strong> If the targeted unit is Returning Fire, resolve shooting for both units simultaneously (i.e. casualties are only removed after both sides have shot). The Returning Fire! Unit resolves shooting using Limited Fire."
+ ])}<div class="ref-highlight"><strong>Take Cover! reaction:</strong> A targeted unit, before any hits are rolled against it, may declare it is taking cover. Unit gains either cover save (or gains a 6+ cover if in the open) but also becomes Pinned.</div>`)}
+ ${card("Step 4: Casualty Check",`${list([
+   "All units which suffered casualties equal to 25% or more of its current strength during the shooting phase must be marked to take a Casualty Test at the end of the turn, unless the unit becomes engaged in a melee."
+ ])}<div class="ref-highlight"><strong>Resolving Shooting Attacks:</strong><br>1. Determine eligible shooting models<br>2. Determine hittable models (within LoS &amp; range of at least one attacking model). Check for screening.<br>3. Roll to hit with ranged attacks based on one unit onto a target unit at a time.<br>4. Roll to wound using majority toughness.<br>5. Allocate wounds evenly across the hittable models.<br>6. Determine and roll saving throws based on allocated wounds.<br>7. Apply wounds and remove casualties.</div>`)}
+ </div>`;
+
+ const assaultFlow=`<div class="ref-flow">
+ ${card("Step 1: Declare Charges",`${list([
+   "Active player selects a unit that is eligible to charge or withdraw.",
+   "Declare a charge target or declare withdrawal. Cannot charge a target if the unit shot at a different target.",
+   "May declare a charge against multiple enemy units, but at least one must be a unit charging in front of it (if they fired during the shooting phase)."
+ ])}<div class="ref-highlight"><strong>Charge eligibility:</strong><br>Must be unengaged · May not have advanced (unless unit has fleet) · May not have fired (unless assault/pistol weapons) · May not be Pinned · May not be Broken</div>`)}
+ ${card("Step 2: Assault Moves & Reactions",`${list([
+   "Active player selects one of their charging or withdrawing units.",
+   "Check to see if the charge is successful (within the unit’s charge range).",
+   "<strong>Stand &amp; Shoot:</strong> The charged unit may choose to stand &amp; shoot. If so, the unit immediately shoots at the charging unit (before it moves) using the Limited Fire rules.",
+   "Perform charge move."
+ ])}<div class="ref-highlight"><strong>Pile-In:</strong> After charge move, unengaged defending models must pile-in (may move up to 6”) to try and become engaged.</div>`)}
+ ${card("Step 3: Resolve Melee Engagements",`${list([
+   "Active player selects a melee engagement and determines engaged models.",
+   "<strong>ENGAGED MODELS:</strong> In base-to-base contact with an opposing model or that is within 1” of a friendly model that is base-to-base.",
+   "Determine the attack order of models in the engagement based on initiative. Highest goes first.",
+   "Units required to charge through cover or over obstacles are treated as initiative 1 unless armed with frag grenades or similar.",
+   "Resolve melee attacks at each initiative step."
+ ])}<div class="ref-highlight"><strong>Resolving Melee Attacks:</strong><br>1. Determine each attacking model’s number of attacks (base attacks +1 if charged, unless charging from Deep Strike or a non-assault vehicle, +1 for two close combat weapons)<br>2. Determine target unit(s) for attacks<br>3. Roll to hit using the majority weapon skill of target unit.<br>4. Roll to wound using the majority toughness of target unit.<br>5. Allocate wounds evenly across engaged models.<br>6. Determine and roll saving throws<br>7. Apply wounds and remove casualties.</div>`)}
+ ${card("Step 4: Close Combat Results",`${list([
+   "Active player chooses an engagement and determines the losing side, which is the side suffering more unsaved wounds.",
+   "All units on the losing side of an engagement must take a break test. If failed, becomes broken and makes a Retreat Move (Int + D6”/2D6”).",
+   "Winning unit, if no longer engaged, may choose to Pursue or Consolidate (a charging unit must pass a restraint test in order to consolidate)."
+ ])}<div class="ref-highlight"><strong>Morale Modifiers</strong><br>−1 if the unit is below 50% of its starting strength<br>−1 if the unit suffered casualties from a friendly source (e.g. friendly fire)<br>−1 if the unit is out of coherency<br>−1 for every 3 wounds (rounded up) the unit’s side lost during melee<br>−1 for each suppression token on the unit</div>`)}
+ </div>`;
+
+ const movementFlow=`<div class="ref-movement-layout">
+ ${card("Step 1: Reserves",`${list([
+   "Active player rolls a D6 for each unit that is eligible to enter play from their reserves.",
+   "Select each unit that arrives and move onto the table from their table edge or use a special rule (deep strike, outflank, etc.).",
+   "<strong>Deferred Arrival:</strong> Units may defer arrival, but reenter the reserve pool and must roll again next turn."
+ ])}<div class="ref-highlight"><em>After moving all eligible units onto the board, proceed to Step 2.</em></div>` ,"movement-primary")}
+ ${card("Step 2: Move Units",`${list([
+   "Active player selects a unit and chooses an option below for it to perform.",
+   "<strong>Standard Move:</strong> Move base move distance.",
+   "<strong>Advance Move:</strong> Move base move distance and then an additional D6” (or Turbo-Boost).",
+   "<strong>Remain Stationary:</strong> No models in the unit move. Vehicles may pivot on the spot."
+ ])}<div class="ref-highlight"><em>Return to top and repeat for remaining units. Then proceed to SHOOTING PHASE.</em></div>` ,"movement-primary")}
+ <div class="ref-movement-right">
+   ${reserve}
+   ${deepStrike}
+ </div>
+ </div>`;
+
+ const endTurn=card("End of Turn — Casualty Tests",`<div class="ref-callout">Units that were not engaged in close combat and that lost 25% or more of their current strength, must pass a casualty test. If failed, the unit falls back immediately and becomes broken.</div>`);
+
+ const fallback=card("Fall Back Move",list([
+   "Unit moves 2D6” (or 3D6” per unit type) towards nearest own board edge AND must end their turn further away from all enemy units if possible.",
+   "May move around obstacles. Units entering from another table edge may move towards that edge instead.",
+   "<strong>TRAPPED:</strong> If unit cannot perform its full fall back move (e.g. its move would bring it closer to an enemy unit than it started) then the unit moves as far as it can and becomes Pinned.",
+   "Units that reach their table edge stop. Have one final chance to regroup the next turn, or else are removed from the game."
+ ]));
+
+ const broken=card("Broken Units",list([
+   "If unengaged, must fall back at the start of its turn.",
+   "May shoot, but count as having moved.",
+   "May not enter overwatch.",
+   "May not perform reactions (Take Cover, Return Fire, Stand & Shoot).",
+   "If charged, must immediately test to regroup. If failed, strikes at initiative 1.",
+   "Broken units that become pinned continue to fall back, but suffer other consequences of being pinned as well."
+ ]));
+
+ const consolidation=card("Consolidation Move",list([
+   "If unengaged, winning units may consolidate up to 3”.",
+   "Move may be used to engage enemy units. If it engages a new enemy unit, the new engagement is resolved next turn.",
+   "<strong>OVERRUN:</strong> If consolidating on a unit charged, may instead consolidate D6”."
+ ]));
+
+ const rangedTypes=`<div class="ref-card ref-wide"><h3>Ranged Weapon Types Summary</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Weapon Type</th><th>Number of Shots</th><th>Model move and shoot?</th><th>Unit advance and shoot?</th><th>Unit charge after firing?</th><th>Notes</th></tr></thead><tbody>
+ <tr><td><strong>Assault (X)</strong></td><td>“X” shots at max range</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td></td></tr>
+ <tr><td><strong>Heavy (X)</strong></td><td>“X” shots at max range</td><td>Yes, with snap fire</td><td>No</td><td>No</td><td></td></tr>
+ <tr><td><strong>Pistol</strong></td><td>1 shot, unless Pistol (X)</td><td>Yes</td><td>Yes, with snap fire</td><td>Yes</td><td>Counts as an assault and a close combat weapon</td></tr>
+ <tr><td><strong>Rapid Fire</strong></td><td>1 shot at max range<br>2 shots at half range</td><td>Yes</td><td>No</td><td>No</td><td></td></tr>
+ <tr><td><strong>Salvo (X/Y)</strong></td><td>If moved = X shots at half range<br>If not moved = Y shots at full range</td><td>Yes (see left)</td><td>No</td><td>No</td><td></td></tr>
+ </tbody></table></div></div>`;
+
+ const meleeProps=`<div class="ref-card"><h3>Melee Weapon Properties</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type</th><th>Effect</th><th>Examples</th></tr></thead><tbody>
+ <tr><td><strong>Specialist</strong></td><td>Only gain an extra attack for having two weapons if both are the same specialist weapons</td><td><em>Lightning claws, power fists</em></td></tr>
+ <tr><td><strong>Unwieldy</strong></td><td>Strikes at initiative 1</td><td><em>Power fist, thunder hammer</em></td></tr>
+ <tr><td><strong>Power Weapon</strong></td><td>Ignores armor</td><td><em>AP 1/2/3 weapons melee from applicable codices...</em></td></tr>
+ </tbody></table></div></div>`;
+
+ const meleeAP=card("Melee AP Reference",table(
+   ["Melee AP","ProHammer effect"],
+   [["AP 1–3","Power weapon — normal armour saves are negated; invulnerable saves may be taken."],["AP 4","Armour Impacted — reduce the armour save roll by 1."],["AP 5, AP 6 or –","Ignored — does not impact the armour save."]]
+ ));
+
+ const blessingPsychic=card("Psychic Powers - Blessing // Conjuration // Malediction",list([
+   "Invoke powers by passing leadership test.",
+   "If double 1s or 6’s are rolled, suffers one automatic wound with no armor save. May take invulnerable saves.",
+   "May invoke up to two powers per turn (if more than one is known). May not repeat powers.",
+   "<strong>DENY THE WITCH:</strong> When a power is invoked or targeted within 6” of an enemy psyker, may attempt to deny power. Each power roll D6 and add mastery level. If enemy roll is HIGHER, the power is denied."
+ ]));
+
+ const witchfirePsychic=card("Witchfire Psychic Powers",list([
+   "Witchfire powers replace a model’s normal shooting attack. Must roll to hit, wound, save as normal.",
+   "<strong>DENY THE WITCH:</strong> When a power is invoked or targeted within 6” of an enemy psyker, may attempt to deny power. Each power roll D6 and add mastery level. If enemy roll is HIGHER, the power is denied."
+ ]));
+
+ const lineOfSight=cardDetail("Line of Sight",`<div class="ref-list"><ul><li>Use a model’s-eye view to determine what a figurine can see; vehicle weapons determine LoS independently from their weapon position and firing arc.</li><li>Targets must have the relevant body/hull visible; see <strong>More Detail</strong> for dense terrain, intervening terrain and models.</li></ul></div>`,`<p><strong>Figurines:</strong> Use a model’s-eye view from the model’s eyes; if unclear, use the centre of the base at the top of the model’s body. A target is visible if any part of its body can be seen. Appendages alone do not establish line of sight. Bikes and cavalry are visible if their relevant mount/body areas can be seen.</p><p><strong>Vehicles:</strong> Determine line of sight independently for each weapon from its pivot point and within its firing arc. A vehicle target is visible if any part of its hull can be seen. Firing ports normally have a 90° arc; a top hatch has a 360° arc for one model.</p><p><strong>Dense terrain:</strong> Dense/area terrain blocks line of sight beyond 6” through the terrain up to the height of its tallest main feature. Models within 6” of its edge remain visible but count as obscured. Models within 6” of the edge can normally see out without the dense terrain affecting line of sight.</p><p><strong>Intervening models:</strong> Models in the same figurine unit do not block line of sight. Models in other units can affect line of sight and may create Screening. Vehicles are treated as intervening terrain and provide a hard cover save to models obscured by them.</p>`,`shooting-ref-wide`);
+
+ const icMovement=card("Independent Characters — Movement",list([
+   "May join / leave a unit during the movement phase, but may not do both in one turn or if the unit is engaged."
+ ]));
+
+ const icShooting=card("Independent Characters — Shooting",list([
+   "May always shoot at its own target, regardless of what the unit shoots at.",
+   "If not joined to a unit, may not be targeted by enemies unless they are the closest unit within 18” OR are further than 18” and more than 6” from another friendly non-vehicle unit."
+ ]));
+
+ const icAssault=card("Independent Characters — Assault",list([
+   "During assaults, are NOT treated as a separate unit from the one they have joined."
+ ]));
+
+ const pages={
+   start:{title:"Start of Turn",subtitle:"Begin the turn with timing, regrouping and start-of-turn effects.",flow:`<div class="ref-timing"><strong>START OF TURN</strong><span>Resolve start-of-turn effects, then proceed to MOVEMENT.</span></div>`,content:`<div class="ref-masonry"><div class="ref-masonry-col">${broken}</div><div class="ref-masonry-col">${regroup}</div></div>`},
+   movement:{title:"Movement",subtitle:"Reserves, movement, terrain and movement-related abilities.",flow:movementFlow,content:`<div class="ref-grid">${difficult}${blessingPsychic}${icMovement}${dangerous}</div><div class="ref-grid movement-transports">${transports}</div><div class="ref-grid movement-types">${moveTypes}${vehicleTypes}</div>`},
+   shooting:{title:"Shooting",subtitle:"Declare targets, resolve fire and apply shooting effects.",flow:shootingFlow,content:`<div class="ref-topnav ref-shooting-nav" aria-label="Shooting reference sections"><button class="ref-tab ${state.shootingView!=="vehicles"?"active":""}" onclick="state.shootingView='normal';renderReference()">Normal Shooting</button><button class="ref-tab ${state.shootingView==="vehicles"?"active":""}" onclick="state.shootingView='vehicles';renderReference()">Vehicles</button></div>${state.shootingView==="vehicles"?`<div class="ref-masonry"><div class="ref-masonry-full">${vehicleTypes}</div><div class="ref-masonry-full">${damage}</div><div class="ref-masonry-col">${vehicleFacing}</div><div class="ref-masonry-col">${vsp}</div></div>`:`<div class="shooting-reference-grid">
+ <div class="shooting-ref-wide">${lineOfSight}</div>
+ <div class="shooting-ref-card">${witchfirePsychic}</div>
+ <div class="shooting-ref-card">${icShooting}</div>
+ <div class="shooting-ref-card">${screening}</div>
+ <div class="shooting-ref-card">${limitedFire}</div>
+ <div class="shooting-ref-card">${snap}</div>
+ <div class="shooting-ref-card">${rangedHit}</div>
+ <div class="shooting-ref-wide">${woundCard}</div>
+ <div class="shooting-ref-card">${allocation}</div>
+ <div class="shooting-ref-card">${cover}${armour}</div>
+ <div class="shooting-ref-card">${suppression}</div>
+ <div class="shooting-ref-card">${pinned}</div>
+ <div class="shooting-ref-wide ref-subsection"><h2>Weapon References</h2>${rangedTypes}</div>
+ </div>`}`},
+   assault:{title:"Assault",subtitle:"Charges, reactions, melee engagements and combat results.",flow:assaultFlow,content:`<div class="ref-masonry"><div class="ref-masonry-col">${meleeHitCard}${woundCard}${meleeAP}${consolidation}</div><div class="ref-masonry-col">${vehicleHitCard}${meleeProps}${icAssault}</div></div>`},
+   end:{title:"End of Turn",subtitle:"Casualty tests, fall back and end-of-turn resolution.",flow:`<div class="ref-timing"><strong>END OF TURN</strong><span>Resolve casualty tests and other end-of-turn effects before the next player turn.</span></div>`,content:`<div class="ref-masonry"><div class="ref-masonry-col">${endTurn}</div><div class="ref-masonry-col">${fallback}</div></div>`}
+ };
+ if(state.step==="vehicles") {
+   document.getElementById("app").innerHTML=`<div class="eyebrow">Vehicle Reference · ${APP_VERSION}</div><h1 class="ref-page-title">Vehicle Reference</h1><p class="ref-page-subtitle">Vehicle types, damage, facing and structure points.</p><div class="ref-masonry"><div class="ref-masonry-full">${vehicleTypes}</div><div class="ref-masonry-full">${damage}</div><div class="ref-masonry-col">${vehicleFacing}</div><div class="ref-masonry-col">${vsp}</div></div><div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+   applyMoreDetailPanels(document.getElementById("app"));
+   return;
+ }
+ window.__refSearchIndex=Object.entries(pages).flatMap(([key,p])=>{
+   const holder=document.createElement("div");
+   holder.innerHTML=`${p.flow}${p.content}`;
+   applyMoreDetailPanels(holder);
+   const docs=[];
+   holder.querySelectorAll(".ref-card").forEach(cardEl=>{
+     const headingEl=cardEl.querySelector(":scope > h3, :scope > h2");
+     const heading=headingEl ? headingEl.textContent.trim() : p.title;
+     const table=cardEl.querySelector(":scope .ref-table");
+     const rows=[...cardEl.querySelectorAll(":scope .ref-table tbody tr")];
+     if(rows.length){
+       // Keep the complete table as a search result too. This is deliberately
+       // separate from row-level indexing: searching for a table/reference
+       // name should show the whole chart, while searching for a term such as
+       // "Jink" can still return the specific row containing that term.
+       const tableText=(table.innerText||table.textContent||"").replace(/\s+/g," ").trim();
+       if(tableText){
+         docs.push({page:key,section:`Quick Reference · ${p.title}`,title:heading,text:tableText,html:`<div class="search-full-table">${table.outerHTML}</div>`,granular:false,table:true});
+       }
+       rows.forEach(row=>{
+         const cells=[...row.querySelectorAll("td")];
+         const text=(row.innerText||row.textContent||"").replace(/\s+/g," ").trim();
+         if(!text)return;
+         const label=(cells[0]?.innerText||cells[0]?.textContent||heading).replace(/\s+/g," ").trim();
+         docs.push({page:key,section:`Quick Reference · ${p.title}`,title:`${heading} — ${label}`,text,html:`<div class="search-row"><table><tbody><tr>${row.innerHTML}</tr></tbody></table></div>`,granular:true});
+       });
+       const notes=[...cardEl.querySelectorAll(":scope > .ref-note, :scope > .ref-highlight")];
+       notes.forEach(note=>{
+         const text=(note.innerText||note.textContent||"").replace(/\s+/g," ").trim();
+         if(text) docs.push({page:key,section:`Quick Reference · ${p.title}`,title:heading,text,html:`<p class="search-full">${note.innerHTML}</p>`,granular:true});
+       });
+       return;
+     }
+     const items=[...cardEl.querySelectorAll(":scope > .ref-list > li, :scope > .ref-list > ul > li")];
+     if(items.length){
+       items.forEach((item,idx)=>{
+         const text=(item.innerText||item.textContent||"").replace(/\s+/g," ").trim();
+         if(text) docs.push({page:key,section:`Quick Reference · ${p.title}`,title:heading, text, html:`<p class="search-full">${item.innerHTML}</p>`,granular:true});
+       });
+       return;
+     }
+     const text=(cardEl.innerText||cardEl.textContent||"").replace(/\s+/g," ").trim();
+     if(text) docs.push({page:key,section:`Quick Reference · ${p.title}`,title:heading,text,html:`<p class="search-full">${text}</p>`,granular:true});
+   });
+   return docs;
+ });
+ const page=pages[state.refPage]||pages.start;
+ const tabs=Object.entries(pages).map(([key,p])=>`<button class="ref-tab ${state.refPage===key?"active":""}" onclick="state.refPage='${key}';renderReference()">${p.title}</button>`).join("");
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Quick Reference · ${APP_VERSION}</div><h1 class="ref-page-title">${page.title}</h1><p class="ref-page-subtitle">${page.subtitle}</p><div class="ref-topnav" aria-label="Quick Reference sections">${tabs}</div>${page.flow}${page.content}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+ applyMoreDetailPanels(document.getElementById("app"));
+}
+
+const specialRulesData = {
+ "Attack / Weapon Properties": [
+  "<strong>Armourbane:</strong> Attack rolls a 2D6 for armor penetration.",
+  "<strong>Blind:</strong> Unit HIT by a weapon with blind must take an initiative test. If failed, all models are reduced to BS1 and WS1 until the end of their next turn.",
+  "<strong>Concussive:</strong> A model suffering an unsaved wound is reduced to Initiative 1 until the end of the following assault phase. Against units with no Initiative (i.e. vehicles) inflicts crew shaken for 1 hit.",
+  "<strong>Fleshbane:</strong> Always wounds on a 2+. No effect versus vehicles.",
+  "<strong>Gets Hot:</strong> If a model shooting this weapon rolls 1 to hit, it causes an automatic wound on that model and must take an armor or invulnerable save. If the save fails, the shooting model suffers a wound. Vehicles are not affected by Gets Hot.",
+  "<strong>Graviton:</strong> The to-wound roll is instead equal to the model’s armor save roll. Against vehicles, instead of rolling for armor penetration, roll a D6. On a 1–5 nothing happens. On a 6, the vehicle becomes immobilized.",
+  "<strong>Ignores Cover:</strong> Weapon negates any cover saves.",
+  "<strong>Interceptor:</strong> When with this rule may fire at an enemy unit immediately after that enemy unit enters from reserves and ends the movement phase within line of sight and range of the weapon. If used in this way, the firing model may not shoot in the shooting phase of its following turn.",
+  "<strong>Haywire:</strong> Instead of normal armor penetration, roll a D6. 1 = no effect, 2–5 = Glancing hit; 6 = penetrating hit.",
+  "<strong>Lance:</strong> Treat vehicle armor greater than 12 as 12.",
+  "<strong>Master-Crafted:</strong> Re-roll one failed to-hit roll per turn.",
+  "<strong>Melta:</strong> When making armor penetration rolls, roll 2D6 instead of a D6 if the target is at half range or less.",
+  "<strong>Monster Hunter:</strong> Units containing at least one model with this effect rolls failed to wound rolls against monstrous creatures.",
+  "<strong>Pinning:</strong> Unsaved wounds caused by this weapon force the unit to take a Pinning Test (see PINNING).",
+  "<strong>Poison:</strong> Wounds on a fixed number regardless of strength (i.e. 4+). If the attacker’s strength is higher than the defender’s toughness, re-roll failed wounds. Poison has no effect against vehicles. Default value is 4+.",
+  "<strong>Rampage:</strong> Models gain +D3 attacks if the enemy units contain more models than friendly models that are locked in close combat.",
+  "<strong>Rending:</strong> On a wound roll of a 6, causes automatic wound and the weapon is treated as AP2 for ranged attacks and a power weapon for melee attacks. Against vehicles, a penetration roll of a 6 adds an additional D3 to the result of the penetration roll.",
+  "<strong>Smash:</strong> Melee attacks are treated as power weapons (i.e. ignore armor saves). Additionally, this unit may choose to exchange all of its normal attacks to conduct a single smash attack instead. This is resolved at double strength (up to max of 10).",
+  "<strong>Shred:</strong> Re-roll failed to wound rolls.",
+  "<strong>Soul Blaze:</strong> Units wounded by this attack are set ablaze. Roll D6 at the end of each turn. On a 4+, the unit takes D3 S4 AP5 hits with no cover saves. If less than 4, the blaze goes out and the effect is removed.",
+  "<strong>Split Fire:</strong> If a unit has this listed as a special rule, it automatically passes any of its split fire test and may also split its fire between up to three (instead of two) different targets.",
+  "<strong>Sniper:</strong> Hits on a 2+, wounds on 4+. Gains <em>Rending</em> and <em>Pinning</em>.",
+  "<strong>Strikedown:</strong> Models suffering one or more wounds from this weapon (even if saved) move as if in difficult terrain on its next turn.",
+  "<strong>Torrent:</strong> Place the flame template in any orientation so long as the template is entirely within 12” range and the tip of the narrower end is closer to the firing model than the tip of the wider end.",
+  "<strong>Twin-Linked:</strong> Re-roll failed to-hit rolls with this weapon. Does not count as two weapons. Twin-linked <em>Template</em> weapons automatically hit all models fully or partially under the template.",
+  "<strong>Two-Handed:</strong> Model attacking with this weapon does not receive a bonus attack for having additional close combat weapons.",
+  "<strong>Unwieldy:</strong> Model attacking with this weapon is at Initiative 1 unless it’s a monstrous creature or vehicle walker."
+ ],
+ "Unit Properties": [
+  "<strong>Adamantium Will:</strong> +1 bonus to deny the witch and the unit may attempt to deny the witch even if they are not a psyker themselves.",
+  "<strong>And They Shall Know No Fear:</strong> Automatically passes regroup tests at the start of the turn and may be used normally for the rest of the turn. If caught by a pursuit, automatically regroup and are re-engaged in close combat, and do not suffer extra wounds from being caught in a pursuit. Immune to <em>Fear</em>.",
+  "<strong>Brotherhood of Psykers:</strong> Unit counts as a Mastery Level 1 Psyker. Uses the unit’s highest leadership value for psychic power test.",
+  "<strong>Bulky:</strong> Counts as two models for transport capacity. Very bulky counts as three models. Extremely bulky counts as five.",
+  "<strong>Counter-Attack:</strong> If this unit is not engaged with any enemy models and an enemy unit successfully completes a charge move against it, the unit may take a Leadership test. If passed, this unit gains +1 attack during the Assault phase.",
+  "<strong>Daemon:</strong> Models gain a 5+ invulnerable save and causes <em>Fear</em>.",
+  "<strong>Eternal Warrior:</strong> Immune to instant death / massive wounds. Model suffers 1 wound instead of D3 wounds.",
+  "<strong>Fear:</strong> Enemy units in base contact must pass a Leadership test before suffering their close combat attacks. If the test fails, those units attack with WS1 in the melee engagement.",
+  "<strong>Fearless:</strong> Automatically pass all Morale and Pinning tests. May not Take Cover! or choose to voluntarily fail a break test.",
+  "<strong>Feel No Pain:</strong> A model with Feel No Pain that fails their normal saving throw may attempt to ignore the wound a second time with Feel No Pain. Roll a D6 and if the value is equal to or above the Feel No Pain value the wound is ignored.",
+  "<strong>Feel No Pain (5th Edition):</strong> After suffering an unsaved wound, on a 4+ the wound is ignored (unless the wound applies instant death or against AP1 or AP2 weapons). The specific Feel No Pain ability may specify a different saving value.",
+  "<strong>Feel No Pain (6th/7th edition codexes):</strong> As above, except the wound is ignored on a 5+ unless otherwise specified.",
+  "<strong>Furious Charge:</strong> Models gain +1 strength and +1 initiative in assault on the turn they charged.",
+  "<strong>Hammer of Wrath:</strong> On the turn this unit charges, models may perform ONE of their normally allowed attacks at initiative 10 instead of during their normal initiative step.",
+  "<strong>Hatred:</strong> If a unit with hatred is engaged in melee combat against a hated enemy type, and was NOT engaged in melee combat with that enemy type during the prior turn, the unit may re-roll all failed close combat to-hit rolls against the hated target.",
+  "<strong>It Will Not Die:</strong> Roll a D6 at the start of its turn for each model with less than its starting wounds but is not destroyed. On a 5+ it regains one lost wound. A vehicle with It Will Not Die may, on a 5+, repair an Engine Damaged, Weapon Destroyed, or Immobilized vehicle result.",
+  "<strong>Night Vision:</strong> Units containing at least one model with this effect ignore night fighting restrictions.",
+  "<strong>Preferred Enemy:</strong> The unit can re-roll failed hits in close combat against the indicated preferred enemy.",
+  "<strong>Shrouded:</strong> Adds +2 to the value of cover saves conferred by terrain (Max of 2+ cover save). If in the open, receives a 5+ cover save. Does NOT stack with stealth.",
+  "<strong>Stealth:</strong> Adds +1 to the value of cover saves conferred by terrain (Max of 2+ cover save). If in the open, receives a 6+ cover save. Does NOT stack with shrouded.",
+  "<strong>Stubborn:</strong> Ignore negative leadership modifiers on Morale and Pinning tests.",
+  "<strong>Swarms:</strong> Have stealth and are vulnerable to blasts/templates.",
+  "<strong>Tank Hunters:</strong> +1 to armor penetration rolls. Automatically passes tank shock morale tests.",
+  "<strong>Vulnerable to Blasts/Templates:</strong> Each hit counts as two hits from blast/template weapons.",
+  "<strong>Zealot:</strong> A unit with at least one model with this effect gains <em>Fearless</em> and <em>Hatred</em>."
+ ],
+ "Movement / Deployment": [
+  "<strong>Acute Senses:</strong> Unit can re-roll which random table edge it arrives from on reserves.",
+  "<strong>Assault Vehicle:</strong> Passengers disembarking from an assault vehicle do not lose their extra attack charge bonuses when disembarking and charging from an assault vehicle. All open-topped vehicles count as Assault Vehicles.",
+  "<strong>Crusader:</strong> Roll an extra D6 when advancing and use the highest result. Adds D3 to pursuit rolls.",
+  "<strong>Fleet:</strong> Unit may still charge into melee combat even if it advanced this turn.",
+  "<strong>Hit & Run:</strong> Unit may choose to leave combat at the end of the assault phase after taking break tests. Take an initiative test. If passed, the unit moves 3D6” in a chosen direction. The unit does not count as having broken (or in fall back), and any new unengaged enemy units may then only consolidate.",
+  "<strong>Infiltrate:</strong> During deployment, may be set up after normal deployment. The unit must be set up 12” or more away from any enemy units that do NOT have line of sight and 18” or more away from any units WITH line of sight to the unit, if the unit is deployed outside the normal deployment zone. The unit also gains <em>Outflank</em>.",
+  "<strong>Jink:</strong> Units that moved in the prior turn can activate their jink ability as a reaction to being shot and gain a 5+ cover save until the start of its next turn. If a model with this rule used turbo-boosters or moved at flat out speeds, it gains a 4+ cover save instead. Models that utilize a jink only shoot with snap fire on the next turn.",
+  "<strong>Move Through Cover:</strong> Roll a 3D6 for difficult terrain tests instead of 2D6 and choose the highest.",
+  "<strong>Outflank:</strong> When units with this ability enter from reserve, they have a chance to enter from the side table edge. On a 1–2, enters from player’s left, 3–4 from player’s right, 5–6 players choose a side edge. May alternate choose to enter from reserve normally from the player’s normal table edge(s).",
+  "<strong>Power of the Machine Spirit:</strong> A vehicle moving less than that flat out speed and not using smoke launchers can fire one additional main weapon at full Ballistic Skill.",
+  "<strong>Rage (3rd–5th Edition Codexes):</strong> Unit must move towards the closest enemy.",
+  "<strong>Rage (6th–7th Edition Codexes):</strong> Unit gains +2 attacks instead of +1 when it charges into close combat (aka Berserk Charge).",
+  "<strong>Relentless:</strong> Model may move and fire heavy, ordnance, salvo, or rapid fire weapons as if they remained stationary. May still charge even after firing such weapons.",
+  "<strong>Scout:</strong> May be deployed before rolling to see who goes first, may take a bonus normal move. Confers scout ability to a dedicated transport it is mounted in. If both players have scouts, roll-off and alternate moving scout starting with the winner of the roll-off. The unit also gains <em>Outflank</em>.",
+  "<strong>Skilled Rider:</strong> Re-roll failed dangerous terrain tests. Gains +1 to any Jink saves.",
+  "<strong>Slow and purposeful:</strong> Relentless and always moves as if in difficult terrain.",
+  "<strong>Swift:</strong> Units composed entirely of swift models, fall back 3D6” instead of 2D6”. During pursuit and retreat moves, they add their Initiative Value + 2D6”.",
+  "<strong>Turbo-Boosters:</strong> Instead of normal move, a unit may turbo-boost up to 24”. Turbo-boosting units may not shoot in the shooting phase or charge in the assault phase. Units that also have <em>Jink</em> gain a 4+ cover save if they used a Turbo-Boost move in their last movement phase."
+ ],
+ "Flyer Related": [
+  "<strong>Missile Lock:</strong> Missiles fired by this unit scatter D6” rather than 2D6”.",
+  "<strong>Skyfire:</strong> Models shooting with this effect use their normal Ballistic Skill when shooting at flyers, flying creatures, and skimmers, and can only snap fire at other targets.",
+  "<strong>Strafing Run:</strong> When shooting Assault/Heavy/Rapid Fire/Salvo weapons at ground units (without flyer or skimmer type) this vehicle has +1 BS and all shots count as pinning.",
+  "<strong>Supersonic:</strong> Moving at Flat Out speed must move at least 18” and up to a max of 36”. Cannot enter hover mode.",
+  "<strong>Vector Dancer:</strong> Can make an additional pivot on the spot up to 90-degrees at the end of its move. Cannot move at flat out speed in the following turn.",
+  "<strong>Vector Strike:</strong> Nominate an unengaged model this unit has moved over. That unit takes D3+1 hits resolved at the model’s unmodified strength and AP3. Against vehicles hits are resolved on the side armor. A model making a vector strike counts as having moved for shooting."
+ ],
+ "Vehicle Upgrades": [
+  "<strong>Dozer Blade:</strong> Vehicles with a dozer blade may re-roll failed dangerous terrain tests.",
+  "<strong>Extra Armor:</strong> Vehicles with extra armor count Crew Stunned results as Crew Shaken instead.",
+  "<strong>Hunter-Killer Missile:</strong> One-time use using the vehicle’s BS. Infinite range, S8, AP3, Heavy 1.",
+  "<strong>Searchlight:</strong> Can be used if NIGHT FIGHTING rules are in effect. Can illuminate itself and a chosen target, negating the effect of night fighting.",
+  "<strong>Smoke Launchers:</strong> Once per game, instead of shooting the smoke launchers may be used. The vehicle and any models within 6” (friend or foe) can be obscured behind soft cover (5+ save) against shooting attacks until the start of the vehicle’s next turn. Can be used even if the vehicle is shaken or stunned."
+ ]
+};
+
+const strategyPointsHTML=`<div class="special-section"><div class="ref-card ref-wide"><h3>Starting Strategy Points</h3><div class="ref-list"><ul><li><strong>STARTING STRATEGY POINTS:</strong> Armies gain strategy points at the start of the game based on size.</li></ul></div><div class="ref-table-wrap"><table class="ref-table center strategy-table"><thead><tr><th>Army Size</th><th>Strategy Points</th></tr></thead><tbody><tr><td>Up to 500 points</td><td>1</td></tr><tr><td>501 to 1000 points</td><td>2</td></tr><tr><td>1001 to 1500 points</td><td>3</td></tr><tr><td>1501 to 2000 points</td><td>4</td></tr><tr><td>2001 to 2500 points</td><td>5</td></tr><tr><td>2501+ points</td><td>6</td></tr></tbody></table></div></div></div>
+<div class="special-section"><div class="ref-card ref-wide"><h3>Using Strategy Points</h3><div class="ref-list"><ul><li><strong>USING STRATEGY POINTS:</strong> Strategy points can be spent during mission setup and/or during the game itself to provide re-rolls or modifiers to Strategy Rolls as described below:</li></ul></div><div class="ref-table-wrap"><table class="ref-table strategy-table"><thead><tr><th>Strategy Roll</th><th>Effect</th></tr></thead><tbody>
+<tr><td>Mission Parameter Modification</td><td>Immediately after rolling for a specific mission parameter, each player may modify the result by spending one or more Strategy Points. Each point spent modifies the result by +1 or -1 (player’s choice). Players alternate raising (or lowering) the results at will.<br><em>Mission Parameter Rolls may include:</em> Mission Archetype, Approach, Scoring Conditions, Deployment Zone Layouts, Picking Deployment Zones, Determining First Player.</td></tr>
+<tr><td>Reserve Re-Roll</td><td>Immediately after performing a reserve roll, the active player may spend a command point to re-roll it. The result of the re-roll stands.</td></tr>
+<tr><td>Last Turn Re-Roll</td><td>When playing with a variable game length, after rolling to check for the end of the turn, either or both players may spend a strategy point to re-roll the end of turn, starting with the active player.</td></tr>
+<tr><td>Leadership Re-Roll</td><td>When the active player makes a leadership test of any type (except for Psychic tests), they may spend a Strategy Point to re-roll the result.</td></tr>
+<tr><td>Command Action</td><td>The active player, on their turn, may spend a STRATEGY POINT to do one of the following command actions on a unit in the active player’s army:<ul><li>Remove the unit’s pinned status</li><li>Remove all suppression tokens from the unit</li><li>Remove the unit’s limited fire status (can shoot normally this turn)</li><li>Change a vehicle suffering from Crew Stunned into Crew Shaken</li></ul></td></tr>
+</tbody></table></div><div class="ref-highlight"><strong>LIMITS:</strong><br>Once the game begins, players cannot spend more STRATEGY POINTS in a single turn than the current battle round.<br>Each player may only re-roll a given die roll that they are eligible to re-roll once per turn.</div></div></div>`;
+
+const concessionsHTML=`<div class="card" style="margin-top:16px"><h3>SECOND PLAYER CONCESSIONS</h3><p class="small">Unless specified otherwise by the mission briefing, the second player gains one concession point for every 500 points (or part thereof) of army size (e.g. a 750 point army gains 2 concessions).</p><p class="small"><strong>CONCESSION EFFECTS:</strong> Each concession point may be spent to do an effect shown below before the first turn. The cost for taking the same concession multiple times is increased by one each time that concession was previously selected (e.g. taking two Overwatch concessions would require spending 3 points).</p><div class="ref-table-wrap"><table class="ref-table strategy-table"><thead><tr><th>Concession</th><th>Effect</th></tr></thead><tbody><tr><td>Overwatch</td><td>Select a deployed non-vehicle unit. It begins the game on overwatch.</td></tr><tr><td>Redeploy</td><td>Select a unit already deployed or held in reserve and redeploy it subject to its normally allowed deployment options.</td></tr><tr><td>Withhold</td><td>Select a deployed unit and remove from the board, placing it into reserves.</td></tr><tr><td>Fortify</td><td>The unit gains +1 to its cover save until it performs a move.</td></tr><tr><td>Invoke</td><td>A psyker unit may invoke an available blessing power (test passes automatically).</td></tr></tbody></table></div></div>`;
+
+const warlordTraitsHTML=`<div class="special-section"><div class="ref-card ref-wide"><h3>Warlord Traits</h3><div class="ref-list"><ul><li><strong>Choose your Warlord:</strong> One HQ character model in your army must be designated as the Warlord.</li><li><strong>Choose a trait:</strong> The Warlord receives one trait from the table below of the player’s choice. If the army’s codex provides its own equivalent trait set, those may be used instead.</li></ul></div><div class="ref-table-wrap"><table class="ref-table warlord-table"><thead><tr><th>Trait</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Inspiring Presence</strong></td><td>Friendly units within 12” of the Warlord can use his Leadership rather than their own.</td></tr><tr><td><strong>The Dust of a Thousand Worlds</strong></td><td>The Warlord and all friendly units within 12” have Move Through Cover.</td></tr><tr><td><strong>Master of Maneuver</strong></td><td>The Warlord has Outflank. This is not conferred to units he joins.</td></tr><tr><td><strong>Target Priority</strong></td><td>In the Shooting phase, the Warlord and all friendly units within 12” of him re-roll To Hit rolls of 1.</td></tr><tr><td><strong>Master of Defense</strong></td><td>The Warlord has Counter-attack.</td></tr><tr><td><strong>Tenacity</strong></td><td>The Warlord has Feel No Pain (5+).</td></tr><tr><td><strong>Coordinated Assault</strong></td><td>In the Assault phase, the Warlord and all friendly units within 12” of him re-roll To Hit rolls of 1.</td></tr><tr><td><strong>Master of Offense</strong></td><td>The Warlord has Furious Charge.</td></tr><tr><td><strong>Strategic Genius</strong></td><td>Whilst the Warlord is alive, you can re-roll any Reserve Rolls.</td></tr></tbody></table></div></div></div>`;
+
+function renderWarlordTraits(){
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Warlord Traits · ${APP_VERSION}</div><h1 class="ref-page-title">Warlord Traits</h1><p class="ref-page-subtitle">Choose and reference the ProHammer Classic Warlord trait for your army’s Warlord.</p>${warlordTraitsHTML}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+}
+
+function renderSpecialRules(){
+ const groups=Object.entries(specialRulesData).map(([title,items])=>`<div class="special-section"><h2>${title}</h2><div class="special-grid"><div class="ref-card ref-wide"><ul class="ref-list">${items.map(x=>`<li>${x}</li>`).join("")}</ul></div></div></div>`).join("");
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Special Rules · ${APP_VERSION}</div><h1 class="ref-page-title">Special Rules</h1><p class="ref-page-subtitle">Common special rules and abilities, kept separate from the phase-based Quick Reference.</p>${groups}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+}
+
+function renderStrategyPoints(){
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Strategy Points · ${APP_VERSION}</div><h1 class="ref-page-title">Strategy Points</h1><p class="ref-page-subtitle">A standalone quick reference for a resource you may use repeatedly during the battle.</p>${strategyPointsHTML}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+}
+
+function ensureSearchIndex(){
+ if(window.__refSearchIndex)return;
+ if(!window.__refSearchIndexSeeded){
+  window.__refSearchIndexSeeded=true;
+  // Build the index from both normal Quick Reference content and the separate
+  // Vehicle view. Vehicle tables are intentionally indexed at row level too,
+  // so searches such as "Crew stunned" return the actual damage result.
+  const oldStep=state.step, oldRefPage=state.refPage, oldShootingView=state.shootingView;
+
+  state.step="reference";
+  state.refPage="start";
+  state.shootingView="normal";
+  renderReference();
+  const normalDocs=[...(window.__refSearchIndex||[])];
+
+  state.refPage="shooting";
+  state.shootingView="vehicles";
+  renderReference();
+  const vehicleDocs=[...(window.__refSearchIndex||[])];
+
+  window.__refSearchIndex=[...normalDocs,...vehicleDocs];
+  state.step=oldStep; state.refPage=oldRefPage; state.shootingView=oldShootingView;
+ }
+}
+function renderSearch(){
+ ensureSearchIndex();
+ const rawQ=(state.searchQuery||"").trim();
+ const q=rawQ.toLowerCase();
+ const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+ const nq=norm(rawQ);
+ const specialDocs=Object.entries(specialRulesData).flatMap(([section,items])=>items.map((item,idx)=>{
+   const clean=item.replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim();
+   const m=item.match(/<strong>(.*?)<\/strong>/i);
+   const title=m?m[1].replace(/<[^>]*>/g,""):clean.split(/[:—–-]/)[0].trim().slice(0,80);
+   return {title,section:"Special Rules · "+section,text:clean,html:`<p class="search-full">${item}</p>`,special:true,index:idx,granular:true,table:false};
+ }));
+ const docs=[...(window.__refSearchIndex||[]),...specialDocs,
+   {title:"Strategy Points",section:"Strategy Points",text:strategyPointsHTML.replace(/<[^>]+>/g," "),html:strategyPointsHTML,granular:true,table:false},
+   {title:"Warlord Traits",section:"Warlord Traits",text:warlordTraitsHTML.replace(/<[^>]+>/g," "),html:warlordTraitsHTML,granular:true,table:false},
+   {title:"Concessions",section:"Battle Companion · Deployment",text:concessionsHTML.replace(/<[^>]+>/g," "),html:concessionsHTML,granular:true,table:false}
+ ];
+ let matches=q?docs.filter(d=>`${d.title} ${d.section} ${d.text}`.toLowerCase().includes(q)).sort((a,b)=>{
+   const score=d=>{
+     const t=norm(d.title), txt=norm(d.text);
+     // Exact named Special Rules are the highest-priority result.
+     if(d.special && t===nq) return 0;
+     if(d.special && t.startsWith(nq+" ")) return 1;
+     if(d.special && t.includes(nq)) return 2;
+     // Specific rule/row matches should always beat whole-table results.
+     const titleExact=t===nq;
+     const titleStart=t.startsWith(nq+" ");
+     const titleContains=t.includes(nq);
+     const textStarts=txt.startsWith(nq+" ") || txt===nq;
+     if(d.granular && titleExact) return 3;
+     if(d.granular && titleStart) return 4;
+     if(d.granular && titleContains) return 5;
+     if(d.granular && textStarts) return 6;
+     if(d.granular) return 7;
+     // Whole tables are deliberately pushed to the bottom of results.
+     if(d.table && titleExact) return 90;
+     if(d.table && titleStart) return 91;
+     if(d.table && titleContains) return 92;
+     return 99;
+   };
+   return score(a)-score(b);
+ }):[];
+
+ const body=q?`<p class="small">${matches.length} result${matches.length===1?"":"s"} for <strong>${esc(state.searchQuery)}</strong>.</p><div class="ref-grid">${matches.map((d,i)=>`<div class="ref-card search-result ${d.table?"search-table-result":""}" onclick="openSearchResult(${i})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openSearchResult(${i})"><div class="ref-list"><div class="search-meta">${esc(d.section)}</div><h3>${esc(d.title)}</h3><div class="search-snippet">${d.html?d.html:`<p>${esc(d.text)}</p>`}</div></div></div>`).join("")}</div>`:`<div class="ref-card"><div class="ref-list"><p>Search Quick Reference, Vehicle Reference, Special Rules, Strategy Points, Warlord Traits and Concessions.</p></div></div>`;
+ window.__currentSearchMatches=matches;
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Rules Search · ${APP_VERSION}</div><h1 class="ref-page-title">Search</h1><p class="ref-page-subtitle">Find a rule by keyword, ability name, weapon property or phase.</p><div class="search-box"><input id="rule-search" value="${esc(state.searchQuery)}" placeholder="e.g. jink, rending, reserves, armour…" oninput="state.searchQuery=this.value" onkeydown="if(event.key==='Enter')renderSearch()"><button class="btn primary" onclick="renderSearch()">SEARCH</button></div>${body}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+}
+function openSearchResult(i){
+ const d=window.__currentSearchMatches?.[i]; if(!d)return;
+ if(d.section.startsWith("Special Rules")){state.step="special";renderSpecialRules();return;}
+ if(d.section==="Strategy Points"){state.step="strategy";renderStrategyPoints();return;}
+ if(d.section==="Warlord Traits"){state.step="warlord";renderWarlordTraits();return;}
+ if(d.section.includes("Battle Companion")){state.step="deploy";renderDeploy();return;}
+ state.step="reference"; if(d.page){state.refPage=d.page;state.shootingView=d.view||state.shootingView;} renderReference();
+}
+
 function renderCourse(){
  const courseItems = [
   ["The Muster of War","Apply painting scores and determine starting VP"],
@@ -315,6 +1092,7 @@ function renderDeploy(){
     <button class="btn ${first==="p1"?"primary":""}" onclick="setFirstDeploy('p1')">${esc(state.p[1].name||"PLAYER 2")}</button>
    </div>
  </div>
+ ${concessionsHTML}
  <p>Deploy your armies, then continue.</p></div>`;
  shell("Deployment","Deploy",body);
 }
