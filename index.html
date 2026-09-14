@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.6</title>
+<title>ProHammer Battle Companion v1.1.7</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -661,16 +661,37 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .compact-rule p{margin:0 0 10px}
 .compact-rule p:last-child{margin-bottom:0}
 
+
+/* Special Rules and navigation refinement — v1.1.7 */
+.special-rule-entry{border:1px solid var(--line);border-radius:3px;margin:0 0 7px;background:rgba(255,255,255,.015);overflow:hidden}
+.special-rule-entry .sr-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;background:rgba(255,255,255,.045);color:var(--accent);font-weight:800;font-size:13px}
+.special-rule-entry .sr-type{font-size:8px;letter-spacing:.8px;color:var(--muted);font-weight:700}
+.special-rule-entry .sr-body{padding:10px 11px;line-height:1.4}
+.special-rule-entry .sr-summary{font-size:13px}
+.special-rule-entry .sr-more{margin-top:8px}
+.special-rule-entry .more-detail-content{margin-top:8px;padding:9px;border-left:2px solid var(--accent);background:rgba(255,255,255,.025);font-size:12px;line-height:1.45}
+.special-filterbar{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px}
+.special-filterbar button{min-height:34px;padding:7px 9px}
+.special-filterbar button.active{border-color:var(--accent);color:var(--accent)}
+.randomise-action{margin:0 0 12px!important}
+.randomise-action .randomise-top{margin:0!important}
+@media(max-width:800px){
+ .special-rule-entry .sr-title{font-size:12px}
+ .special-rule-entry .sr-body{font-size:13px}
+ .special-filterbar button{flex:1 1 auto}
+ .randomise-action .randomise-top{width:100%!important}
+}
+
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.6</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.7</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.6";
+const APP_VERSION="v1.1.7";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -716,12 +737,15 @@ function shell(eyebrow,title,body,back=true,nextText="NEXT →"){
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMobileNav();});
 function go(s){
  closeMobileNav();
- if(["reference","vehicles","special","strategy","warlord","search"].includes(s)){
-   if(!["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){
+ const topPages=["reference","vehicles","special","strategy","warlord","search","mission","twist"];
+ if(topPages.includes(s)){
+   if(!topPages.includes(state.step)){
      state.returnStep=state.step;
      state.returnScrollY=window.scrollY||0;
    }
-   state.step=s; render(); return;
+   state.step=s; render();
+   setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
+   return;
  }
  if(s==="final" && state.step!=="final"){return;}
  state.step=s; render();
@@ -1322,9 +1346,56 @@ function renderWarlordTraits(){
  document.getElementById("app").innerHTML=`<div class="eyebrow">Warlord Traits · ${APP_VERSION}</div><h1 class="ref-page-title">Warlord Traits</h1><p class="ref-page-subtitle">Choose and reference the ProHammer Classic Warlord trait for your army’s Warlord.</p>${warlordTraitsHTML}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
 }
 
+function specialRuleTitle(item){
+ const m=item.match(/<strong>([^<]+):<\/strong>/i);
+ return m?m[1]:item.replace(/<[^>]+>/g,"").split(/[.:]/)[0].trim();
+}
+function specialRuleBody(item){
+ return item.replace(/^\s*<strong>[^<]+:<\/strong>\s*/i,"");
+}
+function specialRuleEntry(item){
+ const title=specialRuleTitle(item);
+ const raw=specialRuleBody(item);
+ const text=raw.replace(/<[^>]+>/g,"").trim();
+ const cut=text.search(/\.\s+/);
+ let summary,detail;
+ if(cut>=0 && cut<Math.min(180,text.length-1)){
+   const sentenceEnd=cut+1;
+   summary=text.slice(0,sentenceEnd);
+   detail=raw.slice(raw.indexOf(".")+1).trim();
+ }else{
+   summary=raw;
+   detail="";
+ }
+ return `<div class="special-rule-entry" data-special-rule="${esc(title).toLowerCase()}">
+   <div class="sr-title"><span>${esc(title)}</span><span class="sr-type">SPECIAL RULE</span></div>
+   <div class="sr-body"><div class="sr-summary">${summary}</div>
+   ${detail?`<div class="sr-more"><button class="btn" onclick="toggleMoreDetail(this)">MORE DETAIL ＋</button><div class="more-detail-content" hidden>${detail}</div></div>`:""}
+   </div>
+ </div>`;
+}
+function filterSpecialRules(filter){
+ document.querySelectorAll(".special-filterbar button").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
+ document.querySelectorAll(".special-section").forEach(section=>{
+   const category=section.dataset.category||"";
+   const show=filter==="all"||category===filter;
+   section.hidden=!show;
+ });
+}
 function renderSpecialRules(){
- const groups=Object.entries(specialRulesData).map(([title,items])=>`<div class="special-section"><h2>${title}</h2><div class="special-grid"><div class="ref-card ref-wide"><ul class="ref-list">${items.map(x=>`<li>${x}</li>`).join("")}</ul></div></div></div>`).join("");
- document.getElementById("app").innerHTML=`<div class="eyebrow">Special Rules · ${APP_VERSION}</div><h1 class="ref-page-title">Special Rules</h1><p class="ref-page-subtitle">Common special rules and abilities, kept separate from the phase-based Quick Reference.</p>${groups}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+ const categories=Object.keys(specialRulesData);
+ const filterbar=`<div class="special-filterbar" role="toolbar" aria-label="Special rule categories">
+   <button class="btn active" data-filter="all" onclick="filterSpecialRules('all')">ALL</button>
+   ${categories.map((c,i)=>`<button class="btn" data-filter="cat${i}" onclick="filterSpecialRules('cat${i}')">${esc(c.split(" / ")[0])}</button>`).join("")}
+ </div>`;
+ const groups=categories.map((title,i)=>`<div class="special-section" data-category="cat${i}"><h2>${esc(title)}</h2><div class="special-grid"><div class="ref-card ref-wide">${itemsToSpecialRules(specialRulesData[title])}</div></div></div>`).join("");
+ document.getElementById("app").innerHTML=`<div class="eyebrow">Special Rules · ${APP_VERSION}</div><h1 class="ref-page-title">Special Rules</h1><p class="ref-page-subtitle">Common special rules and abilities, kept separate from the phase-based Quick Reference.</p>
+ <div class="mobile-primary-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#searchInput');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>
+ ${filterbar}${groups}<div class="actions"><button class="btn back-battle reference-back" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
+ setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
+}
+function itemsToSpecialRules(items){
+ return items.map(specialRuleEntry).join("");
 }
 
 function renderStrategyPoints(){
@@ -1450,10 +1521,11 @@ function renderMission(){
    <div class="small" style="margin:16px 0 6px">SECOND BATTLE ROUND ONWARDS · END OF YOUR TURN</div>
    ${m.from2.map(c=>`<div class="cond"><label>${esc(c[0])}</label><div class="pts">${c[1]} VP</div></div>`).join("")}
  </div>`;
- const body=`<div class="mission"><div class="num">MISSION ${missionNo} OF 6</div><h2>${esc(state.mission)}</h2><p>${esc(m.flavour)}</p></div>
- ${scoring}
- <div class="actions right"><button class="btn" onclick="randomMission();renderMission()">🎲 RANDOMISE AGAIN</button></div>`;
+ const body=`<div class="actions right randomise-action"><button class="btn primary randomise-top" onclick="randomMission();renderMission()">🎲 RANDOMISE MISSION</button></div>
+ <div class="mission"><div class="num">MISSION ${missionNo} OF 6</div><h2>${esc(state.mission)}</h2><p>${esc(m.flavour)}</p></div>
+ ${scoring}`;
  shell("Mission Selection","Your Mission",body);
+ setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
 }
 function renderDeployment(){
  const body=`<p class="flavour">Roll a D3 to determine which deployment map is used. No selection is required in the app — use the map corresponding to your roll.</p>
@@ -1462,10 +1534,11 @@ function renderDeployment(){
 }
 function renderTwist(){
  const names=Object.keys(twists);
- const body=`<p class="flavour">Open Battle is the default. Choose it for a standard battle, or randomise to add one of the five optional twists.</p>
- <div class="grid3">${names.map(t=>`<div class="twist ${state.twist===t?"selected":""}" onclick="state.twist='${t}';renderTwist()"><h3>${esc(t)}</h3><p>${esc(twists[t])}</p><div class="rule">${esc(twistRules[t])}</div></div>`).join("")}</div>
- <div class="actions right"><button class="btn" onclick="randomTwist()">🎲 RANDOMISE TWIST</button></div>`;
+ const body=`<div class="actions right randomise-action"><button class="btn primary randomise-top" onclick="randomTwist()">🎲 RANDOMISE TWIST</button></div>
+ <p class="flavour">Open Battle is the default. Choose it for a standard battle, or randomise to add one of the five optional twists.</p>
+ <div class="grid3">${names.map(t=>`<div class="twist ${state.twist===t?"selected":""}" onclick="state.twist='${t}';renderTwist()"><h3>${esc(t)}</h3><p>${esc(twists[t])}</p><div class="rule">${esc(twistRules[t])}</div></div>`).join("")}</div>`;
  shell("The Shape of Battle","Optional Twists",body);
+ setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
 }
 function randomTwist(){const a=Object.keys(twists).filter(x=>x!=="Open Battle");state.twist=a[Math.floor(Math.random()*a.length)];renderTwist();}
 function renderDeploy(){
