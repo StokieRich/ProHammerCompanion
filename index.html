@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.0</title>
+<title>ProHammer Battle Companion v1.1.1</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -299,16 +299,61 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .shooting-reference-grid .ref-subsection{margin-top:0}
 .shooting-reference-grid .ref-subsection>h2{margin-top:0}
 @media(max-width:800px){.shooting-reference-grid{grid-template-columns:1fr}.shooting-reference-grid>.shooting-ref-wide{grid-column:auto}}
+
+/* Mobile navigation — v1.1.1 */
+.mobile-menu-btn{display:none;margin-left:auto;border:1px solid var(--line);background:#1b1d1e;color:var(--ink);padding:9px 12px;border-radius:3px;font-size:11px;font-weight:bold;letter-spacing:1px}
+.mobile-menu-btn:hover{background:#2a2c2e}
+.mobile-nav-backdrop{display:none}
+@media(max-width:800px){
+  header{height:58px;padding:0 12px;gap:10px}
+  header .subtitle{font-size:10px;white-space:nowrap}
+  .mobile-menu-btn{display:block}
+  .layout{display:block;min-height:calc(100vh - 58px)}
+  nav#nav{
+    position:fixed;
+    left:0;
+    top:58px;
+    bottom:0;
+    width:min(300px,86vw);
+    height:auto;
+    z-index:40;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:14px 12px 24px;
+    border-right:1px solid var(--line);
+    border-bottom:0;
+    display:block;
+    transform:translateX(-105%);
+    transition:transform .2s ease;
+    box-shadow:12px 0 30px rgba(0,0,0,.35);
+  }
+  nav#nav.mobile-open{transform:translateX(0)}
+  nav#nav .navitem{white-space:normal;margin:3px 0;padding:11px 12px}
+  nav#nav .ref-nav{margin-top:16px;padding-top:14px}
+  .mobile-nav-backdrop{
+    position:fixed;
+    inset:58px 0 0 0;
+    z-index:35;
+    background:rgba(0,0,0,.55);
+    display:block;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+  }
+  .mobile-nav-backdrop.open{opacity:1;pointer-events:auto}
+  main{padding:22px 14px 84px}
+}
+
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.0</div></header>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.1</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.0";
+const APP_VERSION="v1.1.1";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -324,6 +369,25 @@ let state={step:"course",p:[
 ],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null,refPage:"start",shootingView:"normal",searchQuery:"",returnStep:"course",returnScrollY:0};
 
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+function toggleMobileNav(){
+ const n=document.getElementById("nav");
+ const b=document.getElementById("mobile-nav-backdrop");
+ const btn=document.getElementById("mobile-menu-btn");
+ if(!n)return;
+ const open=!n.classList.contains("mobile-open");
+ n.classList.toggle("mobile-open",open);
+ if(b)b.classList.toggle("open",open);
+ if(btn)btn.setAttribute("aria-expanded",String(open));
+}
+function closeMobileNav(){
+ const n=document.getElementById("nav");
+ const b=document.getElementById("mobile-nav-backdrop");
+ const btn=document.getElementById("mobile-menu-btn");
+ if(n)n.classList.remove("mobile-open");
+ if(b)b.classList.remove("open");
+ if(btn)btn.setAttribute("aria-expanded","false");
+}
 function renderNav(){
  const n=document.getElementById("nav");
  n.innerHTML=steps.map((s,i)=>`<div class="navitem ${state.step===s?"active":i<steps.indexOf(state.step)?"done":""}" onclick="go('${s}')">${i+1}. ${labels[s]}</div>`).join("")+`<div class="ref-nav"><div class="navitem ${state.step==="reference"?"active":""}" onclick="go('reference')">Quick Reference</div><div class="navitem ${state.step==="vehicles"?"active":""}" onclick="go('vehicles')">Vehicle Reference</div><div class="navitem ${state.step==="special"?"active":""}" onclick="go('special')">Special Rules</div><div class="navitem ${state.step==="strategy"?"active":""}" onclick="go('strategy')">Strategy Points</div><div class="navitem ${state.step==="warlord"?"active":""}" onclick="go('warlord')">Warlord Traits</div><div class="navitem ${state.step==="search"?"active":""}" onclick="go('search')">Search</div></div>`;
@@ -332,7 +396,9 @@ function shell(eyebrow,title,body,back=true,nextText="NEXT →"){
  document.getElementById("app").innerHTML=`<div class="eyebrow">${eyebrow}</div><h1>${title}</h1>${body}<div class="actions">${back?'<button class="btn" onclick="back()">← BACK</button>':'<span></span>'}<button class="btn primary" onclick="next()">${nextText}</button></div>`;
  renderNav();
 }
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMobileNav();});
 function go(s){
+ closeMobileNav();
  if(["reference","vehicles","special","strategy","warlord","search"].includes(s)){
    if(!["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){
      state.returnStep=state.step;
