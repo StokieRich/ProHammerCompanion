@@ -810,16 +810,16 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.18</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.19</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.18";
+const APP_VERSION="v1.1.19";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
-const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
+const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round: 5+ in Round 3, 4+ in Round 4, and 3+ in Round 5. Once Night Fighting takes effect, it remains in effect for the remainder of the battle."};
 const flex = [["Priority Objective", "Nominate one objective on the battlefield. You must control that objective at the end of the battle."], ["Assassination", "Nominate one enemy Character, excluding their Warlord. That Character must be destroyed by the end of the battle."], ["Protection", "Nominate one friendly Character, excluding your Warlord. That Character must survive until the end of the battle."], ["Manifest", "Manifest five Psychic Powers with a single friendly Psyker during the battle."], ["Tank Hunter", "Destroy one enemy Vehicle during the battle."], ["First Blood", "Destroy the first enemy unit destroyed during the battle."]];
 const paint = [[0, "0–250pts painted", "An army of grey and plastic brings little glory to the battlefield."], [5, "250–500pts painted", "A splash of colour is a good start. At least someone is ready for battle."], [10, "500–750pts painted", "The army is becoming a force to behold. Each new warrior adds to its character and splendour."], [15, "750–1000pts painted", "Now we're getting somewhere. The army is beginning to look like an army."], [20, "1000pts painted", "Now that's an army worth fighting over."]];
 const course = [["Battle Setup", ""], ["The Course of Battle", "From the first orders given to the final shots fired, every battle unfolds in stages. Know what must be decided, when it must be decided, and prepare accordingly."], ["The Muster of War", ""], ["Mission Selection", ""], ["The Battlefield", ""], ["Deployment", ""], ["Commander’s Intent", ""], ["The Aftermath", ""]];
@@ -829,7 +829,7 @@ const labels={course:"Course",muster:"Muster",mission:"Mission",deployment:"Batt
 let state={step:"course",p:[
  {name:"",faction:"",paint:0,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]},
  {name:"",faction:"",paint:0,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]}
-],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null,refPage:"start",shootingView:"normal",searchQuery:"",returnStep:"course",returnScrollY:0,activePlayer:0};
+],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null,refPage:"start",shootingView:"normal",searchQuery:"",returnStep:"course",returnScrollY:0,activePlayer:0,nightfallActive:false,nightfallCheckedRound:null};
 
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 
@@ -1727,11 +1727,12 @@ function renderDeployment(){
  <div class="mapwrap">${deploymentImage?`<img src="data:image/png;base64,${deploymentImage}" alt="ProHammer deployment maps">`:"<div class='notice'>Deployment map asset not found.</div>"}</div>`;
  shell("The Battlefield","Deployment",body);
 }
+function selectTwist(t){state.twist=t;state.nightfallActive=false;state.nightfallCheckedRound=null;renderTwist();}
 function renderTwist(){
  const names=Object.keys(twists);
  const body=`<div class="actions right randomise-action"><button class="btn primary randomise-top" onclick="randomTwist()">🎲 RANDOMISE TWIST</button></div>
  <p class="flavour">Open Battle is the default. Choose it for a standard battle, or randomise to add one of the five optional twists.</p>
- <div class="grid3">${names.map(t=>`<div class="twist ${state.twist===t?"selected":""}" onclick="state.twist='${t}';renderTwist()"><h3>${esc(t)}</h3><p>${esc(twists[t])}</p><div class="rule">${esc(twistRules[t])}</div></div>`).join("")}</div>`;
+ <div class="grid3">${names.map(t=>`<div class="twist ${state.twist===t?"selected":""}" onclick="selectTwist('${t}')"><h3>${esc(t)}</h3><p>${esc(twists[t])}</p><div class="rule">${esc(twistRules[t])}</div></div>`).join("")}</div>`;
  shell("The Shape of Battle","Optional Twists",body);
  setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
 }
@@ -1964,6 +1965,15 @@ function secondaryTotal(pi){
  }
  return Math.min(25,total);
 }
+function nightfallTarget(round){return round===3?5:round===4?4:round===5?3:null;}
+function resolveNightfall(success){state.nightfallCheckedRound=state.round;if(success)state.nightfallActive=true;renderBattle();setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);}
+function nightfallReminder(){
+ if(state.twist!=="Nightfall"||state.round<3)return "";
+ if(state.nightfallActive)return `<div class="notice nightfall-notice"><strong>🌙 NIGHT FIGHTING ACTIVE</strong><br>Night Fighting is in effect for the remainder of the battle. Apply the Night Fighting rules during this turn.</div>`;
+ if(state.nightfallCheckedRound===state.round)return `<div class="notice nightfall-notice"><strong>🌙 NIGHTFALL — NOT YET</strong><br>The roll for Round ${state.round} failed. Roll again at the start of Battle Round ${state.round+1}.</div>`;
+ const target=nightfallTarget(state.round);
+ return `<div class="notice nightfall-notice"><strong>🌙 NIGHTFALL — ROLL NOW</strong><br>At the start of Battle Round ${state.round}, roll ${target}+ for Night Fighting. If successful, it remains in effect for the rest of the battle.<div class="actions" style="margin-top:12px"><button class="btn primary" onclick="resolveNightfall(true)">NIGHT FIGHTING BEGINS</button><button class="btn" onclick="resolveNightfall(false)">NO — ROLL AGAIN NEXT ROUND</button></div></div>`;
+}
 function renderBattle(){
  if(!state.mission)state.mission=Object.keys(missions)[0];
  const pi=Number(state.activePlayer)||0;
@@ -1982,6 +1992,7 @@ function renderBattle(){
    <button class="btn" ${nextDisabled?"disabled":""} onclick="nextPlayerTurn()">→</button>
  </div>
  <div class="battle-turn-indicator"><span>PLAYER ${pi+1} OF 2</span><span>ROUND ${round} OF 5</span></div>
+ ${nightfallReminder()}
  <div class="scoreboards single-player">${`<div class="scoreboard"><div class="playerhead"><div><strong>${esc(player.name)}</strong><div class="small">${esc(player.faction)} · Painting ${player.paint}/20</div></div><div><div class="small">PRIMARY</div><div class="tot" id="total${pi}">${primaryTotal(pi)}</div></div></div>${conditionList(pi)}${secondary(pi)}</div>`}</div>
  <div class="notice">Primary is calculated from the selected conditions. Secondary objectives are ticked when achieved and contribute 5 VP each.</div>`;
 
