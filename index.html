@@ -808,6 +808,16 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 }
 
 </style>
+
+<style id="melee-layout-v1-1-22">
+.melee-properties-full .melee-weapon-properties { width: 100%; }
+@media (min-width: 701px) {
+  .melee-properties-full { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .melee-properties-full { grid-column: 1 / -1; }
+}
+</style>
 </head>
 <body>
 <header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.20</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
@@ -956,7 +966,10 @@ function renderReference(){
    "Transports":`<p><strong>Access:</strong> Disembarking models must be within 2” of an access point; open-topped vehicles treat the whole hull as an access point. A unit may not embark and disembark in the same turn.</p><p><strong>Emergency Disembarkation:</strong> If a transport suffers penetrating hits but is not destroyed, passengers may disembark after the current attacks are resolved. If the passengers are subsequently exposed to attacks, they use the applicable Shaken/Stunned/Snap Fire restrictions.</p>`,
    "Suppression & Crossfire":`<p>A unit can have no more than six suppression tokens. Suppression also applies a -1 modifier to Leadership tests, including Morale, Pinning, Split Fire and Psychic tests.</p><p><strong>Crossfire:</strong> determine the vehicle/unit’s rearward arc from the direction the unit is facing; when an attack from that arc would cause a suppression token, it causes two instead.</p>`,
    "Screening":`<p>Gaps wider than 2” do not count as part of a screen. Multiple units may form a combined screen if no relevant line of fire passes through a gap wider than 2”. Single-model units never count as screens.</p><p><strong>Shooting into melee:</strong> Roll to hit normally, then roll a D6 for each hit: 4+ hits the intended enemy; 1–3 hits the friendly engaged unit. If several friendly units are involved, use the largest unit, breaking ties by proximity. Add +1 when shooting at a monstrous creature or walker.</p>`,
-   "Pinned":`<p><strong>Pinning Test:</strong> use the highest applicable Leadership, with -1 if at half strength, -1 if out of coherency, and -1 for each suppression token.</p><p>A Pinned unit may not Advance, enter Overwatch, or perform Take Cover!, Return Fire!, or Stand &amp; Shoot! reactions.</p>`
+   "Pinned":`<p><strong>Pinning Test:</strong> use the highest applicable Leadership, with -1 if at half strength, -1 if out of coherency, and -1 for each suppression token.</p><p>A Pinned unit may not Advance, enter Overwatch, or perform Take Cover!, Return Fire!, or Stand &amp; Shoot! reactions.</p>`,
+   "Characteristic Tests":`<p><strong>Characteristic Test:</strong> Roll a single D6. The test is passed if the result is equal to or less than the tested characteristic.</p><p><strong>Automatic Pass/Fail:</strong> A natural 6 always fails and a natural 1 always passes, regardless of the characteristic value.</p><p><strong>Leadership Test:</strong> Roll 2D6 and add the results together. The test is passed if the total is equal to or less than the model's Leadership. If a unit contains different Leadership values, use the highest applicable value.</p>`,
+   "Artillery":`<p><strong>Profile:</strong> Use the artillery piece's unit-entry profile. If none is specified, it has T6, 1 Wound and a 3+ armour save. If it uses Armour Values, use T6 plus 1 for each point of AV above 10.</p><p><strong>Moving:</strong> Each artillery model needs at least one crew member to move.</p><p><strong>Shooting:</strong> A designated crew member within 2” may fire the artillery instead of their own weapon. Use both the artillery and firing model for line of sight; measure range from the artillery barrel. Unless otherwise noted, artillery cannot shoot after moving and cannot shoot without a designated crew member within 2”.</p><p><strong>Attacked:</strong> Artillery may receive ranged wounds as normal, but does not benefit from the <strong>TAKE COVER!</strong> reaction.</p><p><strong>Melee:</strong> Attacks may be allocated specifically to artillery models and hit on 3+. Artillery cannot fight back.</p><p><strong>Unit Size:</strong> Artillery models do not count toward starting strength, Morale checks or similar unit-size rules.</p><p><strong>Transports:</strong> Cannot be transported unless the specific unit entry says otherwise.</p>`,
+   "Buildings & Fortifications":`<p><strong>Occupancy:</strong> Buildings allow INFANTRY to enter through predetermined access points. A standard building normally holds one unit. Transport capacity is set during setup; bunkers default to 10 models.</p><p><strong>Firing Ports:</strong> Buildings may have defined firing ports that allow models inside to fire out.</p><p><strong>Armour Values:</strong> Fortification/Bunker: <strong>14 ranged / 13 melee</strong>. Concrete, stone or heavy metal: <strong>12 / 11</strong>. Wooden, corrugated metal or shed structures: <strong>10 / 9</strong>.</p><p><strong>Damage:</strong> Buildings are attacked like vehicles. Glancing or penetrating hits use the normal Vehicle Damage Table. Weapon Destroyed, Engine Damaged and Immobilized results count as damage when resolving subsequent hits.</p><p><strong>Template:</strong> A Template weapon hitting a building's firing port inflicts D6 automatic hits on the unit inside, in addition to damage to the building.</p>`
  };
  const applyMoreDetailPanels=root=>{root.querySelectorAll(".ref-card").forEach(cardEl=>{if(cardEl.querySelector(":scope > .more-detail-btn"))return;const h=cardEl.querySelector(":scope > h3");if(!h)return;const title=h.textContent.trim();const details=MORE_DETAIL_RULES[title];if(!details)return;cardEl.insertAdjacentHTML("beforeend",`<button class="more-detail-btn" type="button" onclick="toggleMoreDetail(this)">More Detail</button><div class="more-detail-panel" hidden>${details}</div>`);});};
  const table=(head,rows,cls="")=>`<div class="ref-table-wrap"><table class="ref-table ${cls}"><thead><tr>${head.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((x,i)=>i===0?`<td>${x}</td>`:`<td class="result">${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
@@ -1057,6 +1070,28 @@ function renderReference(){
    "If a model with more than one wound is allocated unsaved wounds, subsequent wounds must be applied to the already wounded models first.",
    "<strong>INDEPENDENT CHARACTER EXCEPTION:</strong> If an Independent Character has joined a unit, a wound does NOT have to be allocated to an already wounded Independent Character if another model in the unit can take the wound."
  ]),`<p>Unsaved wounds may be allocated to any model in the unit, including models that did not take a saving throw or were not eligible to receive the original attack. Wounds are allocated one-by-one across models able to be hit.</p><p><strong>Multi-wound models:</strong> already wounded models are normally allocated subsequent wounds first, until reduced to zero wounds. The Independent Character exception allows the player to avoid allocating a wound to an already wounded joined Independent Character when another model can take it.</p><p><strong>Massive wounds / Instant Death:</strong> an unsaved wound from a weapon that causes Instant Death or has Strength double (or more) the Toughness used for the wound roll inflicts a Massive Wound, causing D3 wounds to the target. Excess damage does not spill over to another model.</p>`);
+
+ const characteristicTests=cardDetail("Characteristic Tests",list([
+   "Roll a single D6 against the tested characteristic; the test passes if the result is equal to or less than that characteristic.",
+   "A natural 6 always fails and a natural 1 always passes, regardless of the characteristic value.",
+   "Leadership Tests use 2D6; pass if the total is equal to or less than Leadership. Units with different Leadership values use the highest applicable value."
+ ]),MORE_DETAIL_RULES["Characteristic Tests"]);
+
+ const artillery=cardDetail("Artillery",list([
+   "Each artillery model needs at least one crew member to move.",
+   "To fire, a designated crew member within 2” fires the artillery instead of their own weapon; use both models for line of sight and measure range from the artillery barrel.",
+   "Unless otherwise noted, artillery cannot shoot after moving or without a designated crew member within 2”.",
+   "Artillery may receive ranged wounds normally, but cannot use the TAKE COVER! reaction.",
+   "In melee, attacks may be allocated to artillery specifically and hit on 3+; artillery cannot fight back.",
+   "Artillery models do not count toward unit size or Morale, and cannot normally be transported."
+ ]),MORE_DETAIL_RULES["Artillery"]);
+
+ const buildings=cardDetail("Buildings & Fortifications",list([
+   "Buildings allow INFANTRY to enter through predetermined access points; a standard building normally holds one unit.",
+   "Building transport capacity is set during setup; bunkers default to 10 models.",
+   "Buildings have separate ranged and melee Armour Values and use the normal Vehicle Damage Table when they suffer glancing or penetrating hits.",
+   "A building's firing ports may allow models inside to fire out."
+ ]),MORE_DETAIL_RULES["Buildings & Fortifications"]);
 
  const transports=cardDetail("Transports",list([
    "May carry one unit only, and may not exceed the vehicle’s transport capacity.",
@@ -1247,7 +1282,7 @@ function renderReference(){
  <tr class="mobile-collapsible-row" onclick="toggleMobileTableRow(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMobileTableRow(this)}" tabindex="0" role="button" aria-expanded="false"><td><strong>Salvo (X/Y)</strong></td><td>If moved = X shots at half range<br>If not moved = Y shots at full range</td><td>Yes (see left)</td><td>No</td><td>No</td><td></td></tr>
  </tbody></table></div></div>`;
 
- const meleeProps=`<div class="ref-card"><h3>Melee Weapon Properties</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type</th><th>Effect</th><th>Examples</th></tr></thead><tbody>
+ const meleeProps=`<div class="ref-card melee-weapon-properties"><h3>Melee Weapon Properties</h3><div class="ref-table-wrap"><table class="ref-table"><thead><tr><th>Type</th><th>Effect</th><th>Examples</th></tr></thead><tbody>
  <tr><td><strong>Force Weapon</strong></td><td>Counts as a power weapon. A psyker may take a Psychic test after causing one or more unsaved wounds; if passed, each unsaved wound deals D3 damage.</td><td><em>Force weapons</em></td></tr>
  <tr><td><strong>Lightning Claws</strong></td><td>Specialist Weapon. Counts as a power weapon; re-roll failed wounds.</td><td><em>Lightning claws</em></td></tr>
  <tr><td><strong>Power Weapon</strong></td><td>Negates the target's normal armour save; invulnerable saves may be taken.</td><td><em>Power weapons</em></td></tr>
@@ -1298,8 +1333,8 @@ function renderReference(){
  ]));
 
  const pages={
-   start:{title:"Start of Turn",subtitle:"Begin the turn with timing, regrouping and start-of-turn effects.",flow:`<div class="ref-timing"><strong>START OF TURN</strong><span>Resolve start-of-turn effects, then proceed to MOVEMENT.</span></div>`,content:`<div class="ref-masonry"><div class="ref-masonry-col">${broken}</div><div class="ref-masonry-col">${regroup}</div></div>`},
-   movement:{title:"Movement",subtitle:"Reserves, movement, terrain and movement-related abilities.",flow:movementFlow,content:`<div class="ref-grid">${difficult}${blessingPsychic}${icMovement}${dangerous}</div><div class="ref-grid movement-transports">${transports}</div><div class="ref-grid movement-types">${moveTypes}${vehicleTypes}</div>`},
+   start:{title:"Start of Turn",subtitle:"Begin the turn with timing, regrouping and start-of-turn effects.",flow:`<div class="ref-timing"><strong>START OF TURN</strong><span>Resolve start-of-turn effects, then proceed to MOVEMENT.</span></div>`,content:`<div class="ref-masonry"><div class="ref-masonry-col">${broken}</div><div class="ref-masonry-col">${regroup}</div></div><div class="ref-grid"><div class="ref-masonry-full">${characteristicTests}</div></div>`},
+   movement:{title:"Movement",subtitle:"Reserves, movement, terrain and movement-related abilities.",flow:movementFlow,content:`<div class="ref-grid">${difficult}${blessingPsychic}${icMovement}${dangerous}</div><div class="ref-grid movement-transports">${transports}${artillery}</div><div class="ref-grid movement-types">${moveTypes}${vehicleTypes}</div>`},
    shooting:{title:"Shooting",subtitle:"Declare targets, resolve fire and apply shooting effects.",flow:shootingFlow,content:`<div class="ref-topnav ref-shooting-nav" aria-label="Shooting reference sections"><button class="ref-tab ${state.shootingView!=="vehicles"?"active":""}" onclick="state.shootingView='normal';renderReference()">Normal Shooting</button><button class="ref-tab ${state.shootingView==="vehicles"?"active":""}" onclick="state.shootingView='vehicles';renderReference()">Vehicles</button></div>${state.shootingView==="vehicles"?`<div class="ref-masonry"><div class="ref-masonry-full">${vehicleTypes}</div><div class="ref-masonry-full">${damage}</div><div class="ref-masonry-col">${vehicleFacing}</div><div class="ref-masonry-col">${vsp}</div></div>`:`<div class="shooting-reference-grid">
  <div class="shooting-ref-wide">${lineOfSight}</div>
  <div class="shooting-ref-card">${witchfirePsychic}</div>
@@ -1313,9 +1348,10 @@ function renderReference(){
  <div class="shooting-ref-card">${cover}${armour}</div>
  <div class="shooting-ref-card">${suppression}</div>
  <div class="shooting-ref-card">${pinned}</div>
+ <div class="shooting-ref-card">${buildings}</div>
  <div class="shooting-ref-wide ref-subsection"><h2>Weapon References</h2>${rangedTypes}</div>
  </div>`}`},
-   assault:{title:"Assault",subtitle:"Charges, reactions, melee engagements and combat results.",flow:assaultFlow,content:`<div class="ref-masonry"><div class="ref-masonry-col">${meleeHitCard}${woundCard}${meleeAP}${consolidation}</div><div class="ref-masonry-col">${vehicleHitCard}${meleeProps}${icAssault}</div></div>`},
+   assault:{title:"Assault",subtitle:"Charges, reactions, melee engagements and combat results.",flow:assaultFlow,content:`<div class="ref-masonry"><div class="ref-masonry-col">${meleeHitCard}${woundCard}${meleeAP}${consolidation}</div><div class="ref-masonry-col">${vehicleHitCard}${icAssault}</div><div class="ref-masonry-full melee-properties-full">${meleeProps}</div></div>`},
    end:{title:"End of Turn",subtitle:"Casualty tests, fall back and end-of-turn resolution.",flow:`<div class="ref-timing"><strong>END OF TURN</strong><span>Resolve casualty tests and other end-of-turn effects before the next player turn.</span></div>`,content:`<div class="ref-masonry"><div class="ref-masonry-col">${endTurn}</div><div class="ref-masonry-col">${fallback}</div></div>`}
  };
  if(state.step==="vehicles") {
