@@ -771,13 +771,13 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.9</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.11</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.10";
+const APP_VERSION="v1.1.11";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -1463,19 +1463,21 @@ function specialRuleEntry(item){
    </div>
  </div>`;
 }
-function filterSpecialRules(filter){
- document.querySelectorAll(".special-filterbar button").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
+function filterSpecialRules(filterIndex){
+ const buttons=document.querySelectorAll(".special-filterbar button");
+ buttons.forEach(b=>b.classList.toggle("active", b.dataset.filterIndex===String(filterIndex)));
  document.querySelectorAll(".special-section").forEach(section=>{
-   const category=section.dataset.category||"";
-   section.classList.toggle("filter-hidden", !(filter==="all"||category===filter));
+   const categoryIndex=section.dataset.categoryIndex;
+   section.classList.toggle("filter-hidden", !(String(filterIndex)==="0" || categoryIndex===String(filterIndex)));
  });
 }
 function renderSpecialRules(){
  const categories=Object.keys(specialRulesData);
- const filterButtons=[`<button type="button" class="btn active" data-filter="all" onclick="filterSpecialRules('all')">ALL</button>`,
-   ...categories.map(c=>`<button type="button" class="btn" data-filter="${esc(c)}" onclick="filterSpecialRules(${JSON.stringify(c)})">${esc(c)}</button>`)
+ const filterButtons=[
+   `<button type="button" class="btn active" data-filter-index="0" onclick="filterSpecialRules(0)">ALL</button>`,
+   ...categories.map((c,i)=>`<button type="button" class="btn" data-filter-index="${i+1}" onclick="filterSpecialRules(${i+1})">${esc(c)}</button>`)
  ].join("");
- const groups=categories.map(title=>`<div class="special-section" data-category="${esc(title)}"><h2>${esc(title)}</h2><div class="special-grid"><div class="ref-card ref-wide"><div class="special-rule-list">${specialRulesData[title].map(specialRuleEntry).join("")}</div></div></div></div>`).join("");
+ const groups=categories.map((title,i)=>`<div class="special-section" data-category-index="${i+1}"><h2>${esc(title)}</h2><div class="special-grid"><div class="ref-card ref-wide"><div class="special-rule-list">${specialRulesData[title].map(specialRuleEntry).join("")}</div></div></div></div>`).join("");
  document.getElementById("app").innerHTML=`<div class="eyebrow">Special Rules · ${APP_VERSION}</div><h1 class="ref-page-title">Special Rules</h1><p class="ref-page-subtitle">Common special rules and abilities, kept separate from the phase-based Quick Reference.</p>
  <div class="special-rules-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#rule-search');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>
  <div class="special-filterbar" aria-label="Special Rules categories">${filterButtons}</div>
