@@ -771,6 +771,16 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .special-rule-entry .sr-more{margin-top:8px}
 .special-rule-entry .more-detail-content{margin-top:8px;padding:9px;border-left:2px solid var(--accent);background:rgba(255,255,255,.025);font-size:12px;line-height:1.45}
 .special-rule-entry .sr-more{margin-top:7px}
+.special-rule-entry .more-detail-panel .special-detail-paragraph{
+  margin:0 0 10px;
+  padding:0;
+  line-height:1.5;
+}
+.special-rule-entry .more-detail-panel .special-detail-paragraph:last-child{margin-bottom:0}
+.special-rule-entry .more-detail-panel .detail-keyword{
+  color:var(--accent);
+  font-weight:800;
+}
 .special-rule-entry .special-more-detail{
   width:auto;
   border:0;
@@ -800,13 +810,13 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.14</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.16</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.14";
+const APP_VERSION="v1.1.16";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -1355,16 +1365,16 @@ function renderReference(){
 
 const specialRulesData = {
  "Attack / Weapon Properties": [
-  "<strong>Assault:</strong> Assault X weapons fire X-number of times in the Shooting phase. Units with models that shoot with an assault weapon are still eligible to charge in the Assault phase. Models in units that advance may shoot with an assault weapon, but only with SNAP FIRE.",
-  "<strong>Barrage:</strong> Barrage weapons or “G” (Guess-range weapons in older codex books) typically also count as BLAST weapons and may be fired with DIRECT FIRE or INDIRECT FIRE. With indirect fire, the shooter does not need line of sight and does not use Ballistic Skill; center a BLAST marker on a specific model in range and roll 2D6” plus the scatter dice. A HIT means the marker hits; otherwise it scatters. Direct fire follows normal shooting rules and may disregard minimum ranges. Models fully under the template are automatically hit; models partially under it are hit on a 4+. Unsaved wounds from INDIRECT FIRE barrage attacks force a Pinning Test. Multiple barrage blasts use scatter-dice-only placement for subsequent shots, with templates touching the first; on a HIT they may be placed anywhere touching or overlapping the first. For indirect fire against structures, the blast marker only affects the highest exposed level at its position, moving down a level if it scatters over lower levels.",
-  "<strong>Blast:</strong> Blast weapons use normal or large circular blast markers. Place the marker centred on a hittable model in the target unit, then roll to hit normally using the shooting model’s BS. If the shot hits, models wholly under the marker are hit and models partially under it are hit on a 4+. If it misses, roll the scatter dice and move the marker 2D6” in the indicated direction; on a HIT, it still moves in the direction of the smaller arrow. Maximum scatter is half the distance between the shooting model and the target location. Hits and wounds from blast weapons may be allocated to any models in the unit rather than only models physically under the marker. Resolve models from different units separately. Multiple blasts are resolved one weapon at a time. Vehicles touched by any part of the marker are hit automatically, using the shooter’s position to determine facing. Against structures, blast markers affect only the chosen level. When shooting into engagements, count all models hit before applying the normal Shooting Into Melee Combat allocation.",
-  "<strong>Heavy:</strong> Heavy X weapons fire X-number of times in the Shooting phase. A Heavy weapon may fire normally if the firing model has not moved, even if other models in its unit moved. If the firing model moved, it may only fire with SNAP FIRE. Units with models firing Heavy weapons may not charge in the Assault phase.",
-  "<strong>Ordnance:</strong> Infantry models cannot fire Ordnance weapons if they moved in the Movement phase, not even with SNAP FIRE. Units with models that fired Ordnance weapons cannot charge in the Assault phase. A vehicle that fires an Ordnance weapon cannot fire, or have fired, any other weapons that turn. Ordnance weapons roll 2D6 on the Vehicle Damage Table and pick the highest result.",
-  "<strong>Pistol:</strong> Pistol X weapons fire X-number of times in the Shooting phase. All pistol weapons also count as ASSAULT weapons. Pistol weapons also count as a melee weapon in close combat fights, although the pistol itself is not fired or used as the close combat weapon.",
-  "<strong>Rapid Fire:</strong> Rapid Fire weapons may shoot once at maximum range or twice at half of their maximum range. Units with models firing Rapid Fire weapons may not charge in the Assault phase.",
-  "<strong>Salvo:</strong> Salvo weapons are written as Salvo X/Y. A model that moved may fire the weapon X times at up to half its maximum range. A model that did not move may fire it Y times at its maximum range. Units with models firing Salvo weapons may not charge in the Assault phase.",
-  "<strong>Template:</strong> Template weapons use the teardrop-shaped flamer template. Declare the target normally; if at least one model in the target unit is hit, the template may also touch models from other units. Place the narrow end in base contact with the firing model and align it straight out in a chosen direction. Models fully under the template are hit automatically; models partially under it are hit on a 4+. Template weapons ignore cover saves.",
-  "<strong>D-Strength Weapons:</strong> D-Strength weapons count as Strength 10 and may re-roll failed wounds. They always inflict D3 wounds on models suffering unsaved wounds. Against vehicles, they allow the armour penetration roll to be re-rolled and add +1 to Vehicle Damage Table results.",
+  "<strong>Assault:</strong> Assault X weapons fire X shots and still allow the unit to charge. A model that Advanced may only fire an Assault weapon with SNAP FIRE.",
+  "<strong>Barrage:</strong> Barrage weapons may use DIRECT FIRE or INDIRECT FIRE and typically also count as BLAST weapons.",
+  "<strong>Blast:</strong> Use a normal or large circular blast marker; roll To Hit normally, then resolve the marker according to the Blast rules.",
+  "<strong>Heavy:</strong> Heavy X weapons fire X shots. A model that moved may only fire a Heavy weapon with SNAP FIRE, and the unit may not charge.",
+  "<strong>Ordnance:</strong> Ordnance cannot be fired by infantry that moved; units firing Ordnance cannot charge. Vehicles firing Ordnance cannot fire any other weapons.",
+  "<strong>Pistol:</strong> Pistol X weapons fire X shots, count as ASSAULT weapons, and count as a melee weapon in close combat.",
+  "<strong>Rapid Fire:</strong> Fire once at maximum range or twice at half range. A unit firing Rapid Fire weapons may not charge.",
+  "<strong>Salvo:</strong> Salvo X/Y fires X shots after moving at up to half range, or Y shots if stationary at maximum range. A unit firing Salvo weapons may not charge.",
+  "<strong>Template:</strong> Use the teardrop-shaped flamer template; models fully under it are hit automatically, while partially covered models are hit on 4+. Template weapons ignore cover.",
+  "<strong>D-Strength Weapons:</strong> Count as Strength 10, re-roll failed wounds, and inflict D3 wounds from each unsaved wound.",
   "<strong>Armourbane:</strong> Attack rolls a 2D6 for armor penetration.",
   "<strong>Blind:</strong> Unit HIT by a weapon with blind must take an initiative test. If failed, all models are reduced to BS1 and WS1 until the end of their next turn.",
   "<strong>Concussive:</strong> A model suffering an unsaved wound is reduced to Initiative 1 until the end of the following assault phase. Against units with no Initiative (i.e. vehicles) inflicts crew shaken for 1 hit.",
@@ -1498,10 +1508,48 @@ function specialRuleEntry(item){
  return `<div class="special-rule-entry" data-special-rule="${esc(title).toLowerCase()}">
    <div class="sr-title"><span>${esc(title)}</span><span class="sr-type">SPECIAL RULE</span></div>
    <div class="sr-body"><div class="sr-summary">${summary}</div>
-   ${detail?`<div class="sr-more"><button class="more-detail-btn special-more-detail" type="button" onclick="toggleMoreDetail(this)">More Detail</button><div class="more-detail-panel" hidden>${detail}</div></div>`:""}
+   ${(specialRuleDetailOverrides[title]||detail)?`<div class="sr-more"><button class="more-detail-btn special-more-detail" type="button" onclick="toggleMoreDetail(this)">More Detail</button><div class="more-detail-panel" hidden>${specialRuleDetailOverrides[title]||formatSpecialRuleDetail(title,detail)}</div></div>`:""}
    </div>
  </div>`;
 }
+
+function highlightSpecialDetail(html){
+ const keywords=[
+  "DIRECT FIRE","INDIRECT FIRE","SNAP FIRE","LINE OF SIGHT","RANGE",
+  "BALLISTIC SKILL","SCATTER","HIT","MISS","BLAST","TEMPLATE",
+  "PINNING TEST","VEHICLE","VEHICLES","STRUCTURES","COVER",
+  "ARMOUR PENETRATION","ARMOR PENETRATION","AP","CHARGE",
+  "ASSAULT PHASE","SHOOTING PHASE","MOVEMENT PHASE","RESERVE"
+ ];
+ const re=new RegExp("\\b("+keywords.sort((a,b)=>b.length-a.length).map(x=>x.replace(/[.*+?^${}()|[\\]\\\\]/g,"\\$&")).join("|")+")\\b","gi");
+ return String(html).split(/(<[^>]+>)/g).map((part,i)=>{
+   if(i%2)return part;
+   return part.replace(re,m=>`<strong class="detail-keyword">${m}</strong>`);
+ }).join("");
+}
+function formatSpecialRuleDetail(title, detail){
+ const clean=String(detail).trim();
+ if(!clean)return "";
+ // Keep the rule wording intact; improve readability by separating complete
+ // sentences into short paragraphs and highlighting key rules terminology.
+ const sentences=clean.split(/\\.\\s+(?=[A-Z0-9])/);
+ return sentences.map(s=>`<p class="special-detail-paragraph">${highlightSpecialDetail(s.trim())}</p>`).join("");
+}
+
+
+const specialRuleDetailOverrides={
+ "Assault":`<p><strong>Firing:</strong> Assault X weapons fire X shots.</p><p><strong>Charging:</strong> A unit that fires Assault weapons may still charge. If the firing model Advanced, it may only fire with <strong>SNAP FIRE</strong>.</p>`,
+ "Barrage":`<p><strong>Indirect Fire:</strong> No <strong>LINE OF SIGHT</strong> or Ballistic Skill is required. Centre a <strong>BLAST</strong> marker on a specific model in range and roll 2D6" with the scatter dice. A <strong>HIT</strong> hits the target; otherwise the marker scatters.</p><p><strong>Direct Fire:</strong> Treat the weapon as a <strong>BLAST</strong> weapon under normal shooting rules; minimum range may be ignored.</p><p><strong>Hits:</strong> Models wholly under the marker are hit automatically; partially covered models are hit on 4+. Unsaved wounds from <strong>INDIRECT FIRE</strong> cause a <strong>PINNING TEST</strong>.</p><p><strong>Multiple Barrage:</strong> After the first marker, subsequent shots use the scatter dice only and are placed touching the first marker as directed. On a <strong>HIT</strong>, the marker may touch or overlap the first.</p><p><strong>Structures:</strong> Indirect fire affects the highest exposed level at the marker; if it scatters over a lower level, move it to the next exposed level below.</p>`,
+ "Blast":`<p><strong>Placement:</strong> Centre the marker on a hittable model and roll To Hit using the firing model's <strong>BS</strong>.</p><p><strong>Hit:</strong> Models wholly under the marker are hit; partially covered models are hit on 4+.</p><p><strong>Miss &amp; Scatter:</strong> Roll the scatter dice and move the marker 2D6". On a <strong>HIT</strong>, it still moves in the smaller-arrow direction. Maximum scatter is half the distance between the firing model and target location.</p><p><strong>Allocation:</strong> Blast hits and wounds may be allocated to any models in the unit, not only those physically under the marker. Resolve different units separately. Resolve multiple blasts one weapon at a time.</p><p><strong>Vehicles:</strong> A vehicle touched by any part of the marker is hit automatically; determine facing from the firing model's position.</p><p><strong>Structures:</strong> Affect only the chosen level.</p><p><strong>Engagements:</strong> Count all models under the marker before resolving <strong>SHOOTING INTO MELEE COMBAT</strong>.</p>`,
+ "Heavy":`<p><strong>Stationary:</strong> A Heavy weapon fires normally if its firing model did not move, even if other models in the unit moved.</p><p><strong>Moved:</strong> The firing model may only use <strong>SNAP FIRE</strong>.</p><p><strong>Charging:</strong> A unit firing Heavy weapons may not charge.</p>`,
+ "Ordnance":`<p><strong>Infantry:</strong> Cannot fire Ordnance after moving, even with <strong>SNAP FIRE</strong>.</p><p><strong>Charging:</strong> A unit that fired Ordnance may not charge.</p><p><strong>Vehicles:</strong> A vehicle firing Ordnance cannot fire, or have fired, any other weapons that turn.</p><p><strong>Vehicle Damage:</strong> Roll <strong>2D6</strong> on the Vehicle Damage Table and use the highest result.</p>`,
+ "Pistol":`<p><strong>Firing:</strong> Pistol X weapons fire X shots and count as <strong>ASSAULT</strong> weapons.</p><p><strong>Close Combat:</strong> Pistols count as a melee weapon in close combat, but the pistol itself is not fired or used as the close combat weapon.</p>`,
+ "Rapid Fire":`<p><strong>Maximum Range:</strong> Fire once.</p><p><strong>Half Range:</strong> Fire twice.</p><p><strong>Charging:</strong> A unit firing Rapid Fire weapons may not charge.</p>`,
+ "Salvo":`<p><strong>Salvo X/Y:</strong> If the model moved, fire X shots at up to half maximum range. If it did not move, fire Y shots at maximum range.</p><p><strong>Charging:</strong> A unit firing Salvo weapons may not charge.</p>`,
+ "Template":`<p><strong>Placement:</strong> Declare the target normally. Place the narrow end of the teardrop template in base contact with the firing model and align it straight out in the chosen direction. If at least one model in the target unit is hit, the template may also touch models from other units.</p><p><strong>Hits:</strong> Models wholly under the template are hit automatically; partially covered models are hit on 4+.</p><p><strong>Cover:</strong> Template weapons ignore cover saves.</p><p><strong>Allocation:</strong> Template hits and wounds may be allocated to any hittable models, not only the model physically hit by the template.</p><p><strong>Snap Fire:</strong> When firing with <strong>SNAP FIRE</strong>, all models wholly or partially under the template are hit only on 4+.</p><p><strong>Structures:</strong> The template may target the shooting model's level or one level above or below, remaining horizontally flat.</p><p><strong>Engagements:</strong> Use the same process as <strong>BLAST</strong> weapons.</p>`,
+ "D-Strength Weapons":`<p><strong>Strength:</strong> Counts as Strength 10 and may re-roll failed wounds.</p><p><strong>Unsaved Wounds:</strong> Each unsaved wound inflicts <strong>D3 wounds</strong>.</p><p><strong>Vehicles:</strong> Re-roll the armour penetration roll and add <strong>+1</strong> to the Vehicle Damage Table result.</p>`
+};
+
 function filterSpecialRules(filterIndex){
  const buttons=document.querySelectorAll(".special-filterbar button");
  buttons.forEach(b=>b.classList.toggle("active", b.dataset.filterIndex===String(filterIndex)));
