@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.43</title>
+<title>ProHammer Battle Companion v1.1.44</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -881,7 +881,7 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.43";
+const APP_VERSION="v1.1.44";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -996,11 +996,11 @@ function go(s){
      state.returnScrollY=window.scrollY||0;
    }
    state.step=s; render();
-   setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
+    scrollScreenTop();
    return;
  }
  if(s==="final" && state.step!=="final"){return;}
- state.step=s; render();
+  state.step=s; render(); scrollScreenTop();
 }
 function backToBattle(){
  const target=state.returnStep||"course";
@@ -1010,8 +1010,8 @@ function backToBattle(){
  setTimeout(()=>window.scrollTo({top:y,behavior:"auto"}),0);
 }
 function back(){
- if(["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){backToBattle();return;}
- const i=steps.indexOf(state.step);if(i>0){state.step=steps[i-1];render();}
+  if(["reference","vehicles","special","strategy","warlord","search"].includes(state.step)){backToBattle();return;}
+  const i=steps.indexOf(state.step);if(i>0){state.step=steps[i-1];render();scrollScreenTop();}
 }
 
 function next(){
@@ -1023,9 +1023,11 @@ function next(){
    if(state.step==="muster"&&!validMuster())return;
    state.step=steps[i+1];
    if(state.step==="mission"&&!state.mission)randomMission();
-   render();
+    render();
+    scrollScreenTop();
  }
 }
+function scrollScreenTop(){setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);}
 function validMuster(){for(const p of state.p){if(!p.name.trim()){alert("Please enter both player names.");return false}if(!p.faction){alert("Please select both factions.");return false}}return true}
 function validIntent(){
  if(!state.firstDeploy){
@@ -1843,12 +1845,12 @@ function renderSearch(){
  document.getElementById("app").innerHTML=`<div class="eyebrow">Rules Search · ${APP_VERSION}</div><h1 class="ref-page-title">Search</h1><p class="ref-page-subtitle">Find a rule by keyword, ability name, weapon property or phase.</p><div class="search-box"><input id="rule-search" value="${esc(state.searchQuery)}" placeholder="e.g. jink, rending, reserves, armour…" oninput="state.searchQuery=this.value" onkeydown="if(event.key==='Enter')renderSearch()"><button class="btn primary" onclick="renderSearch()">SEARCH</button></div>${body}<div class="actions"><button class="btn" onclick="backToBattle()">← BACK TO BATTLE</button><button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button></div>`;
 }
 function openSearchResult(i){
- const d=window.__currentSearchMatches?.[i]; if(!d)return;
- if(d.section.startsWith("Special Rules")){state.step="special";renderSpecialRules();return;}
- if(d.section==="Strategy Points"){state.step="strategy";renderStrategyPoints();return;}
- if(d.section==="Warlord Traits"){state.step="warlord";renderWarlordTraits();return;}
- if(d.section.includes("Battle Companion")){state.step="deploy";renderDeploy();return;}
- state.step="reference"; if(d.page){state.refPage=d.page;state.shootingView=d.view||state.shootingView;} renderReference();
+  const d=window.__currentSearchMatches?.[i]; if(!d)return;
+  if(d.section.startsWith("Special Rules")){state.step="special";renderSpecialRules();scrollScreenTop();return;}
+  if(d.section==="Strategy Points"){state.step="strategy";renderStrategyPoints();scrollScreenTop();return;}
+  if(d.section==="Warlord Traits"){state.step="warlord";renderWarlordTraits();scrollScreenTop();return;}
+  if(d.section.includes("Battle Companion")){state.step="deploy";renderDeploy();scrollScreenTop();return;}
+  state.step="reference"; if(d.page){state.refPage=d.page;state.shootingView=d.view||state.shootingView;} renderReference();scrollScreenTop();
 }
 
 function renderCourse(){
@@ -1995,6 +1997,9 @@ function setPriority(pi,location){
   state.p[pi].priorityOpen=false;
   renderIntent(state.intentTurn?Number(state.intentTurn.slice(1)):null);
 }
+function jumpToIntentPlayer(pi){
+  document.getElementById(`intent-player-${pi}`)?.scrollIntoView({behavior:"smooth",block:"start"});
+}
 function renderIntent(focusPlayer=null){
  if(!state.firstDeploy)state.firstDeploy="p0";
  if(!state.intentTurn && !(state.p[0].intent.length===2 && state.p[1].intent.length===2)) state.intentTurn=state.firstDeploy;
@@ -2022,8 +2027,10 @@ function renderIntent(focusPlayer=null){
     <p class="small">Choose the objective this player must control at the end of the battle.</p>
     <div class="priority-choices">${["Left Flank","Right Flank","Opponent","Central"].map(x=>`<button class="btn ${state.p[priorityPi].priority===x?"primary":""}" onclick="setPriority(${priorityPi},'${x}')">${x}</button>`).join("")}</div>
   </div></div>`;
+ const firstChooser=Number((state.firstDeploy||"p0").slice(1));
+ const jumpToPlayerTwo=firstChooser===1&&state.p[0].intent.length===0&&state.p[1].intent.length===0?`<br><button type="button" class="btn" style="margin-top:10px" onclick="jumpToIntentPlayer(1)">GO TO PLAYER 2’S OBJECTIVES ↓</button>`:"";
  const body=`<p class="flavour">Each player selects two Commander's Intent objectives. The player who deployed the first unit chooses first, then players alternate choosing one objective at a time until both have chosen two.</p>
- <div class="notice"><strong>${turn?esc(turnName)+" to choose":"All objectives selected."}</strong>${turn?`<br><span class="small">Selection order: first player → second player → first player → second player. Click a selected objective again to remove it and choose a replacement.</span>`:`<br><span class="small">Both players have selected two objectives. Click any selected objective again if you need to change a choice.</span>`}</div>
+ <div class="notice"><strong>${turn?esc(turnName)+" to choose":"All objectives selected."}</strong>${turn?`<br><span class="small">Selection order: first player → second player → first player → second player. Click a selected objective again to remove it and choose a replacement.</span>`:`<br><span class="small">Both players have selected two objectives. Click any selected objective again if you need to change a choice.</span>`}${jumpToPlayerTwo}</div>
   <div class="grid2">${player(0)}${player(1)}</div>${priorityModal}`;
  document.getElementById("app").innerHTML=`<div class="eyebrow">Commander’s Intent</div><h1>Commander’s Intent</h1>${body}<div class="intent-actions"><button type="button" class="btn" onclick="back()">← BACK</button><button type="button" class="btn primary" id="intent-next">NEXT →</button></div>`;
  const nextBtn=document.getElementById("intent-next");
@@ -2036,8 +2043,9 @@ function renderIntent(focusPlayer=null){
      alert("Both players must have selected two objectives, and any Priority Objective must have a location.");
      return;
    }
-   state.step="firstTurn";
-   renderFirstTurn();
+    state.step="firstTurn";
+    renderFirstTurn();
+    scrollScreenTop();
   });
   renderNav();
   if(focusPlayer!==null&&focusPlayer!==undefined&&window.matchMedia("(max-width: 800px)").matches){
@@ -2074,8 +2082,9 @@ function continueFirstTurn(){
  state.step="battle";
  state.round=1;
  state.activePlayer=Number(state.firstTurn.slice(1));
- renderBattle();
- renderNav();
+  renderBattle();
+  renderNav();
+  scrollScreenTop();
 }
 
 function continueIntent(){
@@ -2090,8 +2099,9 @@ function continueIntent(){
      return;
    }
  }
- state.step="firstTurn";
- renderFirstTurn();
+  state.step="firstTurn";
+  renderFirstTurn();
+  scrollScreenTop();
 }
 function conditionList(pi){
  const m=missions[state.mission]||missions[Object.keys(missions)[0]];
@@ -2262,14 +2272,16 @@ function endBattle(){
    <p>Battle Round 5 has been reached. Ending the battle will take you to the final score.</p>
    <p class="small">If this was accidental, choose Continue Battle to return to the score sheet.</p>
  </div>`;
- document.getElementById("app").innerHTML=`<div class="eyebrow">The Aftermath</div><h1>End Battle</h1>${body}
- <div class="actions"><button type="button" class="btn" onclick="renderBattle()">← CONTINUE BATTLE</button>
- <button type="button" class="btn primary" onclick="confirmEndBattle()">END BATTLE →</button></div>`;
- renderNav();
+  document.getElementById("app").innerHTML=`<div class="eyebrow">The Aftermath</div><h1>End Battle</h1>${body}
+  <div class="actions"><button type="button" class="btn" onclick="renderBattle()">← CONTINUE BATTLE</button>
+  <button type="button" class="btn primary" onclick="confirmEndBattle()">END BATTLE →</button></div>`;
+  renderNav();
+  scrollScreenTop();
 }
 function confirmEndBattle(){
- state.step="final";
- renderFinal();
+  state.step="final";
+  renderFinal();
+  scrollScreenTop();
 }
 function achievedSecondaryNames(pi){
  const names=[];
@@ -2323,7 +2335,7 @@ function renderFinal(){
  document.getElementById("app").innerHTML=`<div class="eyebrow">The Aftermath</div><h1>Final Scores</h1>
  <div class="mission"><div class="num">${winner}</div><h2>${a} — ${b}</h2></div>
  ${body}
- <div class="actions"><button class="btn" onclick="state.step='battle';renderBattle()">← BACK TO SCORE SHEET</button>
+  <div class="actions"><button class="btn" onclick="state.step='battle';renderBattle();scrollScreenTop()">← BACK TO SCORE SHEET</button>
  <button class="btn primary" onclick="printResult()">PRINT / SAVE PDF</button>
  <button class="btn danger" onclick="startNewGame()">START A NEW GAME</button></div>`;
  renderNav();
@@ -2383,6 +2395,7 @@ function saveResult(){
 }
 restoreGameState();
 render();
+scrollScreenTop();
 </script>
 
 <script>
