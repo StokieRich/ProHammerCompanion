@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.42</title>
+<title>ProHammer Battle Companion v1.1.43</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -85,11 +85,13 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 .first-turn-choice .choice-state{margin-top:12px;color:var(--accent);font-size:12px;font-weight:bold;letter-spacing:1px;text-transform:uppercase}
 .twist h3{color:var(--accent)}.twist p{color:#bdb8ad;font-style:italic;line-height:1.4}.rule{color:#ddd;font-size:14px}
 .intent{border:1px solid var(--line);padding:14px;background:var(--panel);cursor:pointer}.intent.selected{border-color:var(--accent);background:#29261f}.intent.inactive-intent{opacity:.45;cursor:default}.intent h3{color:var(--accent);font-size:17px}.intent p{color:var(--muted);font-size:13px;line-height:1.4}.count{color:var(--accent);font-size:12px}
+.priority-modal{position:fixed;inset:0;z-index:1100;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82);box-sizing:border-box}.priority-dialog{width:min(100%,480px);padding:22px;background:var(--panel);border:1px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.55)}.priority-dialog h2{color:var(--accent)}.priority-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.priority-choices .btn{min-height:52px}.battle-player-switch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 20px;padding:12px;background:#1b1a17;border:1px solid var(--line)}.battle-player-switch strong{color:var(--accent)}.battle-player-switch .btn{min-height:44px}.secondary{scroll-margin-top:14px}
 .scoreboards{display:grid;grid-template-columns:1fr 1fr;gap:18px}.scoreboard{background:var(--panel);border:1px solid var(--line);padding:18px}.playerhead{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px}.tot{font-size:28px;color:var(--accent);font-weight:bold}.cond{display:flex;align-items:flex-start;gap:10px;border-top:1px solid #343638;padding:11px 0}.cond input{width:auto;margin-top:3px;accent-color:var(--accent)}.cond label{margin:0;text-transform:none;letter-spacing:0;color:#ddd;font-size:14px}.pts{margin-left:auto;color:var(--accent);font-weight:bold;white-space:nowrap}.roundnav{display:flex;align-items:center;justify-content:center;gap:20px;margin:22px 0}.roundnav button{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px}.roundnav strong{font-size:18px}
 .live-scorebar{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-4px 0 14px;padding:8px;background:#151615;border:1px solid var(--line);box-shadow:0 3px 10px rgba(0,0,0,.25)}
 .live-score{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:#211f1b;border-left:3px solid var(--accent)}
 .live-score .name{font-weight:bold}.live-score .breakdown{font-size:11px;color:var(--muted);margin-top:2px}.live-score .total{font-size:25px;color:var(--accent);font-weight:bold;white-space:nowrap}
-@media(max-width:600px){.live-scorebar{gap:6px;padding:6px}.live-score{padding:8px}.live-score .total{font-size:21px}.live-score .breakdown{font-size:10px}}.secondary{margin-top:18px}
+@media(max-width:600px){.live-scorebar{gap:6px;padding:6px}.live-score{padding:8px}.live-score .total{font-size:21px}.live-score .breakdown{font-size:10px}.battle-player-switch{display:grid;grid-template-columns:1fr 1fr;text-align:center}.battle-player-switch>div{grid-column:1/-1;grid-row:1}.battle-player-switch .btn{padding:11px 8px}}
+.secondary{margin-top:18px}
 .secondary .cond{cursor:pointer;padding:11px 20px 11px 4px;box-sizing:border-box}
 .secondary .cond label{display:block;min-width:0;flex:1}
 .secondary .cond .pts{margin-right:2px}
@@ -879,7 +881,7 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.42";
+const APP_VERSION="v1.1.43";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -1969,7 +1971,7 @@ function toggleIntent(pi,idx){
    a.splice(a.indexOf(idx),1);
    if(idx===0){state.p[pi].priority=null;state.p[pi].priorityOpen=false;}
    state.intentTurn="p"+pi;
-   renderIntent();
+    renderIntent(pi);
    return;
  }
  if(!state.intentTurn)state.intentTurn=state.firstDeploy;
@@ -1986,14 +1988,14 @@ function toggleIntent(pi,idx){
  }else{
    state.intentTurn=pi===0?"p1":"p0";
  }
- renderIntent();
+  renderIntent(idx===0?pi:(state.intentTurn?Number(state.intentTurn.slice(1)):null));
 }
 function setPriority(pi,location){
- state.p[pi].priority=location;
- state.p[pi].priorityOpen=false;
- renderIntent();
+  state.p[pi].priority=location;
+  state.p[pi].priorityOpen=false;
+  renderIntent(state.intentTurn?Number(state.intentTurn.slice(1)):null);
 }
-function renderIntent(){
+function renderIntent(focusPlayer=null){
  if(!state.firstDeploy)state.firstDeploy="p0";
  if(!state.intentTurn && !(state.p[0].intent.length===2 && state.p[1].intent.length===2)) state.intentTurn=state.firstDeploy;
  const turn=state.intentTurn;
@@ -2010,22 +2012,19 @@ function renderIntent(){
        <h3>${esc(x[0])}</h3><p>${esc(x[1])}</p>
      </div>`;
    }).join("");
-   const prioritySelected=state.p[pi].intent.includes(0);
-   const priorityBox=prioritySelected && (state.p[pi].priorityOpen || !state.p[pi].priority) ? `<div class="notice" style="margin-top:12px">
-     <strong>Priority Objective</strong><br>
-     <span class="small">Choose the objective this player must control at the end of the battle.</span>
-     <div class="grid3" style="margin-top:10px">
-       ${["Left Flank","Right Flank","Opponent","Central"].map((x,i)=>`<button class="btn ${state.p[pi].priority===x?"primary":""}" onclick="setPriority(${pi},'${x}')">${x}</button>`).join("")}
-     </div>
-     ${state.p[pi].priority?`<div class="small" style="margin-top:8px">Selected: <strong>${esc(state.p[pi].priority)}</strong></div>`:"<div class='error'>Select an objective location to continue.</div>"}
-   </div>` : "";
-   return `<div class="card"><div style="display:flex;justify-content:space-between">
-     <h2>PLAYER ${pi+1}</h2><div class="count">${state.p[pi].intent.length} / 2 selected</div>
-     </div><div class="grid2">${cards}</div>${priorityBox}</div>`;
- };
+    return `<div class="card" id="intent-player-${pi}"><div style="display:flex;justify-content:space-between">
+      <h2>PLAYER ${pi+1}</h2><div class="count">${state.p[pi].intent.length} / 2 selected</div>
+      </div><div class="grid2">${cards}</div></div>`;
+  };
+  const priorityPi=[0,1].find(pi=>state.p[pi].intent.includes(0)&&(state.p[pi].priorityOpen||!state.p[pi].priority));
+  const priorityModal=priorityPi===undefined?"":`<div class="priority-modal"><div class="priority-dialog" role="dialog" aria-modal="true" aria-labelledby="priority-dialog-title">
+    <h2 id="priority-dialog-title">Player ${priorityPi+1}: choose a Priority Objective</h2>
+    <p class="small">Choose the objective this player must control at the end of the battle.</p>
+    <div class="priority-choices">${["Left Flank","Right Flank","Opponent","Central"].map(x=>`<button class="btn ${state.p[priorityPi].priority===x?"primary":""}" onclick="setPriority(${priorityPi},'${x}')">${x}</button>`).join("")}</div>
+  </div></div>`;
  const body=`<p class="flavour">Each player selects two Commander's Intent objectives. The player who deployed the first unit chooses first, then players alternate choosing one objective at a time until both have chosen two.</p>
  <div class="notice"><strong>${turn?esc(turnName)+" to choose":"All objectives selected."}</strong>${turn?`<br><span class="small">Selection order: first player → second player → first player → second player. Click a selected objective again to remove it and choose a replacement.</span>`:`<br><span class="small">Both players have selected two objectives. Click any selected objective again if you need to change a choice.</span>`}</div>
- <div class="grid2">${player(0)}${player(1)}</div>`;
+  <div class="grid2">${player(0)}${player(1)}</div>${priorityModal}`;
  document.getElementById("app").innerHTML=`<div class="eyebrow">Commander’s Intent</div><h1>Commander’s Intent</h1>${body}<div class="intent-actions"><button type="button" class="btn" onclick="back()">← BACK</button><button type="button" class="btn primary" id="intent-next">NEXT →</button></div>`;
  const nextBtn=document.getElementById("intent-next");
  nextBtn.addEventListener("click",function(){
@@ -2039,8 +2038,11 @@ function renderIntent(){
    }
    state.step="firstTurn";
    renderFirstTurn();
- });
- renderNav();
+  });
+  renderNav();
+  if(focusPlayer!==null&&focusPlayer!==undefined&&window.matchMedia("(max-width: 800px)").matches){
+    setTimeout(()=>document.getElementById(`intent-player-${focusPlayer}`)?.scrollIntoView({behavior:"smooth",block:"start"}),0);
+  }
 }
 function renderFirstTurn(){
  const first=state.firstTurn;
@@ -2169,14 +2171,14 @@ function secondary(pi){
 }
 function toggleSecondary(key){
  window._secondary=window._secondary||{};
- window._secondary[key]=!window._secondary[key];
- renderBattle();
+  window._secondary[key]=!window._secondary[key];
+  renderBattle(false,true);
 }
 function changeManifest(pi,delta){
  const r=state.round-1;
  if(!state.p[pi].intent.includes(3))return;
- state.p[pi].manifest[r]=Math.max(0,(state.p[pi].manifest[r]||0)+delta);
- renderBattle();
+  state.p[pi].manifest[r]=Math.max(0,(state.p[pi].manifest[r]||0)+delta);
+  renderBattle(false,true);
 }
 function liveScorebar(){
  return `<div class="live-scorebar" aria-label="Current running scores">
@@ -2204,7 +2206,8 @@ function secondaryTotal(pi){
  }
  return Math.min(25,total);
 }
-function renderBattle(){
+function renderBattle(focusSecondary=false,preserveScroll=false){
+ const previousScrollY=window.scrollY||0;
  if(!state.mission)state.mission=Object.keys(missions)[0];  if(state.firstTurn===null)state.firstTurn=state.firstDeploy||"p0";  const pi=Number(state.activePlayer);  const round=state.round;  const player=state.p[pi];  const firstPi=Number(state.firstTurn.slice(1));  const secondPi=firstPi===0?1:0;  const isFirstTurn=(round===1&&pi===firstPi);  const isLastTurn=(round===5&&pi===secondPi);
 
  const turnLabel=`BATTLE ROUND ${round} — ${esc(player.name||`PLAYER ${pi+1}`)}`;
@@ -2223,26 +2226,28 @@ function renderBattle(){
  const endDisabled=!isLastTurn;
  const rulesSearch=`<div class="battle-rules-search"><button class="btn primary" onclick="go('search');setTimeout(()=>{const q=document.querySelector('#rule-search');if(q)q.focus()},0)">🔍 SEARCH RULES</button></div>`;
 
- document.getElementById("app").innerHTML=`<div class="eyebrow">The Course of Battle</div><h1>Score Sheet</h1>${rulesSearch}${body}<div class="actions"><button class="btn" onclick="back()">← BACK</button><button type="button" class="btn danger" ${endDisabled?"disabled":""} onclick="endBattle()">END BATTLE →</button></div>`;
- renderNav();
+  const nextPlayer=state.p[pi===0?1:0].name||`PLAYER ${pi===0?2:1}`;
+  const playerSwitch=`<div class="battle-player-switch"><button class="btn" ${prevDisabled?"disabled":""} onclick="previousPlayerTurn(true)">← PREVIOUS</button><div><strong>PLAYER ${pi+1}’S TURN</strong><div class="small">Switch to ${esc(nextPlayer)} to score their secondaries</div></div><button class="btn" ${nextDisabled?"disabled":""} onclick="nextPlayerTurn(true)">NEXT →</button></div>`;
+  document.getElementById("app").innerHTML=`<div class="eyebrow">The Course of Battle</div><h1>Score Sheet</h1>${rulesSearch}${body}${playerSwitch}<div class="actions"><button class="btn" onclick="back()">← BACK</button><button type="button" class="btn danger" ${endDisabled?"disabled":""} onclick="endBattle()">END BATTLE →</button></div>`;
+  renderNav();
+  if(focusSecondary){setTimeout(()=>document.querySelector(".secondary")?.scrollIntoView({behavior:"smooth",block:"start"}),0);}
+  else if(preserveScroll){setTimeout(()=>window.scrollTo({top:previousScrollY,left:0,behavior:"auto"}),0);}
 }
-function nextPlayerTurn(){
+function nextPlayerTurn(focusSecondary=false){
  const firstPi=Number((state.firstTurn||"p0").slice(1));
  const secondPi=firstPi===0?1:0;
  if(state.round===5 && state.activePlayer===secondPi)return;
  if(state.activePlayer===firstPi){state.activePlayer=secondPi;}
  else{state.activePlayer=firstPi;state.round=Math.min(5,state.round+1);}
- renderBattle();
- setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
+  renderBattle(focusSecondary);
 }
-function previousPlayerTurn(){
+function previousPlayerTurn(focusSecondary=false){
  const firstPi=Number((state.firstTurn||"p0").slice(1));
  const secondPi=firstPi===0?1:0;
  if(state.round===1 && state.activePlayer===firstPi)return;
  if(state.activePlayer===secondPi){state.activePlayer=firstPi;}
  else{state.activePlayer=secondPi;state.round=Math.max(1,state.round-1);}
- renderBattle();
- setTimeout(()=>window.scrollTo({top:0,left:0,behavior:"auto"}),0);
+  renderBattle(focusSecondary);
 }
 function endBattle(){
  const firstPi=Number((state.firstTurn||"p0").slice(1));
