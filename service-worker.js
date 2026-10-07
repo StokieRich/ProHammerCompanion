@@ -1,4 +1,4 @@
-const VERSION = '1.1.32';
+const VERSION = '1.1.33';
 const CACHE = `prohammer-v${VERSION}`;
 const ASSETS = [
   './',
