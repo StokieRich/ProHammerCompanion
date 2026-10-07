@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="ProHammer">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>ProHammer Battle Companion v1.1.44</title>
+<title>ProHammer Battle Companion v1.1.45</title>
 <style>
 :root{--bg:#101112;--panel:#1a1c1e;--panel2:#222527;--ink:#eee9dd;--muted:#aaa69b;--accent:#b99a63;--line:#4b4a45;--danger:#9d4c43;--good:#738d6c}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;min-height:100vh}
@@ -24,6 +24,7 @@ nav{border-right:1px solid var(--line);padding:18px 12px;background:#151718;posi
 .navitem{padding:10px 11px;margin:3px 0;border:1px solid transparent;color:#8f8d85;font-size:13px}
 .navitem.active{border-color:var(--accent);color:var(--ink);background:#25231f}
 .navitem.done{color:#c7bfae}
+.nav-actions{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}.nav-section-title{padding:4px 11px;color:var(--accent);font-size:10px;font-weight:bold;letter-spacing:1px}.navitem.nav-action{display:block;width:100%;text-align:left;background:transparent;cursor:pointer}.navitem.nav-action:disabled{opacity:.4;cursor:not-allowed}.navitem.nav-action.refresh-action{color:var(--accent)}
 main{max-width:1100px;width:100%;margin:0 auto;padding:34px 38px 80px}
 .eyebrow{font-size:12px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
 h1{font-size:34px;margin:0 0 12px;text-transform:uppercase;letter-spacing:1px}
@@ -875,13 +876,13 @@ input,select{width:100%;background:#0f1011;color:var(--ink);border:1px solid var
 </style>
 </head>
 <body>
-<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · v1.1.42</div><div id="game-save-status" class="game-save-status" role="status" aria-live="polite" title="Game progress is saved automatically on this device">AUTO-SAVE READY</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
+<header><div class="brand">PROHAMMER</div><div class="subtitle">BATTLE COMPANION · <span id="app-version">v1.1.45</span></div><div id="game-save-status" class="game-save-status" role="status" aria-live="polite" title="Game progress is saved automatically on this device">AUTO-SAVE READY</div><button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="nav" onclick="toggleMobileNav()">☰ MENU</button></header><div class="mobile-nav-backdrop" id="mobile-nav-backdrop" onclick="closeMobileNav()"></div>
 <div class="layout">
 <nav id="nav"></nav>
 <main id="app"></main>
 </div>
 <script>
-const APP_VERSION="v1.1.44";
+const APP_VERSION="v1.1.45";
 const missions = {"Supremacy": {"flavour": "Victory belongs to those who command the battlefield. Seize every advantage, drive the enemy from their positions and leave them nowhere to stand.", "any": [["Control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control your opponent's home objective.", 4]]}, "Stand Firm": {"flavour": "Let the enemy come. Let them break themselves against your lines. Hold the ground that matters and endure until their fury has spent itself.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control two or more objectives (excluding your home objective).", 3], ["You control the central objective.", 4]]}, "Clear and Hold": {"flavour": "The field is fractured by a dozen struggles, each one demanding resolution. Crush the resistance at every strongpoint and make each gain permanent.", "any": [["You control more objectives than your opponent.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control one or more objectives you did not control at the end of your last turn.", 3], ["One or more enemy units were destroyed since the end of your last turn by a friendly unit that was within range of an objective, or while the enemy unit was within range of an objective.", 4]]}, "An Eye for an Eye": {"flavour": "Blood calls for blood. For every life taken, another must answer for it. Let none who strike you escape the price of their deeds.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["More enemy units were destroyed since the end of your last turn than friendly units were destroyed during your opponent's previous turn.", 3], ["One or more enemy units that destroyed a friendly unit during the previous turn were destroyed this turn.", 4]]}, "Into the Breach": {"flavour": "The enemy's defences stand firm, but no wall can withstand the fury of the assault. Break through their lines, drive deep into enemy territory and seize the ground beyond.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You have a unit in your opponent’s territory.", 3], ["You control the central objective.", 4]]}, "Overwhelm": {"flavour": "There will be no pause and no mercy. Press the assault without respite, overwhelm every defence and carry the fight into the heart of the foe.", "any": [["One or more enemy units were destroyed this turn.", 3]], "from2": [["You control one or more objectives (excluding your home objective).", 3], ["You control the central objective.", 3], ["You control your opponent's home objective.", 4]]}};
 const twists = {"Open Battle": "There are no surprises, no hidden reserves, and no tricks. Two armies meet upon the field, and victory will belong to those who fight the battle best.", "Dawn Assault": "The battle begins before the sun has risen. Forces converge through the darkness, with elements of both armies yet to reach the field.", "Preliminary Bombardment": "Both sides have prepared their positions well. Before the assault begins however, the guns speak, tearing into fortifications and scattering those who thought themselves safe.", "Deep Strike": "The enemy believes themselves secure, but danger can come from above as readily as from the battlefield ahead.", "Rapid Escalation": "The battle is already underway, and reinforcements race towards the front. There is no time to wait for the full strength of your army.", "Nightfall": "As the battle drags on, darkness begins to descend upon the battlefield. The fading light offers concealment to those who know how to use it."};
 const twistRules = {"Open Battle": "No additional special rules.", "Dawn Assault": "Night Fighting is in effect during Battle Round 1. Before deployment, each player must place 1 unit in Reserve.", "Preliminary Bombardment": "After deployment, each player randomly selects D3 deployed units. Each suffers D6 S5 AP– hits. Units wholly within their deployment zone gain Stealth.", "Deep Strike": "Each player may place one Infantry unit into Reserve using Deep Strike, even if that unit does not normally have the Deep Strike ability.", "Rapid Escalation": "Before deployment, each player must place two units into Reserve. Those units automatically arrive at the start of Battle Round 2, using the normal rules for arriving from Reserve.", "Nightfall": "Starting from Round 3, roll for Night Fighting at the start of each Battle Round. On a 4+ the rule takes effect for the remainder of the battle."};
@@ -895,7 +896,7 @@ const deploymentMaps=[
 ];
 const steps=["course","muster","mission","twist","deploy","intent","firstTurn","battle","final"];
 const labels={course:"Battle Setup",muster:"Painting",mission:"Mission",twist:"Twist",deploy:"Deployment",intent:"Secondaries",firstTurn:"First Turn",battle:"Battle",final:"Final Scores"};
-let state={step:"course",p:[
+let state={step:"course",endedEarly:false,p:[
  {name:"",faction:"",paint:0,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]},
  {name:"",faction:"",paint:0,intent:[],priority:null,priorityOpen:false,manifest:[0,0,0,0,0],primary:[0,0,0,0,0],secondary:[]}
 ],mission:null,twist:"Open Battle",round:1,firstDeploy:null,intentTurn:null,firstTurn:null,refPage:"start",shootingView:"normal",searchQuery:"",returnStep:"course",returnScrollY:0,activePlayer:0};
@@ -903,6 +904,7 @@ let state={step:"course",p:[
 const GAME_SAVE_KEY="prohammer-active-game-v1";
 const initialGameState=JSON.parse(JSON.stringify(state));
 let gameSaveTimer=null;
+let discardingGameForRefresh=false;
 function setGameSaveStatus(saved){
  const indicator=document.getElementById("game-save-status");
  if(!indicator)return;
@@ -910,7 +912,8 @@ function setGameSaveStatus(saved){
  indicator.classList.toggle("is-error",!saved);
 }
 function saveGameState(){
- try{
+  if(discardingGameForRefresh)return true;
+  try{
    localStorage.setItem(GAME_SAVE_KEY,JSON.stringify({format:1,savedAt:Date.now(),state,checks:window._checks||{},secondary:window._secondary||{}}));
    setGameSaveStatus(true);
    return true;
@@ -949,13 +952,45 @@ function hasGameProgress(){
    Object.values(window._checks||{}).some(Boolean)||Object.values(window._secondary||{}).some(Boolean);
 }
 function startNewGame(){
- if(!confirm("Start a new game? This will erase the saved game on this device."))return;
- state=JSON.parse(JSON.stringify(initialGameState));
+  closeMobileNav();
+  if(!confirm("Start a new game? This will erase the saved game on this device."))return;
+  state=JSON.parse(JSON.stringify(initialGameState));
  window._checks={};
  window._secondary={};
  try{localStorage.removeItem(GAME_SAVE_KEY);}catch(error){}
  render();
- window.scrollTo({top:0,left:0,behavior:"auto"});
+  window.scrollTo({top:0,left:0,behavior:"auto"});
+}
+function endGameEarly(){
+  closeMobileNav();
+  if(!hasGameProgress()||state.step==="final")return;
+  if(!confirm("End this game early and calculate the scores from progress recorded so far? Unplayed rounds will not be scored."))return;
+  state.endedEarly=true;
+  state.step="final";
+  renderFinal();
+  scrollScreenTop();
+}
+async function forceRefreshApp(){
+  closeMobileNav();
+  if(!confirm("Force refresh the app? This will abort any game in progress and erase its saved progress from this device."))return;
+  discardingGameForRefresh=true;
+  try{localStorage.removeItem(GAME_SAVE_KEY);}catch(error){}
+  try{
+    if("serviceWorker" in navigator){
+      const registration=await navigator.serviceWorker.getRegistration();
+      const appScope=new URL("./",location.href).pathname;
+      if(registration&&new URL(registration.scope).pathname===appScope)await registration.unregister();
+    }
+  }catch(error){}
+  try{
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.filter(key=>key.startsWith("prohammer-v")).map(key=>caches.delete(key)));
+    }
+  }catch(error){}
+  const refreshUrl=new URL(location.href);
+  refreshUrl.searchParams.set("appRefresh",String(Date.now()));
+  location.replace(refreshUrl.toString());
 }
 
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
@@ -979,8 +1014,12 @@ function closeMobileNav(){
  if(btn)btn.setAttribute("aria-expanded","false");
 }
 function renderNav(){
- const n=document.getElementById("nav");
- n.innerHTML=steps.map((s,i)=>`<div class="navitem ${state.step===s?"active":i<steps.indexOf(state.step)?"done":""}" onclick="go('${s}')">${i+1}. ${labels[s]}</div>`).join("")+`<div class="ref-nav"><div class="navitem ${state.step==="reference"?"active":""}" onclick="go('reference')">Quick Reference</div><div class="navitem ${state.step==="vehicles"?"active":""}" onclick="go('vehicles')">Vehicle Reference</div><div class="navitem ${state.step==="special"?"active":""}" onclick="go('special')">Special Rules</div><div class="navitem ${state.step==="strategy"?"active":""}" onclick="go('strategy')">Strategy Points</div><div class="navitem ${state.step==="warlord"?"active":""}" onclick="go('warlord')">Warlord Traits</div><div class="navitem ${state.step==="search"?"active":""}" onclick="go('search')">Search</div></div>`;
+  const n=document.getElementById("nav");
+  const gameActions=`<div class="nav-actions"><div class="nav-section-title">GAME ACTIONS</div>
+    <button type="button" class="navitem nav-action" onclick="startNewGame()">START NEW GAME</button>
+    <button type="button" class="navitem nav-action" onclick="endGameEarly()" ${hasGameProgress()&&state.step!=="final"?"":"disabled"}>END GAME EARLY</button>
+    <button type="button" class="navitem nav-action refresh-action" onclick="forceRefreshApp()">FORCE REFRESH APP</button></div>`;
+  n.innerHTML=steps.map((s,i)=>`<div class="navitem ${state.step===s?"active":i<steps.indexOf(state.step)?"done":""}" onclick="go('${s}')">${i+1}. ${labels[s]}</div>`).join("")+`<div class="ref-nav"><div class="navitem ${state.step==="reference"?"active":""}" onclick="go('reference')">Quick Reference</div><div class="navitem ${state.step==="vehicles"?"active":""}" onclick="go('vehicles')">Vehicle Reference</div><div class="navitem ${state.step==="special"?"active":""}" onclick="go('special')">Special Rules</div><div class="navitem ${state.step==="strategy"?"active":""}" onclick="go('strategy')">Strategy Points</div><div class="navitem ${state.step==="warlord"?"active":""}" onclick="go('warlord')">Warlord Traits</div><div class="navitem ${state.step==="search"?"active":""}" onclick="go('search')">Search</div></div>${gameActions}`;
 }
 function shell(eyebrow,title,body,back=true,nextText="NEXT →"){
  document.getElementById("app").innerHTML=`<div class="eyebrow">${eyebrow}</div><h1>${title}</h1>${body}<div class="actions">${back?'<button class="btn" onclick="back()">← BACK</button>':'<span></span>'}<button class="btn primary" onclick="next()">${nextText}</button></div>`;
@@ -1048,6 +1087,9 @@ function validIntent(){
 }
 
 function render(){
+  const versionLabel=document.getElementById("app-version");
+  if(versionLabel)versionLabel.textContent=APP_VERSION;
+  document.title=`ProHammer Battle Companion ${APP_VERSION}`;
  if(state.step==="course") renderCourse();
  if(state.step==="muster") renderMuster();
  if(state.step==="mission") renderMission();
@@ -2279,6 +2321,7 @@ function endBattle(){
   scrollScreenTop();
 }
 function confirmEndBattle(){
+  state.endedEarly=false;
   state.step="final";
   renderFinal();
   scrollScreenTop();
@@ -2332,7 +2375,8 @@ function renderFinal(){
  const a=state.p[0].paint+primaryTotal(0)+secondaryTotal(0);
  const b=state.p[1].paint+primaryTotal(1)+secondaryTotal(1);
  const winner=a===b?"DRAW":a>b?`${esc(state.p[0].name)} WINS`:`${esc(state.p[1].name)} WINS`;
- document.getElementById("app").innerHTML=`<div class="eyebrow">The Aftermath</div><h1>Final Scores</h1>
+  document.getElementById("app").innerHTML=`<div class="eyebrow">The Aftermath</div><h1>Final Scores</h1>
+  ${state.endedEarly?`<div class="notice warning"><strong>Game ended early.</strong> Scores include only the progress recorded so far; unplayed rounds were not scored.</div>`:""}
  <div class="mission"><div class="num">${winner}</div><h2>${a} — ${b}</h2></div>
  ${body}
   <div class="actions"><button class="btn" onclick="state.step='battle';renderBattle();scrollScreenTop()">← BACK TO SCORE SHEET</button>
@@ -2401,7 +2445,9 @@ scrollScreenTop();
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(() => {});
+    navigator.serviceWorker.register('./service-worker.js', { scope: './', updateViaCache: 'none' })
+      .then(registration => registration.update())
+      .catch(() => {});
   });
 }
 </script>
